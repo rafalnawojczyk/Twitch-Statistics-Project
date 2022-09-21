@@ -6,3 +6,6 @@ npm-debug.log*
 pids
 *.pid
 *.seed
+.env
+.node_repl_history
+.next
