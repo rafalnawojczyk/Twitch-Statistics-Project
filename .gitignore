@@ -1,0 +1,8 @@
+node_modules
+MY ASSETS
+logs
+*.log
+npm-debug.log*
+pids
+*.pid
+*.seed
