@@ -3,21 +3,14 @@ import { MongoClient } from "mongodb";
 const handler = async (req, res) => {
     if (req.method !== "POST") return;
 
+    const data = JSON.parse(req.body);
+
     const client = await MongoClient.connect(
         "mongodb+srv://***REMOVED***:***REMOVED***@cluster0.9v1xfdu.mongodb.net/twitchStatistics?retryWrites=true&w=majority"
     );
     const db = client.db();
 
-    const twitchStatisticsCollection = db.collection("twitchStatistics");
-
-    // data should be an object storing statistics of 500 users, as well as date
-
-    const data = {
-        date: new Date().toISOString(),
-        statistics: {
-            ...req.body,
-        },
-    };
+    const twitchStatisticsCollection = db.collection("hourlyStats");
 
     // insert "data" to meetups collection and await result
     const result = await twitchStatisticsCollection.insertOne(data);

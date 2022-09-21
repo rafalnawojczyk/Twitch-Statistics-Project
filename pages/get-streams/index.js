@@ -1,11 +1,11 @@
 const GetStreams = props => {
+    console.log(props.wholeData);
     const info = props.wholeData.length === 500 ? "parsing data done" : "parsing data failed";
     return <p>{info}</p>;
 };
 
 export async function getServerSideProps() {
     const getOAuthToken = async () => {
-        console.log("getting token");
         const url = `${process.env.TWITCH_AUTH_API_URL}?client_id=${process.env.TWITCH_CLIENT_ID}&client_secret=${process.env.TWITCH_CLIENT_SECRET}&grant_type=client_credentials`;
 
         const response = await fetch(url, {
@@ -52,11 +52,21 @@ export async function getServerSideProps() {
         return wholeData;
     };
 
-    const wholeData = await getStream();
+    const date = new Date().toISOString();
+    const initialData = (await getStream()).map(el => ({
+        id: el.id,
+        user_id: el.user_id,
+        user_login: el.user_login,
+        user_name: el.user_name,
+        viewer_count: el.viewer_count,
+    }));
+    const wholeData = { date, statistics: [...initialData] };
+
+    // const wholeData = initialData.map(streamer => ({ ...streamer, date }));
 
     const response = await fetch(`${process.env.SERVER}api/twitch-hourly-statistics`, {
         method: "POST",
-        body: wholeData,
+        body: JSON.stringify(wholeData),
     });
 
     return {
