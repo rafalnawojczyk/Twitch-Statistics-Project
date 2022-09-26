@@ -6,7 +6,7 @@ const handler = async (req, res) => {
     const data = JSON.parse(req.body);
 
     const client = await MongoClient.connect(
-        "mongodb+srv://***REMOVED***:***REMOVED***@cluster0.9v1xfdu.mongodb.net/twitchStatistics?retryWrites=true&w=majority"
+        `mongodb+srv://${process.env.DB_CLIENT_ID}:${process.env.DB_CLIENT_PASSWORD}@cluster0.9v1xfdu.mongodb.net/twitchStatistics?retryWrites=true&w=majority`
     );
     const db = client.db();
 

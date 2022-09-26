@@ -9,28 +9,18 @@ const GetStreams = props => {
 };
 
 export async function getServerSideProps() {
-    const getOAuthToken = async () => {
-        const url = `${process.env.TWITCH_AUTH_API_URL}?client_id=${process.env.TWITCH_CLIENT_ID}&client_secret=${process.env.TWITCH_CLIENT_SECRET}&grant_type=client_credentials`;
-
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-        });
-
-        const data = await response.json();
-        return data;
-    };
-
     const getStream = async () => {
-        const authorizationObject = await getOAuthToken();
+        const authorizationObject = await fetch(`${process.env.SERVER}api/twitch-oauth-token`);
+        const authorizationData = await authorizationObject.json();
 
-        let { access_token, token_type } = authorizationObject;
-        token_type = token_type.slice(0, 1).toUpperCase() + token_type.slice(1);
+        if (!authorizationData.ok) throw new Error("Getting token failed.");
 
-        const authorization = `${token_type} ${access_token}`;
+        let { accessToken, tokenType } = authorizationData.data;
+        tokenType = tokenType.slice(0, 1).toUpperCase() + tokenType.slice(1);
+
+        const authorization = `${tokenType} ${accessToken}`;
         const wholeData = [];
+        const topHourly = [];
         let pagination;
         let counter = HOURLY_CHANNELS_AMOUNT / 100;
 
@@ -47,29 +37,56 @@ export async function getServerSideProps() {
             });
             const data = await response.json();
 
+            if (i === 0) topHourly.push(...data.data);
+
             wholeData.push(...data.data);
             pagination = data.pagination.cursor;
         }
 
-        return wholeData;
+        return { wholeData, topHourly };
     };
 
-    const date = new Date().toISOString();
-    const initialData = await getStream();
-    const statistics = {};
-    initialData.forEach(channel => (statistics[channel.user_id] = channel.viewer_count));
-    const wholeData = { date, statistics };
+    try {
+        const responseData = await getStream();
 
-    const response = await fetch(`${process.env.SERVER}api/twitch-hourly-statistics`, {
-        method: "POST",
-        body: JSON.stringify(wholeData),
-    });
+        const { wholeData: initialData, topHourly } = responseData;
 
-    return {
-        props: {
-            wholeData,
-        },
-    };
+        const statistics = {};
+        initialData.forEach(channel => (statistics[channel.user_id] = channel.viewer_count));
+
+        const date = new Date().toISOString();
+        const wholeData = { date, statistics };
+
+        const hourlyResponse = await fetch(
+            `${process.env.SERVER}api/twitch-hourly-views-statistics`,
+            {
+                method: "POST",
+                body: JSON.stringify(wholeData),
+            }
+        );
+
+        const topHourlyResponse = await fetch(
+            `${process.env.SERVER}api/twitch-top-channels-hourly`,
+            {
+                method: "POST",
+                body: JSON.stringify(topHourly),
+            }
+        );
+
+        const topGamesResponse = await fetch(`${process.env.SERVER}api/twitch-top-games-hourly`, {
+            method: "POST",
+            body: JSON.stringify(initialData),
+        });
+
+        return {
+            props: {
+                wholeData,
+            },
+        };
+    } catch (err) {
+        // ******* TEMPORARY *******
+        console.log(err);
+    }
 }
 
 export default GetStreams;
