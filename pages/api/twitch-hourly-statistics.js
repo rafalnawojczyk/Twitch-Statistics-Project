@@ -12,10 +12,7 @@ const handler = async (req, res) => {
 
     const twitchStatisticsCollection = db.collection("hourlyStats");
 
-    // insert "data" to meetups collection and await result
     const result = await twitchStatisticsCollection.insertOne(data);
-
-    // add error handling
 
     //close connection
     client.close();

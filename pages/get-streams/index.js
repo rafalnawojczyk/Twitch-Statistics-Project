@@ -1,6 +1,10 @@
+import { HOURLY_CHANNELS_AMOUNT } from "../../config";
+
 const GetStreams = props => {
-    console.log(props.wholeData);
-    const info = props.wholeData.length === 500 ? "parsing data done" : "parsing data failed";
+    const info =
+        Object.keys(props.wholeData.statistics).length === HOURLY_CHANNELS_AMOUNT
+            ? "parsing data done"
+            : "parsing data failed";
     return <p>{info}</p>;
 };
 
@@ -22,13 +26,13 @@ export async function getServerSideProps() {
     const getStream = async () => {
         const authorizationObject = await getOAuthToken();
 
-        let { access_token, expires_in, token_type } = authorizationObject;
+        let { access_token, token_type } = authorizationObject;
         token_type = token_type.slice(0, 1).toUpperCase() + token_type.slice(1);
 
         const authorization = `${token_type} ${access_token}`;
         const wholeData = [];
         let pagination;
-        let counter = 5;
+        let counter = HOURLY_CHANNELS_AMOUNT / 100;
 
         for (let i = 0; i < counter; i++) {
             let url = process.env.GET_STREAMS_API_URL;
@@ -47,22 +51,14 @@ export async function getServerSideProps() {
             pagination = data.pagination.cursor;
         }
 
-        // fetch through API to send data to database
-
         return wholeData;
     };
 
     const date = new Date().toISOString();
-    const initialData = (await getStream()).map(el => ({
-        id: el.id,
-        user_id: el.user_id,
-        user_login: el.user_login,
-        user_name: el.user_name,
-        viewer_count: el.viewer_count,
-    }));
-    const wholeData = { date, statistics: [...initialData] };
-
-    // const wholeData = initialData.map(streamer => ({ ...streamer, date }));
+    const initialData = await getStream();
+    const statistics = {};
+    initialData.forEach(channel => (statistics[channel.user_id] = channel.viewer_count));
+    const wholeData = { date, statistics };
 
     const response = await fetch(`${process.env.SERVER}api/twitch-hourly-statistics`, {
         method: "POST",
