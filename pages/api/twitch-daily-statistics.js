@@ -1,7 +1,8 @@
 import { MongoClient } from "mongodb";
+import { DAILY_CHANNELS_AMMOUNT } from "../../config";
 
 const handler = async (req, res) => {
-    if (req.method !== "GET") return;
+    if (req.method !== "POST") return;
 
     const client = await MongoClient.connect(
         `mongodb+srv://${process.env.DB_CLIENT_ID}:${process.env.DB_CLIENT_PASSWORD}@cluster0.9v1xfdu.mongodb.net/twitchStatistics?retryWrites=true&w=majority`
@@ -50,7 +51,8 @@ const handler = async (req, res) => {
     const authorization = `${tokenType} ${accessToken}`;
 
     const sortedByViews = Object.values(data).sort((a, b) => b.maxViews - a.maxViews);
-    if (sortedByViews.length > 50) sortedByViews.length = 50;
+    if (sortedByViews.length > DAILY_CHANNELS_AMMOUNT)
+        sortedByViews.length = DAILY_CHANNELS_AMMOUNT;
 
     const keys = sortedByViews.map(el => el.userId);
 
@@ -74,8 +76,6 @@ const handler = async (req, res) => {
     const createdAt = new Date().toISOString();
 
     const finalData = { createdAt, data: sortedByViews };
-
-    const deleteResult = await twitchDailyCollection.deleteOne({});
 
     const result = await twitchDailyCollection.insertOne(finalData);
 

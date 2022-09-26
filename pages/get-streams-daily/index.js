@@ -4,7 +4,9 @@ const GetDailyStreams = props => {
 
 export async function getServerSideProps() {
     try {
-        const response = await fetch(`${process.env.SERVER}api/twitch-daily-statistics`);
+        const response = await fetch(`${process.env.SERVER}api/twitch-daily-statistics`, {
+            method: "POST",
+        });
 
         return {
             props: {

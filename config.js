@@ -1,1 +1,3 @@
 export const HOURLY_CHANNELS_AMOUNT = 2000;
+export const DAILY_CHANNELS_AMMOUNT = 200;
+export const HOURLY_CHANNELS_AMMOUNT = 50;

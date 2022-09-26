@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { HOURLY_CHANNELS_AMMOUNT } from "../../config";
 
 const handler = async (req, res) => {
     if (req.method !== "POST") return;
@@ -22,7 +23,7 @@ const handler = async (req, res) => {
 
     const finalData = { createdAt: date, data };
 
-    if (data.length > 50) data.length = 50;
+    if (data.length > HOURLY_CHANNELS_AMMOUNT) data.length = HOURLY_CHANNELS_AMMOUNT;
 
     const deleteResult = await twitchStatisticsCollection.deleteOne({});
 
