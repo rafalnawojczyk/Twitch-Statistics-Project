@@ -11,8 +11,8 @@ const handler = async (req, res) => {
     const db = client.db();
 
     const twitchStatisticsCollection = db.collection("hourlyStats");
-
-    const result = await twitchStatisticsCollection.insertOne(data);
+    const date = new Date().toISOString();
+    const result = await twitchStatisticsCollection.insertOne({ data: data, createdAt: date });
 
     //close connection
     client.close();

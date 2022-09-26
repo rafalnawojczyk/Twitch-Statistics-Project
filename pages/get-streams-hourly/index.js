@@ -20,7 +20,7 @@ export async function getServerSideProps() {
 
         const authorization = `${tokenType} ${accessToken}`;
         const wholeData = [];
-        const topHourly = [];
+        const topHourlyChannels = [];
         let pagination;
         let counter = HOURLY_CHANNELS_AMOUNT / 100;
 
@@ -37,19 +37,29 @@ export async function getServerSideProps() {
             });
             const data = await response.json();
 
-            if (i === 0) topHourly.push(...data.data);
-
+            if (i === 0) topHourlyChannels.push(...data.data);
             wholeData.push(...data.data);
             pagination = data.pagination.cursor;
         }
 
-        return { wholeData, topHourly };
+        const topHourlyGamesResponse = await fetch(process.env.GET_GAMES_API_URL, {
+            method: "GET",
+            headers: {
+                authorization: authorization,
+                "Client-Id": process.env.TWITCH_CLIENT_ID,
+            },
+        });
+
+        const topHourlyGamesData = await topHourlyResponse.json();
+        const topHourlyGames = topHourlyData.data;
+
+        return { wholeData, topHourlyGames, topHourlyChannels };
     };
 
     try {
         const responseData = await getStream();
 
-        const { wholeData: initialData, topHourly } = responseData;
+        const { wholeData: initialData, topHourlyChannels, topHourlyGames } = responseData;
 
         const statistics = {};
         initialData.forEach(channel => (statistics[channel.user_id] = channel.viewer_count));
@@ -58,7 +68,7 @@ export async function getServerSideProps() {
         const wholeData = { date, statistics };
 
         const hourlyResponse = await fetch(
-            `${process.env.SERVER}api/twitch-hourly-views-statistics`,
+            `${process.env.SERVER}api/twitch-views-statistics-hourly`,
             {
                 method: "POST",
                 body: JSON.stringify(wholeData),
@@ -69,13 +79,13 @@ export async function getServerSideProps() {
             `${process.env.SERVER}api/twitch-top-channels-hourly`,
             {
                 method: "POST",
-                body: JSON.stringify(topHourly),
+                body: JSON.stringify(topHourlyChannels),
             }
         );
 
         const topGamesResponse = await fetch(`${process.env.SERVER}api/twitch-top-games-hourly`, {
             method: "POST",
-            body: JSON.stringify(initialData),
+            body: JSON.stringify(topHourlyGames),
         });
 
         return {

@@ -20,7 +20,7 @@
 // ******* ONCE PER HOUR *******
 // - get 2000 streams {steam_id:actual_viewers_count}
 // create a DB entry that will store top 50 actual streamers and date, and It will be shown in main page in TOP LIVE STREAMS
-// loop through all 2000 streams data, and create an object with games data. Check which games are in top10 most streamed, and most viewer right now, ane show it on main page
+// loop through all 2000 streams data, and create an object with games data. Check which games are in top10 most streamed, and most viewer right now, ane show it on main page TODO: Interchange logic for fetching data from twtich instead of calculating it by myself
 
 // ******* ONCE PER DAY *******
 // 1st JOB: get all hourly data from last day, and perform calculations, that will reveal 500 biggest streamers based on peak actual_viewers_count.

@@ -20,7 +20,7 @@ const handler = async (req, res) => {
     const twitchStatisticsCollection = db.collection("hourlyTop");
     const date = new Date().toISOString();
 
-    const finalData = { date, data };
+    const finalData = { createdAt: date, data };
 
     if (data.length > 50) data.length = 50;
 
