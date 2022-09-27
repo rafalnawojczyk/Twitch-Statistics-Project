@@ -5,7 +5,7 @@ const GetStreams = props => {
         Object.keys(props.wholeData.statistics).length === HOURLY_CHANNELS_AMOUNT
             ? "parsing data done"
             : "parsing data failed";
-    return <p>{info}</p>;
+    return <p>{Object.keys(props.wholeData.statistics).length}</p>;
 };
 
 export async function getServerSideProps() {
@@ -50,8 +50,8 @@ export async function getServerSideProps() {
             },
         });
 
-        const topHourlyGamesData = await topHourlyResponse.json();
-        const topHourlyGames = topHourlyData.data;
+        const topHourlyGamesData = await topHourlyGamesResponse.json();
+        const topHourlyGames = topHourlyGamesData.data;
 
         return { wholeData, topHourlyGames, topHourlyChannels };
     };
@@ -64,8 +64,7 @@ export async function getServerSideProps() {
         const statistics = {};
         initialData.forEach(channel => (statistics[channel.user_id] = channel.viewer_count));
 
-        const date = new Date().toISOString();
-        const wholeData = { date, statistics };
+        const wholeData = { statistics };
 
         const hourlyResponse = await fetch(
             `${process.env.SERVER}api/twitch-views-statistics-hourly`,
@@ -96,6 +95,11 @@ export async function getServerSideProps() {
     } catch (err) {
         // ******* TEMPORARY *******
         console.log(err);
+        return {
+            props: {
+                err: err.message,
+            },
+        };
     }
 }
 

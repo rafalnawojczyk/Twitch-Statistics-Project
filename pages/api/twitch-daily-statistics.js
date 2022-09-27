@@ -19,12 +19,12 @@ const handler = async (req, res) => {
         .find(
             {
                 // ******* TEMPORARY - date exchange for createdAt
-                date: { $gt: requestedTime },
+                createdAt: { $gt: requestedTime },
             },
             {
                 _id: 0,
-                date: 0,
-                statistics: 1,
+                createdAt: 0,
+                data: 1,
             }
         )
         .toArray();
@@ -32,14 +32,14 @@ const handler = async (req, res) => {
     // [{statistics:{userId: viewsCount, userId: viewsCount, }}, {}]
     const data = {};
     lastDayHourlyData.forEach(hourData => {
-        const keys = Object.keys(hourData.statistics);
+        const keys = Object.keys(hourData.data.statistics);
         keys.forEach(key => {
             data[key] = data[key] || { userId: key };
 
             data[key].maxViews =
-                data[key].maxViews > hourData.statistics[key]
+                data[key].maxViews > hourData.data.statistics[key]
                     ? data[key].maxViews
-                    : hourData.statistics[key];
+                    : hourData.data.statistics[key];
         });
     });
 
@@ -71,6 +71,7 @@ const handler = async (req, res) => {
     userInformation.data.forEach(el => {
         data[el.id].username = el.display_name;
         data[el.id].image = el.profile_image_url;
+        data[el.id].login = el.login;
     });
 
     const createdAt = new Date().toISOString();
