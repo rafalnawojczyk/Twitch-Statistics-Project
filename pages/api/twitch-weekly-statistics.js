@@ -40,49 +40,32 @@ const handler = async (req, res) => {
             };
 
             weeklyData[user.userId].maxViews =
-                weeklyData[user.userId].maxViews > dailyData.data[user.userId]
+                weeklyData[user.userId].maxViews > user.maxViews
                     ? weeklyData[user.userId].maxViews
-                    : dailyData.data[user.userId];
+                    : user.maxViews;
         });
     });
 
-    // request to GET_WEEKLY_SUMMARY_API_URL with login to get statistics and put into a weeklyData accordingly
-    const userWeeklySummary = [];
-    const getWeeklySummary = async function (login) {
-        const response = await fetch(`${process.env.GET_WEEKLY_SUMMARY_API_URL}${login}`);
-        const data = await response.json();
-
-        userWeeklySummary.push(response);
-    };
-
-    const loginLis = Object.keys(weeklyData).map(key => weeklyData[key].login);
-    const loginList = loginLis.filter(el => el);
-    // loginList.length = 10; // ******* TEMPORARY
-
-    while (loginList.length > 0) {
-        const login = loginList[loginList.length - 1];
-        loginList.length -= 1;
-
-        await getWeeklySummary(login);
-    }
-
-    console.log(userWeeklySummary);
-    console.log("JEDNO");
-    console.log(userWeeklySummary[0]);
+    // GET https://api.twitch.tv/helix/subscriptions
+    // GET https://api.twitch.tv/helix/users/follows?to_id=<user ID>
 
     // - number of subscribers
     // - number of views in last 30 days
     // - number of followers
     // - number of hours watched in last 30 days
 
-    // const sortedByViews = Object.values(data).sort((a, b) => b.maxViews - a.maxViews);
-    // if (sortedByViews.length > WEEKLY_TOP_AMMOUNT) sortedByViews.length = WEEKLY_TOP_AMMOUNT;
+    const sortedByViews = Object.values(weeklyData).sort((a, b) => b.maxViews - a.maxViews);
+
+    if (sortedByViews.length > WEEKLY_TOP_AMMOUNT) sortedByViews.length = WEEKLY_TOP_AMMOUNT;
 
     const createdAt = new Date().toISOString();
 
-    // const finalData = { createdAt, data: sortedByViews };
+    const finalData = {
+        createdAt,
+        data: sortedByViews,
+    };
 
-    // const result = await twitchDailyCollection.insertOne(finalData);
+    const result = await twitchWeeklyCollection.insertOne(finalData);
 
     //close connection
     client.close();

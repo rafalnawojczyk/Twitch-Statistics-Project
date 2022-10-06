@@ -1,4 +1,4 @@
-const GetDailyStreams = props => {
+const GetDailyStreams: React.FC<{ message: string }> = props => {
     return <p>{props.message}</p>;
 };
 

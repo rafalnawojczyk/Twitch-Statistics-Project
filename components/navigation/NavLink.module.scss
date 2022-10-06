@@ -1,0 +1,24 @@
+@import "../../styles/variables.scss";
+
+.navLink {
+    color: $font-color-primary;
+    text-decoration: none;
+    font-size: 1.8rem;
+    scale: 1;
+    transition: 0.3s all;
+    border-bottom: 2px solid transparent;
+}
+
+.navLink:hover {
+    scale: 1.05;
+    border-bottom: 2px solid $font-color-primary;
+}
+
+.navLink--active {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.8rem;
+    scale: 1;
+    scale: 1.05;
+    border-bottom: 2px solid $brand-color;
+}

@@ -1,0 +1,32 @@
+.top-card {
+    &__box {
+        background-color: #1a2e63;
+        padding: 1.5rem 3rem;
+    }
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+    &__title {
+        font-size: 2rem;
+    }
+    &__description {
+        color: #a8bcf5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        &--title {
+            font-size: 1.6rem;
+        }
+        &--subtitle {
+            font-size: 1rem;
+        }
+    }
+}
+
+.list:not(:last-child) {
+    margin-bottom: 1rem;
+}

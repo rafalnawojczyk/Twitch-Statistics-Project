@@ -1,0 +1,26 @@
+@import "../../styles/variables.scss";
+
+.views {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-right: 1rem;
+
+    &__number {
+        font-size: 2.4rem;
+    }
+    &__description {
+        opacity: 0.8;
+        display: flex;
+        align-items: center;
+        font-size: 1.2rem;
+        gap: 0.5rem;
+    }
+    &__precentage {
+        color: $brand-secondary-color;
+    }
+    &__image {
+        height: 1.6rem;
+    }
+}

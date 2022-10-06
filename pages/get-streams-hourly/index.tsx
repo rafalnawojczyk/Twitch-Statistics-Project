@@ -1,17 +1,14 @@
 import { HOURLY_CHANNELS_AMOUNT } from "../../config";
 
-const GetStreams = props => {
-    const info =
-        Object.keys(props.wholeData.statistics).length === HOURLY_CHANNELS_AMOUNT
-            ? "parsing data done"
-            : "parsing data failed";
-    return <p>{Object.keys(props.wholeData.statistics).length}</p>;
+const GetStreams: React.FC<{ wholeData: { statistics: {} } }> = props => {
+    return <p>{JSON.stringify(props.wholeData)}</p>;
 };
 
 export async function getServerSideProps() {
     const getStream = async () => {
         const authorizationObject = await fetch(`${process.env.SERVER}api/twitch-oauth-token`);
-        const authorizationData = await authorizationObject.json();
+        const authorizationData: { data: { accessToken: string; tokenType: string }; ok: boolean } =
+            await authorizationObject.json();
 
         if (!authorizationData.ok) throw new Error("Getting token failed.");
 
@@ -25,7 +22,7 @@ export async function getServerSideProps() {
         let counter = HOURLY_CHANNELS_AMOUNT / 100;
 
         for (let i = 0; i < counter; i++) {
-            let url = process.env.GET_STREAMS_API_URL;
+            let url = process.env.GET_STREAMS_API_URL!;
             if (i > 0) url = `${process.env.GET_STREAMS_API_URL}&after=${pagination}`;
 
             const response = await fetch(url, {
@@ -42,7 +39,7 @@ export async function getServerSideProps() {
             pagination = data.pagination.cursor;
         }
 
-        const topHourlyGamesResponse = await fetch(process.env.GET_GAMES_API_URL, {
+        const topHourlyGamesResponse = await fetch(process.env.GET_GAMES_API_URL!, {
             method: "GET",
             headers: {
                 authorization: authorization,

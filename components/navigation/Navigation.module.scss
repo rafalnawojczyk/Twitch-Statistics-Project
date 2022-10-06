@@ -1,0 +1,27 @@
+@import "../../styles/mixins.scss";
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 4rem;
+    position: relative;
+
+    &::after {
+        content: "";
+        bottom: 0;
+        position: absolute;
+        @include horizontal-line;
+    }
+}
+
+.nav--left {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+.nav--right {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}

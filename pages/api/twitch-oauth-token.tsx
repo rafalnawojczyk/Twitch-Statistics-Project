@@ -1,4 +1,5 @@
-import {} from "../../config";
+type AuthObjectType = { accessToken: string; tokenType: string };
+type ResponseType = { data: AuthObjectType; ok: boolean; message: string };
 
 const getOAuthToken = async (req, res) => {
     if (req.method !== "GET") return;
@@ -14,17 +15,24 @@ const getOAuthToken = async (req, res) => {
         });
 
         const data = await response.json();
-        const finalData = {
+
+        const authenticationObject: AuthObjectType = {
             accessToken: data.access_token,
             tokenType: data.token_type,
         };
-        return finalData;
+        return authenticationObject;
     };
 
     try {
-        const response = await sendTokenRequest();
+        const response: AuthObjectType = await sendTokenRequest();
 
-        res.status(201).json({ data: response, ok: true, message: "Data updated succesfully" });
+        const responseObject: ResponseType = {
+            data: response,
+            ok: true,
+            message: "Data updated succesfully",
+        };
+
+        res.status(201).json();
     } catch (err) {
         res.status(400).json({ ok: false });
     }
