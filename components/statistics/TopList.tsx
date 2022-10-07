@@ -3,6 +3,12 @@ import TopListItem from "./TopListItem";
 import styles from "./TopList.module.scss";
 import Stats from "../../models/Stats";
 import ViewMoreLink from "../ui/ViewMoreLink";
+import {
+    CHANNEL_THUMBNAIL_HEIGHT,
+    CHANNEL_THUMBNAIL_WIDTH,
+    GAME_THUMBNAIL_HEIGHT,
+    GAME_THUMBNAIL_WIDTH,
+} from "../../config";
 
 const TopList: React.FC<{
     statistics: Stats[];
@@ -28,6 +34,14 @@ const TopList: React.FC<{
                 {props.statistics?.map((stats, index) => {
                     if (index >= props.numberOfItems) return;
 
+                    const imgWidth =
+                        props.type === "games" ? GAME_THUMBNAIL_WIDTH : CHANNEL_THUMBNAIL_WIDTH;
+                    const imgHeight =
+                        props.type === "games" ? GAME_THUMBNAIL_HEIGHT : CHANNEL_THUMBNAIL_HEIGHT;
+
+                    const imageUrl = stats.image
+                        .replace("{width}", `${imgWidth}`)
+                        .replace("{height}", `${imgHeight}`);
                     const className = props.statistics.length - 1 === index ? "" : "underline";
 
                     return (
@@ -37,7 +51,7 @@ const TopList: React.FC<{
                             title={stats.title}
                             views={stats.views}
                             total={props.total}
-                            image={stats.image}
+                            image={imageUrl}
                             className={className}
                         />
                     );

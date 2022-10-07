@@ -1,5 +1,8 @@
 import { MongoClient } from "mongodb";
 import { WEEKLY_TOP_AMMOUNT } from "../../config";
+import Stats from "../../models/Stats";
+
+type StatsObj = { id: string; title: string; image: string; views: number };
 
 const handler = async (req, res) => {
     if (req.method !== "POST") return;
@@ -28,21 +31,17 @@ const handler = async (req, res) => {
         )
         .toArray();
 
-    // [data: {userId:, maxViews:, username: , image:}]
-    const weeklyData = {};
+    const weeklyData: {} = {};
     lastWeekData.forEach(dailyData => {
-        dailyData.data.forEach(user => {
-            weeklyData[user.userId] = weeklyData[user.userId] || {
-                userId: user.userId,
-                username: user.username,
+        dailyData.data.forEach((user: StatsObj) => {
+            weeklyData[user.id] = weeklyData[user.id] || {
+                id: user.id,
+                title: user.title,
                 image: user.image,
-                login: user.login,
             };
 
-            weeklyData[user.userId].maxViews =
-                weeklyData[user.userId].maxViews > user.maxViews
-                    ? weeklyData[user.userId].maxViews
-                    : user.maxViews;
+            weeklyData[user.id].views =
+                weeklyData[user.id].views > user.views ? weeklyData[user.id].views : user.views;
         });
     });
 
@@ -54,15 +53,19 @@ const handler = async (req, res) => {
     // - number of followers
     // - number of hours watched in last 30 days
 
-    const sortedByViews = Object.values(weeklyData).sort((a, b) => b.maxViews - a.maxViews);
+    const sortedByViews = Object.values(weeklyData).sort((a, b) => b.views - a.views);
 
     if (sortedByViews.length > WEEKLY_TOP_AMMOUNT) sortedByViews.length = WEEKLY_TOP_AMMOUNT;
 
     const createdAt = new Date().toISOString();
 
+    const typedData: Stats[] = sortedByViews.map(
+        el => new Stats(el.title, el.views, el.image, el.id)
+    );
+
     const finalData = {
         createdAt,
-        data: sortedByViews,
+        data: typedData,
     };
 
     const result = await twitchWeeklyCollection.insertOne(finalData);

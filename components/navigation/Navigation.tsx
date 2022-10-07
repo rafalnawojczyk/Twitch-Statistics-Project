@@ -1,10 +1,11 @@
 import styles from "./Navigation.module.scss";
 import Logo from "./Logo";
 import NavLink from "./NavLink";
+import Header from "../layout/Header";
 
 const Navigation: React.FC = () => {
     return (
-        <>
+        <Header>
             <nav className={styles.nav}>
                 <div className={styles["nav--left"]}>
                     <Logo />
@@ -17,7 +18,7 @@ const Navigation: React.FC = () => {
                     <NavLink href="/logIn" title="Log In" exact={true} />
                 </div>
             </nav>
-        </>
+        </Header>
     );
 };
 

@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb";
 import { DAILY_CHANNELS_AMMOUNT } from "../../config";
+import Stats from "../../models/Stats";
 
 const handler = async (req, res) => {
     if (req.method !== "POST") return;
@@ -74,9 +75,22 @@ const handler = async (req, res) => {
         data[el.id].login = el.login;
     });
 
+    const typedData: Stats[] = [];
+
+    keys.forEach(el => {
+        const stat = new Stats(
+            data[el].username,
+            data[el].maxViews,
+            data[el].image,
+            data[el].userId
+        );
+        console.log(stat);
+        typedData.push(stat);
+    });
+
     const createdAt = new Date().toISOString();
 
-    const finalData = { createdAt, data: sortedByViews };
+    const finalData = { createdAt, data: typedData };
 
     const result = await twitchDailyCollection.insertOne(finalData);
 

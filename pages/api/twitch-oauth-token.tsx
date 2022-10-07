@@ -20,6 +20,7 @@ const getOAuthToken = async (req, res) => {
             accessToken: data.access_token,
             tokenType: data.token_type,
         };
+
         return authenticationObject;
     };
 
@@ -32,7 +33,7 @@ const getOAuthToken = async (req, res) => {
             message: "Data updated succesfully",
         };
 
-        res.status(201).json();
+        res.status(201).json(responseObject);
     } catch (err) {
         res.status(400).json({ ok: false });
     }

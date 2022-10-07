@@ -1,3 +1,4 @@
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import TwoStatsColumns from "../components/layout/TwoStatsColumns";
 
@@ -131,14 +132,18 @@ const gamesStatistics = [
 ];
 
 const typedStatistics = statistics.map(el => {
-    return new Stats(el.title, el.views, el.image);
+    return new Stats(el.title, el.views, el.image, el.title);
 });
 
 const typedGamesStatistics = gamesStatistics.map(el => {
-    return new Stats(el.title, el.views, el.image);
+    return new Stats(el.title, el.views, el.image, el.title);
 });
 
-const HomePage: React.FC = () => {
+const HomePage: React.FC<{
+    topLiveGames: Stats[];
+    topLiveChannels: Stats[];
+    topWeeklyChannels: Stats[];
+}> = props => {
     return (
         <>
             <Head>
@@ -150,7 +155,7 @@ const HomePage: React.FC = () => {
                     listTitle="TOP LIVE CHANNELS"
                     listSubTitle="CURRENTLY WATCHING"
                     total={1233213}
-                    statistics={typedStatistics}
+                    statistics={props.topLiveChannels}
                     numberOfItems={10}
                     type="channels"
                 />
@@ -158,7 +163,7 @@ const HomePage: React.FC = () => {
                     listTitle="TOP LIVE GAMES"
                     listSubTitle="CURRENTLY WATCHING"
                     total={1233213}
-                    statistics={typedGamesStatistics}
+                    statistics={props.topLiveGames}
                     numberOfItems={10}
                     type="games"
                 />
@@ -168,3 +173,38 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
+
+// get top live games
+// get top live channels
+// get top channels from last 7 days
+
+export const getStaticProps: GetStaticProps = async context => {
+    const gamesResponse = await fetch(`${process.env.SERVER}api/twitch-get-top-live-games`);
+    const topLiveGames: Stats[] = await gamesResponse.json();
+
+    const liveChannelsResponse = await fetch(
+        `${process.env.SERVER}api/twitch-get-top-live-channels`
+    );
+    const topLiveChannels: Stats[] = await liveChannelsResponse.json();
+
+    const weeklyChannelsResponse = await fetch(
+        `${process.env.SERVER}api/twitch-get-top-weekly-channels`
+    );
+    const topWeeklyChannels: Stats[] = await weeklyChannelsResponse.json();
+
+    return {
+        props: {
+            topLiveGames,
+            topLiveChannels,
+            topWeeklyChannels,
+        },
+        revalidate: 3600,
+    };
+};
+
+export async function getStaticPaths() {
+    return {
+        fallback: true,
+        paths: [],
+    };
+}

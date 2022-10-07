@@ -5,10 +5,12 @@ import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <Layout>
+        <>
             <Navigation />
-            <Component {...pageProps} />
-        </Layout>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </>
     );
 }
 

@@ -1,4 +1,6 @@
-import { HOURLY_CHANNELS_AMOUNT } from "../../config";
+import { title } from "process";
+import { HOURLY_CHANNELS_AMOUNT, GAME_THUMBNAIL_WIDTH, GAME_THUMBNAIL_HEIGHT } from "../../config";
+import Stats from "../../models/Stats";
 
 const GetStreams: React.FC<{ wholeData: { statistics: {} } }> = props => {
     return <p>{JSON.stringify(props.wholeData)}</p>;
@@ -16,8 +18,8 @@ export async function getServerSideProps() {
         tokenType = tokenType.slice(0, 1).toUpperCase() + tokenType.slice(1);
 
         const authorization = `${tokenType} ${accessToken}`;
-        const wholeData = [];
-        const topHourlyChannels = [];
+        const wholeData: Stats[] = [];
+        const topHourlyChannels: Stats[] = [];
         let pagination;
         let counter = HOURLY_CHANNELS_AMOUNT / 100;
 
@@ -33,9 +35,19 @@ export async function getServerSideProps() {
                 },
             });
             const data = await response.json();
+            const typedData: Stats[] = data.data.map(
+                el =>
+                    new Stats(
+                        el.user_name,
+                        el.viewer_count,
+                        el.thumbnail_url,
+                        el.user_id,
+                        el.game_name
+                    )
+            );
 
-            if (i === 0) topHourlyChannels.push(...data.data);
-            wholeData.push(...data.data);
+            if (i === 0) topHourlyChannels.push(...typedData);
+            wholeData.push(...typedData);
             pagination = data.pagination.cursor;
         }
 
@@ -48,7 +60,9 @@ export async function getServerSideProps() {
         });
 
         const topHourlyGamesData = await topHourlyGamesResponse.json();
-        const topHourlyGames = topHourlyGamesData.data;
+        const topHourlyGames = topHourlyGamesData.data.map(
+            el => new Stats(el.name, +el.id, el.box_art_url, el.id)
+        );
 
         return { wholeData, topHourlyGames, topHourlyChannels };
     };
@@ -58,8 +72,8 @@ export async function getServerSideProps() {
 
         const { wholeData: initialData, topHourlyChannels, topHourlyGames } = responseData;
 
-        const statistics = {};
-        initialData.forEach(channel => (statistics[channel.user_id] = channel.viewer_count));
+        const statistics: any = {};
+        initialData.forEach(channel => (statistics[channel.id] = channel.views));
 
         const wholeData = { statistics };
 
