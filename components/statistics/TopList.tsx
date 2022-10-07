@@ -1,12 +1,16 @@
 import Card from "../layout/Card";
 import TopListItem from "./TopListItem";
 import styles from "./TopList.module.scss";
+import Stats from "../../models/Stats";
+import ViewMoreLink from "../ui/ViewMoreLink";
 
 const TopList: React.FC<{
-    statistics: { title: string; views: number; image: string }[];
+    statistics: Stats[];
     listTitle: string;
     listSubTitle: string;
     total: number;
+    numberOfItems: number;
+    type: "games" | "channels";
 }> = props => {
     return (
         <Card className={styles["top-card__box"]}>
@@ -22,10 +26,13 @@ const TopList: React.FC<{
             </div>
             <ul className={styles.list}>
                 {props.statistics?.map((stats, index) => {
+                    if (index >= props.numberOfItems) return;
+
                     const className = props.statistics.length - 1 === index ? "" : "underline";
 
                     return (
                         <TopListItem
+                            type={props.type}
                             key={stats.title}
                             title={stats.title}
                             views={stats.views}
@@ -36,6 +43,7 @@ const TopList: React.FC<{
                     );
                 })}
             </ul>
+            <ViewMoreLink href="/" />
         </Card>
     );
 };

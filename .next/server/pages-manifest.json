@@ -2,5 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
+  "/channels/[channel-id]": "pages/channels/[channel-id].js",
+  "/games/[game-id]": "pages/games/[game-id].js",
   "/": "pages/index.js"
 }

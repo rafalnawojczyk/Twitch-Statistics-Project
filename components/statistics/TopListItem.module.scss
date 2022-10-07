@@ -1,12 +1,19 @@
-@import "../../styles/mixins.scss";
+@import "../../styles/_mixins.scss";
 
 .stats {
     display: flex;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
     align-items: center;
     justify-content: space-between;
     position: relative;
+
+    background-color: transparent;
+    transition: 0.5s all;
+
+    &:hover {
+        background-color: rgba(256, 256, 256, 0.1);
+    }
 
     &__description-box {
         display: flex;
@@ -15,12 +22,19 @@
     }
 
     &__image {
-        width: 5rem;
-        height: 5rem;
-        border-radius: 50%;
+        &--game {
+            width: 4.5rem;
+            height: 6rem;
+        }
+
+        &--channel {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+        }
     }
     &__title {
-        font-size: 2.4rem;
+        font-size: 2rem;
     }
 }
 

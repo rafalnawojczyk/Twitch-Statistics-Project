@@ -1,4 +1,4 @@
-import TwitchLogo from "../layout/TwitchLogo";
+import TwitchLogo from "../layout/svg/TwitchLogo";
 import styles from "./ViewsBox.module.scss";
 
 const ViewsBox: React.FC<{ views: number; total: number }> = props => {

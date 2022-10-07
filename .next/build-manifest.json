@@ -28,6 +28,16 @@
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
+    ],
+    "/channels/[channel-id]": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/channels/[channel-id].js"
+    ],
+    "/games/[game-id]": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/games/[game-id].js"
     ]
   },
   "ampFirstPages": []

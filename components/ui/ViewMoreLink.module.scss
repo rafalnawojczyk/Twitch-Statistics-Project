@@ -1,0 +1,40 @@
+@import "../../styles/variables";
+
+.view-more {
+    display: flex;
+    align-items: center;
+
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
+        text-decoration: none;
+    }
+
+    &__icon {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.center {
+    display: inline-block;
+
+    scale: 1;
+    transition: all 0.3s;
+    font-size: 2rem;
+    color: $font-color-primary;
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+        scale: 1.03;
+        color: $brand-secondary-color;
+        border-bottom: 1px solid $brand-secondary-color;
+    }
+
+    &:active {
+        scale: 0.97;
+        color: $brand-secondary-color;
+        border-bottom: 1px solid $brand-secondary-color;
+    }
+}

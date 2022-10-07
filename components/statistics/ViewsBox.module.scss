@@ -1,4 +1,4 @@
-@import "../../styles/variables.scss";
+@import "../../styles/_variables.scss";
 
 .views {
     display: flex;
@@ -6,6 +6,7 @@
     align-items: center;
     justify-content: center;
     padding-right: 1rem;
+    gap: 0.5rem;
 
     &__number {
         font-size: 2.4rem;

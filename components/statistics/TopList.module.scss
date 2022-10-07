@@ -2,6 +2,7 @@
     &__box {
         background-color: #1a2e63;
         padding: 1.5rem 3rem;
+        text-align: center;
     }
     &__header {
         display: flex;
@@ -27,6 +28,10 @@
     }
 }
 
-.list:not(:last-child) {
-    margin-bottom: 1rem;
+.list {
+    padding-bottom: 1rem;
+
+    &:not(:last-child) {
+        padding-bottom: 1rem;
+    }
 }
