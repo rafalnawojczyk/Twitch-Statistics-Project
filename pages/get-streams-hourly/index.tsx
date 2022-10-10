@@ -1,4 +1,4 @@
-import { HOURLY_CHANNELS_AMOUNT } from "../../config";
+import { HOURLY_CHANNELS_AMOUNT, HOURLY_GAMES_AMMOUNT } from "../../config";
 import Stats from "../../models/Stats";
 
 const GetStreams: React.FC<{ wholeData: { statistics: {} } }> = props => {
@@ -56,6 +56,16 @@ export async function getServerSideProps() {
             pagination = data.pagination.cursor;
         }
 
+        const gamesViewers: { [key: string]: { gameStreaming: string; views: number } } = {};
+
+        wholeData.forEach((stats: Stats) => {
+            gamesViewers[stats.gameStreaming!] = gamesViewers[stats.gameStreaming!] || {
+                gameStreaming: stats.gameStreaming,
+                views: 0,
+            };
+            gamesViewers[stats.gameStreaming!].views += +stats.views;
+        });
+
         const topHourlyGamesResponse = await fetch(process.env.GET_GAMES_API_URL!, {
             method: "GET",
             headers: {
@@ -65,10 +75,14 @@ export async function getServerSideProps() {
         });
 
         const topHourlyGamesData = await topHourlyGamesResponse.json();
-        const topHourlyGames = topHourlyGamesData.data.map(
-            (el: { name: string; id: string; box_art_url: string }) =>
-                new Stats(el.name, +el.id, el.box_art_url, el.id)
-        );
+        const topHourlyGames = topHourlyGamesData.data
+            .map(
+                (el: { name: string; id: string; box_art_url: string }) =>
+                    new Stats(el.name, gamesViewers[el.name].views, el.box_art_url, el.id)
+            )
+            .sort((a: Stats, b: Stats) => b.views - a.views);
+
+        if (topHourlyGames.length > HOURLY_GAMES_AMMOUNT) topHourlyGames.length = 50;
 
         return { wholeData, topHourlyGames, topHourlyChannels };
     };
