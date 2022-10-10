@@ -28,7 +28,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const lastDayHourlyData = await twitchHourlyCollection
         .find(
             {
-                // ******* TEMPORARY - date exchange for createdAt
                 createdAt: { $gt: requestedTime },
             },
             {
@@ -41,7 +40,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         )
         .toArray();
 
-    // [{statistics:{userId: viewsCount, userId: viewsCount, }}, {}]
     const data: {
         [key: string]: StatsObj;
     } = {};
