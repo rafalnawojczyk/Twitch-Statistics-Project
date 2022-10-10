@@ -1,10 +1,11 @@
 import { MongoClient } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 import { WEEKLY_TOP_AMMOUNT } from "../../config";
 import Stats from "../../models/Stats";
 
 type StatsObj = { id: string; title: string; image: string; views: number };
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "POST") return;
 
     const client = await MongoClient.connect(
@@ -24,14 +25,18 @@ const handler = async (req, res) => {
                 createdAt: { $gt: requestedTime },
             },
             {
-                _id: 0,
-                date: 0,
-                data: 1,
+                projection: {
+                    _id: 0,
+                    date: 0,
+                    data: 1,
+                },
             }
         )
         .toArray();
 
-    const weeklyData: {} = {};
+    const weeklyData: {
+        [key: string]: StatsObj;
+    } = {};
     lastWeekData.forEach(dailyData => {
         dailyData.data.forEach((user: StatsObj) => {
             weeklyData[user.id] = weeklyData[user.id] || {

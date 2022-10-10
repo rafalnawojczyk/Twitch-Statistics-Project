@@ -1,7 +1,9 @@
+import { NextApiRequest, NextApiResponse } from "next";
+
 type AuthObjectType = { accessToken: string; tokenType: string };
 type ResponseType = { data: AuthObjectType; ok: boolean; message: string };
 
-const getOAuthToken = async (req, res) => {
+const getOAuthToken = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "GET") return;
 
     const sendTokenRequest = async () => {

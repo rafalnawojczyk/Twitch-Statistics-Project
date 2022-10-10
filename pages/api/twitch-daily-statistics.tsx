@@ -1,8 +1,17 @@
 import { MongoClient } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 import { DAILY_CHANNELS_AMMOUNT } from "../../config";
 import Stats from "../../models/Stats";
 
-const handler = async (req, res) => {
+type StatsObj = {
+    maxViews: number;
+    userId: string;
+    username: string;
+    image: string;
+    login: string;
+};
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "POST") return;
 
     const client = await MongoClient.connect(
@@ -23,15 +32,19 @@ const handler = async (req, res) => {
                 createdAt: { $gt: requestedTime },
             },
             {
-                _id: 0,
-                createdAt: 0,
-                data: 1,
+                projection: {
+                    _id: 0,
+                    createdAt: 0,
+                    data: 1,
+                },
             }
         )
         .toArray();
 
     // [{statistics:{userId: viewsCount, userId: viewsCount, }}, {}]
-    const data = {};
+    const data: {
+        [key: string]: StatsObj;
+    } = {};
     lastDayHourlyData.forEach(hourData => {
         const keys = Object.keys(hourData.data.statistics);
         keys.forEach(key => {
@@ -63,17 +76,19 @@ const handler = async (req, res) => {
         method: "GET",
         headers: {
             authorization: authorization,
-            "Client-Id": process.env.TWITCH_CLIENT_ID,
+            "Client-Id": process.env.TWITCH_CLIENT_ID!,
         },
     });
 
     const userInformation = await userInformationResponse.json();
 
-    userInformation.data.forEach(el => {
-        data[el.id].username = el.display_name;
-        data[el.id].image = el.profile_image_url;
-        data[el.id].login = el.login;
-    });
+    userInformation.data.forEach(
+        (el: { display_name: string; profile_image_url: string; login: string; id: string }) => {
+            data[el.id].username = el.display_name;
+            data[el.id].image = el.profile_image_url;
+            data[el.id].login = el.login;
+        }
+    );
 
     const typedData: Stats[] = [];
 
@@ -84,7 +99,7 @@ const handler = async (req, res) => {
             data[el].image,
             data[el].userId
         );
-        console.log(stat);
+
         typedData.push(stat);
     });
 

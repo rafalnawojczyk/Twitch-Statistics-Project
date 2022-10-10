@@ -1,8 +1,9 @@
 import { MongoClient } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 
 import Stats from "../../models/Stats";
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "GET") return;
 
     const client = await MongoClient.connect(

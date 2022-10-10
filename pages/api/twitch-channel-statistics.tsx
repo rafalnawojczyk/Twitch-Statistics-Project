@@ -1,4 +1,6 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, Collection, FindOptions } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
+import Stats from "../../models/Stats";
 
 // TODO:
 // GET a username: username from the req.body
@@ -6,7 +8,7 @@ import { MongoClient } from "mongodb";
 // use this username to get user views history from DB (hourlyStats)
 // compile all these informations and pass them through res
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "POST") return;
 
     const client = await MongoClient.connect(
@@ -14,7 +16,8 @@ const handler = async (req, res) => {
     );
     const db = client.db();
 
-    const twitchHourlyCollection = db.collection("hourlyStats");
+    const twitchHourlyCollection: Collection<{ _id: string; createdAt: string; data: {} }> =
+        db.collection("hourlyStats");
 
     const date = new Date();
     let requestedTime = new Date(new Date().setDate(date.getDate() - 1)).toISOString();
@@ -22,13 +25,10 @@ const handler = async (req, res) => {
     const lastDayHourlyData = await twitchHourlyCollection
         .find(
             {
-                // ******* TEMPORARY - date exchange for createdAt
                 createdAt: { $gt: requestedTime },
             },
             {
-                _id: 0,
-                createdAt: 0,
-                data: 1,
+                projection: { _id: 0, createdAt: 0, data: 1 },
             }
         )
         .toArray();
