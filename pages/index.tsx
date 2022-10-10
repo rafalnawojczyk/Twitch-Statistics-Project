@@ -4,13 +4,17 @@ import TwoStatsColumns from "../components/layout/TwoStatsColumns";
 
 import TopList from "../components/statistics/TopList";
 import Stats from "../models/Stats";
+import TopStatsObj from "../models/TopStatsObj";
 
 const HomePage: React.FC<{
-    topLiveGames: Stats[];
-    topLiveChannels: Stats[];
-    topWeeklyChannels: Stats[];
-    totalViewers: number;
+    typedLiveGames: string;
+    typedLiveChannels: string;
+    typedWeeklyChannels: string;
 }> = props => {
+    const topLiveChannels: TopStatsObj = JSON.parse(props.typedLiveChannels);
+    const topLiveGames: TopStatsObj = JSON.parse(props.typedLiveGames);
+    const topWeeklyChannels: TopStatsObj = JSON.parse(props.typedWeeklyChannels);
+
     return (
         <>
             <Head>
@@ -21,20 +25,19 @@ const HomePage: React.FC<{
                 <TopList
                     listTitle="TOP LIVE CHANNELS"
                     listSubTitle="CURRENTLY WATCHING"
-                    total={props.totalViewers}
-                    statistics={props.topLiveChannels}
+                    total={topLiveChannels.totalViewers}
+                    statistics={topLiveChannels.statistics}
                     numberOfItems={10}
                     type="channels"
                 />
                 <TopList
                     listTitle="TOP LIVE GAMES"
                     listSubTitle="CURRENTLY WATCHING"
-                    total={props.totalViewers}
-                    statistics={props.topLiveGames}
+                    total={topLiveGames.totalViewers}
+                    statistics={topLiveGames.statistics}
                     numberOfItems={10}
                     type="games"
                 />
-                <p>{JSON.stringify(props.topLiveGames)}</p>
             </TwoStatsColumns>
         </>
     );
@@ -48,26 +51,33 @@ export default HomePage;
 
 export const getStaticProps: GetStaticProps = async context => {
     const gamesResponse = await fetch(`${process.env.SERVER}api/twitch-get-top-live-games`);
-    const topLiveGames: Stats[] = await gamesResponse.json();
+    const topLiveGames: { hourlyGamesTop: Stats[]; totalViewers: number } =
+        await gamesResponse.json();
 
     const liveChannelsResponse = await fetch(
         `${process.env.SERVER}api/twitch-get-top-live-channels`
     );
-    const topLiveChannels: Stats[] = await liveChannelsResponse.json();
+    const topLiveChannels: { hourlyChannelsTop: Stats[]; totalViewers: number } =
+        await liveChannelsResponse.json();
 
     const weeklyChannelsResponse = await fetch(
         `${process.env.SERVER}api/twitch-get-top-weekly-channels`
     );
     const topWeeklyChannels: Stats[] = await weeklyChannelsResponse.json();
 
-    const totalViewers = topLiveChannels.reduce((a, b) => a + b.views, 0);
+    const typedLiveGames = JSON.stringify(
+        new TopStatsObj(topLiveGames.hourlyGamesTop, topLiveGames.totalViewers)
+    );
+    const typedLiveChannels = JSON.stringify(
+        new TopStatsObj(topLiveChannels.hourlyChannelsTop, topLiveChannels.totalViewers)
+    );
+    const typedWeeklyChannels = JSON.stringify(new TopStatsObj(topWeeklyChannels, 0));
 
     return {
         props: {
-            topLiveGames,
-            topLiveChannels,
-            topWeeklyChannels,
-            totalViewers,
+            typedLiveGames,
+            typedLiveChannels,
+            typedWeeklyChannels,
         },
         revalidate: 3600,
     };

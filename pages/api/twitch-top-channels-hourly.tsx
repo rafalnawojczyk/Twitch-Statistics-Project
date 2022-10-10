@@ -6,7 +6,7 @@ import Stats from "../../models/Stats";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "POST") return;
 
-    const data: Stats[] = JSON.parse(req.body);
+    const data: { topHourlyChannels: Stats[]; totalViewers: number } = JSON.parse(req.body);
 
     const client = await MongoClient.connect(
         `mongodb+srv://${process.env.DB_CLIENT_ID}:${process.env.DB_CLIENT_PASSWORD}@cluster0.9v1xfdu.mongodb.net/twitchStatistics?retryWrites=true&w=majority`
@@ -16,9 +16,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const twitchStatisticsCollection = db.collection("hourlyTop");
     const date = new Date().toISOString();
 
-    const finalData = { createdAt: date, data };
+    const finalData = {
+        createdAt: date,
+        data: data.topHourlyChannels,
+        totalViewers: data.totalViewers,
+    };
 
-    if (data.length > HOURLY_CHANNELS_AMMOUNT) data.length = HOURLY_CHANNELS_AMMOUNT;
+    if (data.topHourlyChannels.length > HOURLY_CHANNELS_AMMOUNT)
+        data.topHourlyChannels.length = HOURLY_CHANNELS_AMMOUNT;
 
     const deleteResult = await twitchStatisticsCollection.deleteOne({});
 

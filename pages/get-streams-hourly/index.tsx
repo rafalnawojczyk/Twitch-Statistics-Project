@@ -57,6 +57,7 @@ export async function getServerSideProps() {
         }
 
         const gamesViewers: { [key: string]: { gameStreaming: string; views: number } } = {};
+        let totalViewers: number = 0;
 
         wholeData.forEach((stats: Stats) => {
             gamesViewers[stats.gameStreaming!] = gamesViewers[stats.gameStreaming!] || {
@@ -64,6 +65,7 @@ export async function getServerSideProps() {
                 views: 0,
             };
             gamesViewers[stats.gameStreaming!].views += +stats.views;
+            totalViewers += +stats.views;
         });
 
         const topHourlyGamesResponse = await fetch(process.env.GET_GAMES_API_URL!, {
@@ -76,21 +78,26 @@ export async function getServerSideProps() {
 
         const topHourlyGamesData = await topHourlyGamesResponse.json();
         const topHourlyGames = topHourlyGamesData.data
-            .map(
-                (el: { name: string; id: string; box_art_url: string }) =>
-                    new Stats(el.name, gamesViewers[el.name].views, el.box_art_url, el.id)
-            )
+            .map((el: { name: string; id: string; box_art_url: string }) => {
+                if (gamesViewers[el.name])
+                    return new Stats(el.name, gamesViewers[el.name].views, el.box_art_url, el.id);
+            })
             .sort((a: Stats, b: Stats) => b.views - a.views);
 
         if (topHourlyGames.length > HOURLY_GAMES_AMMOUNT) topHourlyGames.length = 50;
 
-        return { wholeData, topHourlyGames, topHourlyChannels };
+        return { wholeData, topHourlyGames, topHourlyChannels, totalViewers };
     };
 
     try {
         const responseData = await getStream();
 
-        const { wholeData: initialData, topHourlyChannels, topHourlyGames } = responseData;
+        const {
+            wholeData: initialData,
+            topHourlyChannels,
+            topHourlyGames,
+            totalViewers,
+        } = responseData;
 
         const statistics: any = {};
         initialData.forEach(channel => (statistics[channel.id] = channel.views));
@@ -109,13 +116,13 @@ export async function getServerSideProps() {
             `${process.env.SERVER}api/twitch-top-channels-hourly`,
             {
                 method: "POST",
-                body: JSON.stringify(topHourlyChannels),
+                body: JSON.stringify({ topHourlyChannels, totalViewers }),
             }
         );
 
         const topGamesResponse = await fetch(`${process.env.SERVER}api/twitch-top-games-hourly`, {
             method: "POST",
-            body: JSON.stringify(topHourlyGames),
+            body: JSON.stringify({ topHourlyGames, totalViewers }),
         });
 
         return {

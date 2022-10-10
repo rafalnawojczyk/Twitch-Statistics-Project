@@ -16,11 +16,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const response = await twitchStatisticsCollection.find({}).toArray();
 
     const hourlyChannelsTop: Stats[] = response[0].data;
+    const totalViewers: number = response[0].totalViewers;
     //close connection
     client.close();
 
     // set status on response
-    res.status(201).json(hourlyChannelsTop);
+    res.status(201).json({ hourlyChannelsTop, totalViewers });
 };
 
 export default handler;
