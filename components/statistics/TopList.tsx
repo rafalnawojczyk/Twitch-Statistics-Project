@@ -57,7 +57,7 @@ const TopList: React.FC<{
                     );
                 })}
             </ul>
-            <ViewMoreLink href="/" />
+            <ViewMoreLink href={`/${props.type}`} />
         </Card>
     );
 };
