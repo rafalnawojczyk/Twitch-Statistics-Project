@@ -1,3 +1,9 @@
+// NEW:
+// Think about ViewMoreLink component - try to make it only as an <a></a> tag, so passHref will work as expected
+//
+// Work on twtich-channel-statistics.tsx  and corresponding channelId page
+// WOrk on twtich-games-statistics.tsx and corresponding gamesId page
+
 // 1. GET STREAMS - 500 nicknames and save their nicknames into newly created object
 // structure: allStreams = {nickname: {statistics} }
 

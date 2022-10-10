@@ -1,8 +1,17 @@
 @import "../../styles/variables";
 
 .view-more {
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
+
+    padding: 0 1rem;
+
+    scale: 1;
+    transition: all 0.3s;
+    font-size: 2rem;
+    color: $font-color-primary;
+    border-bottom: 1px solid transparent;
 
     &:link,
     &:visited,
@@ -11,22 +20,6 @@
         text-decoration: none;
         cursor: pointer;
     }
-
-    &__icon {
-        width: 24px;
-        height: 24px;
-    }
-}
-
-.center {
-    display: inline-block;
-
-    scale: 1;
-    transition: all 0.3s;
-    font-size: 2rem;
-    color: $font-color-primary;
-    border-bottom: 1px solid transparent;
-
     &:hover {
         scale: 1.03;
         color: $brand-secondary-color;
@@ -37,5 +30,11 @@
         scale: 0.97;
         color: $brand-secondary-color;
         border-bottom: 1px solid $brand-secondary-color;
+    }
+
+    &__icon {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
     }
 }

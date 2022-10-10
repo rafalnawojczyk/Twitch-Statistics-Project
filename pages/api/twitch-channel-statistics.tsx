@@ -9,7 +9,9 @@ import Stats from "../../models/Stats";
 // compile all these informations and pass them through res
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    if (req.method !== "POST") return;
+    if (req.method !== "GET") return;
+
+    const username = JSON.parse(req.body);
 
     const client = await MongoClient.connect(
         `mongodb+srv://${process.env.DB_CLIENT_ID}:${process.env.DB_CLIENT_PASSWORD}@cluster0.9v1xfdu.mongodb.net/twitchStatistics?retryWrites=true&w=majority`
