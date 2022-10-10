@@ -28,7 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 createdAt: { $gt: requestedTime },
             },
             {
-                projection: { _id: 0, createdAt: 0, data: 1 },
+                projection: { data: 1 },
             }
         )
         .toArray();

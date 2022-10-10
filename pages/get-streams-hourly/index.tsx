@@ -1,5 +1,4 @@
-import { title } from "process";
-import { HOURLY_CHANNELS_AMOUNT, GAME_THUMBNAIL_WIDTH, GAME_THUMBNAIL_HEIGHT } from "../../config";
+import { HOURLY_CHANNELS_AMOUNT } from "../../config";
 import Stats from "../../models/Stats";
 
 const GetStreams: React.FC<{ wholeData: { statistics: {} } }> = props => {
@@ -31,15 +30,21 @@ export async function getServerSideProps() {
                 method: "GET",
                 headers: {
                     authorization: authorization,
-                    "Client-Id": process.env.TWITCH_CLIENT_ID,
+                    "Client-Id": process.env.TWITCH_CLIENT_ID!,
                 },
             });
             const data = await response.json();
             const typedData: Stats[] = data.data.map(
-                el =>
+                (el: {
+                    user_name: string;
+                    viewer_count: number;
+                    thumbnail_url: string;
+                    user_id: string;
+                    game_name: string;
+                }) =>
                     new Stats(
                         el.user_name,
-                        el.viewer_count,
+                        +el.viewer_count,
                         el.thumbnail_url,
                         el.user_id,
                         el.game_name
@@ -55,13 +60,14 @@ export async function getServerSideProps() {
             method: "GET",
             headers: {
                 authorization: authorization,
-                "Client-Id": process.env.TWITCH_CLIENT_ID,
+                "Client-Id": process.env.TWITCH_CLIENT_ID!,
             },
         });
 
         const topHourlyGamesData = await topHourlyGamesResponse.json();
         const topHourlyGames = topHourlyGamesData.data.map(
-            el => new Stats(el.name, +el.id, el.box_art_url, el.id)
+            (el: { name: string; id: string; box_art_url: string }) =>
+                new Stats(el.name, +el.id, el.box_art_url, el.id)
         );
 
         return { wholeData, topHourlyGames, topHourlyChannels };

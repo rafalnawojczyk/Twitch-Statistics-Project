@@ -26,8 +26,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
             {
                 projection: {
-                    _id: 0,
-                    date: 0,
                     data: 1,
                 },
             }
@@ -72,6 +70,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         createdAt,
         data: typedData,
     };
+
+    const deleteResult = await twitchWeeklyCollection.deleteOne({});
 
     const result = await twitchWeeklyCollection.insertOne(finalData);
 

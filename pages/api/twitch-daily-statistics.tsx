@@ -32,8 +32,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
             {
                 projection: {
-                    _id: 0,
-                    createdAt: 0,
                     data: 1,
                 },
             }

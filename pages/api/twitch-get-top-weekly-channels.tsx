@@ -13,11 +13,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const twitchStatisticsCollection = db.collection("weeklyStats");
 
-    const response: { sortedByViews: Stats[] } = (await twitchStatisticsCollection
-        .find({})
-        .toArray()) as unknown as { sortedByViews: Stats[] };
+    const response = await twitchStatisticsCollection
+        .find({}, { projection: { data: 1 } })
+        .toArray();
 
-    const weeklyChannelsTop = response.sortedByViews;
+    const weeklyChannelsTop: Stats[] = response[0].data;
 
     //close connection
     client.close();

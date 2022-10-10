@@ -13,10 +13,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const twitchStatisticsCollection = db.collection("hourlyTop");
 
-    const hourlyChannelsTop: Stats[] = (await twitchStatisticsCollection
-        .find({})
-        .toArray()) as unknown as Stats[];
+    const response = await twitchStatisticsCollection.find({}).toArray();
 
+    const hourlyChannelsTop: Stats[] = response[0].data;
     //close connection
     client.close();
 

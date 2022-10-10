@@ -5,144 +5,11 @@ import TwoStatsColumns from "../components/layout/TwoStatsColumns";
 import TopList from "../components/statistics/TopList";
 import Stats from "../models/Stats";
 
-const statistics = [
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-    {
-        title: "Gaules",
-        views: 114612,
-        image: "https://static-cdn.jtvnw.net/jtv_user_pictures/1f47965f-7961-4b64-ad6f-71808d7d7fe9-profile_image-300x300.png",
-    },
-];
-
-const gamesStatistics = [
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-    {
-        title: "League of Legends",
-        views: 14124,
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/21779_IGDB-45x60.jpg",
-    },
-];
-
-const typedStatistics = statistics.map(el => {
-    return new Stats(el.title, el.views, el.image, el.title);
-});
-
-const typedGamesStatistics = gamesStatistics.map(el => {
-    return new Stats(el.title, el.views, el.image, el.title);
-});
-
 const HomePage: React.FC<{
     topLiveGames: Stats[];
     topLiveChannels: Stats[];
     topWeeklyChannels: Stats[];
+    totalViewers: number;
 }> = props => {
     return (
         <>
@@ -154,7 +21,7 @@ const HomePage: React.FC<{
                 <TopList
                     listTitle="TOP LIVE CHANNELS"
                     listSubTitle="CURRENTLY WATCHING"
-                    total={1233213}
+                    total={props.totalViewers}
                     statistics={props.topLiveChannels}
                     numberOfItems={10}
                     type="channels"
@@ -162,11 +29,12 @@ const HomePage: React.FC<{
                 <TopList
                     listTitle="TOP LIVE GAMES"
                     listSubTitle="CURRENTLY WATCHING"
-                    total={1233213}
+                    total={props.totalViewers}
                     statistics={props.topLiveGames}
                     numberOfItems={10}
                     type="games"
                 />
+                <p>{JSON.stringify(props.topLiveGames)}</p>
             </TwoStatsColumns>
         </>
     );
@@ -192,11 +60,14 @@ export const getStaticProps: GetStaticProps = async context => {
     );
     const topWeeklyChannels: Stats[] = await weeklyChannelsResponse.json();
 
+    const totalViewers = topLiveChannels.reduce((a, b) => a + b.views, 0);
+
     return {
         props: {
             topLiveGames,
             topLiveChannels,
             topWeeklyChannels,
+            totalViewers,
         },
         revalidate: 3600,
     };
