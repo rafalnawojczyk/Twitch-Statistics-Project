@@ -1,5 +1,6 @@
 import { HOURLY_CHANNELS_AMOUNT, HOURLY_GAMES_AMMOUNT } from "../../config";
 import Stats from "../../models/Stats";
+import TotalViews from "../../models/TotalViews";
 
 const GetStreams: React.FC<{ wholeData: { statistics: {} } }> = props => {
     return <p>{JSON.stringify(props.wholeData)}</p>;
@@ -124,6 +125,16 @@ export async function getServerSideProps() {
             method: "POST",
             body: JSON.stringify({ topHourlyGames, totalViewers }),
         });
+
+        const totalViewsTyped = new TotalViews(new Date().toISOString(), totalViewers);
+
+        const hourlyViewsResponse = await fetch(
+            `${process.env.SERVER}api/twitch-total-views-hourly`,
+            {
+                method: "POST",
+                body: JSON.stringify(totalViewsTyped),
+            }
+        );
 
         return {
             props: {
