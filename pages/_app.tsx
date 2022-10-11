@@ -1,4 +1,5 @@
 import { AppProps } from "next/app";
+import Footer from "../components/layout/footer/Footer";
 import Layout from "../components/layout/Layout";
 import Navigation from "../components/navigation/Navigation";
 import "../styles/globals.scss";
@@ -10,6 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Layout>
                 <Component {...pageProps} />
             </Layout>
+            <Footer />
         </>
     );
 }

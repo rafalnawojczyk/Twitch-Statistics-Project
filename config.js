@@ -4,8 +4,8 @@ export const HOURLY_CHANNELS_AMMOUNT = 50;
 export const HOURLY_GAMES_AMMOUNT = 50;
 export const WEEKLY_TOP_AMMOUNT = 50;
 
-export const GAME_THUMBNAIL_WIDTH = 45;
-export const GAME_THUMBNAIL_HEIGHT = 60;
+export const GAME_THUMBNAIL_WIDTH = 225;
+export const GAME_THUMBNAIL_HEIGHT = 300;
 
-export const CHANNEL_THUMBNAIL_WIDTH = 50;
-export const CHANNEL_THUMBNAIL_HEIGHT = 50;
+export const CHANNEL_THUMBNAIL_WIDTH = 300;
+export const CHANNEL_THUMBNAIL_HEIGHT = 300;

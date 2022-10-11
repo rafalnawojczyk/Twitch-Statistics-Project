@@ -1,7 +1,7 @@
 .top-card {
     &__box {
         background-color: #1a2e63;
-        padding: 1.5rem 3rem;
+        padding: 1.5rem 0;
         text-align: center;
     }
     &__header {
@@ -9,6 +9,7 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 1.5rem;
+        padding: 0 3rem;
     }
     &__title {
         font-size: 2rem;
