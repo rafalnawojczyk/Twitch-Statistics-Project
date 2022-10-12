@@ -21,7 +21,7 @@
     }
 
     &__button {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: space-around;
 
@@ -39,6 +39,13 @@
 
         scale: 1;
         transition: all 0.3s;
+
+        &--wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.4rem;
+        }
 
         &:hover {
             scale: 1.05;
