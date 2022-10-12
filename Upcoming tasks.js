@@ -9,3 +9,5 @@
 //
 // TODO: TO run API routes each hours use cron-jobs in vercel
 // https://vercel.com/docs/concepts/solutions/cron-jobs
+
+// HOmepage is loading too long. Maybe make this thing work without SSG/SSR and get data on the client side - show then some loading spinners and maybe blurred dummy data in all of those fields.

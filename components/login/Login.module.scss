@@ -2,10 +2,10 @@
 
 .login {
     width: 50vw;
-    height: 60vh;
+    height: 70vh;
     background-image: url("../../public/login-bg.jpg");
     background-size: cover;
-    margin: 6rem auto;
+    margin: 3rem auto;
     border-radius: 12px;
     overflow: hidden;
     display: grid;
@@ -29,9 +29,10 @@
     &__box {
         grid-column: 2/3;
         background-color: $bg-color-dark;
-        padding: 6rem;
+        padding: 3rem 6rem;
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 1rem;
         flex-direction: column;
 

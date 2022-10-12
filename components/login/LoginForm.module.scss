@@ -8,6 +8,22 @@
     width: 100%;
     color: darken($font-color-primary, 20%);
 
+    &__remember-box {
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__checkbox {
+        input {
+            margin-right: 0.4rem;
+        }
+        label {
+            color: darken($font-color-primary, 20%);
+        }
+    }
+
     label {
         margin-bottom: 0.5rem;
         margin-top: 2rem;
@@ -70,4 +86,8 @@
             }
         }
     }
+}
+
+.margin-top {
+    margin-top: 0.5rem;
 }

@@ -14,7 +14,7 @@ const Navigation: React.FC = () => {
                     <NavLink href="/subscribers" title="Subscribers" exact={true} />
                 </div>
                 <div className={styles["nav--right"]}>
-                    <NavLink href="/login/signup" title="Sign In" exact={true} />
+                    <NavLink href="/login/signup" title="Sign In" exact={false} />
                     <NavLink href="/login" title="Log In" exact={true} />
                 </div>
             </nav>

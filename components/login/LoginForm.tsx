@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import GoogleLogo from "../../public/google-icon.png";
 import { ReactElement } from "react";
+import Link from "next/link";
 
 const LoginForm: React.FC<{ signup: boolean }> = props => {
     const loginWithGoogleHandler = () => {
@@ -14,20 +15,38 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
               email: "",
               password: "",
               name: "",
+              checkbox: false,
           }
         : {
               email: "",
               password: "",
+              checkbox: false,
           };
+
+    const validationSchema = props.signup
+        ? Yup.object({
+              email: Yup.string().email("Invalid email address").required("Email is required"),
+              password: Yup.string()
+                  .min(8, "Password must contain 8 or more characters.")
+                  .required("Password is required"),
+              name: Yup.string()
+                  .min(8, "Your nickname must contain 8 or more characters.")
+                  .required("Nickname is required"),
+              checkbox: Yup.bool()
+                  .oneOf([true], "Accept Terms & Conditions is required")
+                  .required("Accept Terms & Conditions is required"),
+          })
+        : Yup.object({
+              email: Yup.string().email("Invalid email address").required("Email is required"),
+              password: Yup.string()
+                  .min(8, "Password must contain 8 or more characters.")
+                  .required("Password is required"),
+              checkbox: Yup.bool().oneOf([true, false], ""),
+          });
+
     const formik = useFormik({
         initialValues,
-        validationSchema: Yup.object({
-            email: Yup.string().email("Invalid email address").required("Required"),
-            password: Yup.string()
-                .min(8, "Password must contain 8 or more characters.")
-                .required("Required"),
-            name: Yup.string().min(8, "Your nickname must contain 8 or more characters."),
-        }),
+        validationSchema,
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
         },
@@ -38,9 +57,19 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
 
     // if (props.signup === "LOGIN") {
 
-    buttonTitle = "Login";
+    buttonTitle = "Signup";
     formMarkup = (
         <>
+            <label htmlFor="name">Nickname</label>
+            <input
+                id="name"
+                name="name"
+                type="name"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.name}
+            />
+            {formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
             <label htmlFor="email">Email Address</label>
             <input
                 id="email"
@@ -51,17 +80,6 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
                 value={formik.values.email}
             />
             {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
-
-            <label htmlFor="name">name Address</label>
-            <input
-                id="name"
-                name="name"
-                type="name"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-            />
-            {formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
 
             <label htmlFor="password">Password</label>
             <input
@@ -75,12 +93,29 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
             {formik.touched.password && formik.errors.password ? (
                 <div>{formik.errors.password}</div>
             ) : null}
+
+            <div className={`${styles["login-form__checkbox"]} ${styles["margin-top"]}`}>
+                <input
+                    id="checkbox"
+                    name="checkbox"
+                    type="checkbox"
+                    value={formik.values.checkbox}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+                <label htmlFor="checkbox">
+                    I agree with <Link href="/terms">Terms and Conditions</Link>
+                </label>
+                {formik.touched.checkbox && formik.errors.checkbox ? (
+                    <div>{formik.errors.checkbox}</div>
+                ) : null}
+            </div>
         </>
     );
 
     // if (props.signup === "SIGNUP") {
     if (!props.signup) {
-        buttonTitle = "Signup";
+        buttonTitle = "Login";
 
         formMarkup = (
             <>
@@ -108,6 +143,19 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
                 {formik.touched.password && formik.errors.password ? (
                     <div>{formik.errors.password}</div>
                 ) : null}
+
+                <div className={styles["login-form__remember-box"]}>
+                    <div className={styles["login-form__checkbox"]}>
+                        <input
+                            id="checkbox"
+                            name="checkbox"
+                            type="checkbox"
+                            value={formik.values.checkbox}
+                        />
+                        <label htmlFor="checkbox">Remember me</label>
+                    </div>
+                    <Link href="/login/new-password">Recovery password</Link>
+                </div>
             </>
         );
     }
