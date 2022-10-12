@@ -20,7 +20,7 @@ const Login: React.FC<{ signup: boolean }> = props => {
                         : "Welcome back! Please enter your details."}
                 </p>
                 <LoginForm signup={props.signup} />
-                {!props.signup && <Link href="/login/signup">Doesnt have an account? Sign up</Link>}
+                {!props.signup && <Link href="/login/signup">Don't have an account? Sign up</Link>}
             </div>
         </div>
     );

@@ -10,10 +10,10 @@
 
     label {
         margin-bottom: 0.5rem;
+        margin-top: 2rem;
     }
 
     input {
-        margin-bottom: 2rem;
         font-size: 1.8rem;
 
         padding: 0.5rem;
@@ -52,6 +52,7 @@
         }
 
         &--google {
+            margin-top: 1rem;
             &:hover {
                 background-color: darken(#fff, 20%);
                 color: $bg-color-dark;
