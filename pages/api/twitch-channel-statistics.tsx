@@ -7,6 +7,7 @@ import Stats from "../../models/Stats";
 // use this username to get information about user from twitch API
 // use this username to get user views history from DB (hourlyStats)
 // compile all these informations and pass them through res
+//  use TwitchTracker API to get other info like Hours watched in last 30 days, views total in last 30 days.
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "GET") return;
