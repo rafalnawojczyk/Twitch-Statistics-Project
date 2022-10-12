@@ -30,7 +30,6 @@
         background-color: $bg-color-dark;
         padding: 6rem;
         display: flex;
-        align-items: center;
         justify-content: center;
         gap: 1rem;
         flex-direction: column;
@@ -40,9 +39,9 @@
         }
 
         p {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: darken($font-color-primary, 30%);
-            margin-bottom: 2rem;
+            margin-bottom: 4rem;
         }
     }
 

@@ -3,19 +3,19 @@
 .login-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+
     font-size: 1.6rem;
     width: 100%;
     color: darken($font-color-primary, 20%);
 
     label {
-        margin-top: 2rem;
         margin-bottom: 0.5rem;
     }
 
     input {
+        margin-bottom: 2rem;
         font-size: 1.8rem;
-        width: 80%;
+
         padding: 0.5rem;
         background-color: $bg-color-white;
     }
@@ -27,8 +27,7 @@
 
         background-color: $bg-color-white;
 
-        width: 80%;
-        margin-top: 2rem;
+        margin-top: 3rem;
         padding: 0.8rem 4rem;
         border-radius: 8px;
 
