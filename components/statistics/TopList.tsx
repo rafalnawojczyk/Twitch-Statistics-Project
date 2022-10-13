@@ -66,7 +66,7 @@ const TopList: React.FC<{
                     const imageUrl = stats.image
                         .replace("{width}", `${imgWidth}`)
                         .replace("{height}", `${imgHeight}`);
-                    const className = props.statistics.length - 1 === index ? "" : "underline";
+                    const className = props.maxNumberOfItems - 1 === index ? "" : "underline";
 
                     return (
                         <TopListItem

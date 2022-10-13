@@ -42,6 +42,8 @@
 }
 
 .underline {
+    position: relative;
+
     &::after {
         content: "";
         position: absolute;
