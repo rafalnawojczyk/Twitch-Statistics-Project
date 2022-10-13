@@ -28,6 +28,7 @@ const HomePage: React.FC<{
                     total={topLiveChannels.totalViewers}
                     statistics={topLiveChannels.statistics}
                     numberOfItems={10}
+                    maxNumberOfItems={15}
                     type="channels"
                 />
                 <TopList
@@ -36,6 +37,7 @@ const HomePage: React.FC<{
                     total={topLiveGames.totalViewers}
                     statistics={topLiveGames.statistics}
                     numberOfItems={10}
+                    maxNumberOfItems={15}
                     type="games"
                 />
             </TwoStatsColumns>

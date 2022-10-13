@@ -11,3 +11,4 @@
 // https://vercel.com/docs/concepts/solutions/cron-jobs
 
 // HOmepage is loading too long. Maybe make this thing work without SSG/SSR and get data on the client side - show then some loading spinners and maybe blurred dummy data in all of those fields.
+// Concat all data into one object in DB so it will not take eternity to make 3 or more API calls - one is enough for all hourly data

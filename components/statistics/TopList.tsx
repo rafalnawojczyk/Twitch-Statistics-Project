@@ -9,6 +9,8 @@ import {
     GAME_THUMBNAIL_HEIGHT,
     GAME_THUMBNAIL_WIDTH,
 } from "../../config";
+import { useEffect, useState } from "react";
+import ViewMoreButton from "../ui/ViewMoreButton";
 
 const TopList: React.FC<{
     statistics: Stats[];
@@ -16,8 +18,27 @@ const TopList: React.FC<{
     listSubTitle: string;
     total: number;
     numberOfItems: number;
+    maxNumberOfItems: number;
     type: "games" | "channels";
 }> = props => {
+    const [numberOfItems, setNumberOfItems] = useState(props.numberOfItems);
+
+    useEffect(() => {
+        if (props.maxNumberOfItems <= numberOfItems) {
+            setViewMoreMarkup(<ViewMoreLink href={`/${props.type}`} />);
+        }
+    }, [numberOfItems, props.maxNumberOfItems]);
+
+    const viewMoreHandler = () => {
+        if (props.maxNumberOfItems > numberOfItems) {
+            setNumberOfItems(prevState => prevState + 5);
+            return;
+        }
+    };
+
+    const [viewMoreMarkup, setViewMoreMarkup] = useState(
+        <ViewMoreButton onClick={viewMoreHandler} />
+    );
     return (
         <Card className={styles["top-card__box"]}>
             <div className={styles["top-card__header"]}>
@@ -32,7 +53,7 @@ const TopList: React.FC<{
             </div>
             <ul className={styles.list}>
                 {props.statistics?.map((stats, index) => {
-                    if (index >= props.numberOfItems) return;
+                    if (index >= numberOfItems) return;
 
                     const imgWidth =
                         props.type === "games" ? GAME_THUMBNAIL_WIDTH : CHANNEL_THUMBNAIL_WIDTH;
@@ -57,7 +78,7 @@ const TopList: React.FC<{
                     );
                 })}
             </ul>
-            <ViewMoreLink href={`/${props.type}`} />
+            {viewMoreMarkup}
         </Card>
     );
 };
