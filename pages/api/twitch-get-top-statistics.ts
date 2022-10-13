@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
-import Stats from "../../models/Stats";
+
+import TopHourlyStats from "../../models/TopHourlyStats";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "GET") return;
@@ -14,8 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const response = await twitchStatisticsCollection.find().toArray();
 
-    const data: { hourlyGames: Stats[]; hourlyChannels: Stats[]; weeklyTop: Stats[] } =
-        response[0].data;
+    const data: TopHourlyStats = response[0].data;
 
     //close connection
     client.close();

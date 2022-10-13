@@ -3,6 +3,7 @@
         background-color: #1a2e63;
         padding: 1.5rem 0;
         text-align: center;
+        position: relative;
     }
     &__header {
         display: flex;
@@ -30,9 +31,27 @@
 }
 
 .list {
+    transition: all 1s;
     padding-bottom: 1rem;
 
     &:not(:last-child) {
         padding-bottom: 1rem;
     }
+}
+
+.blur {
+    filter: blur(10px);
+}
+
+.noblur {
+    filter: blur(0);
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 50%;
+    bottom: 50%;
+    transform: translate(-50%, -50%);
 }

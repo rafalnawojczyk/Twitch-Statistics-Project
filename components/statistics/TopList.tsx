@@ -11,6 +11,7 @@ import {
 } from "../../config";
 import { useEffect, useState } from "react";
 import ViewMoreButton from "../ui/ViewMoreButton";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 const TopList: React.FC<{
     statistics: Stats[];
@@ -20,6 +21,7 @@ const TopList: React.FC<{
     numberOfItems: number;
     maxNumberOfItems: number;
     type: "games" | "channels";
+    blur: boolean;
 }> = props => {
     const [numberOfItems, setNumberOfItems] = useState(props.numberOfItems);
 
@@ -41,6 +43,7 @@ const TopList: React.FC<{
     );
     return (
         <Card className={styles["top-card__box"]}>
+            {props.blur && <LoadingSpinner className={styles.center} />}
             <div className={styles["top-card__header"]}>
                 <h3 className={styles["top-card__title"]}>{props.listTitle}</h3>
 
@@ -51,7 +54,7 @@ const TopList: React.FC<{
                     </span>
                 </div>
             </div>
-            <ul className={styles.list}>
+            <ul className={`${styles.list}  ${props.blur ? styles.blur : styles.noblur}`}>
                 {props.statistics?.map((stats, index) => {
                     if (index >= numberOfItems) return;
 
@@ -68,7 +71,7 @@ const TopList: React.FC<{
                     return (
                         <TopListItem
                             type={props.type}
-                            key={stats.title}
+                            key={stats.id}
                             title={stats.title}
                             views={stats.views}
                             total={props.total}

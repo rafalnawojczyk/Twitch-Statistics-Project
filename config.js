@@ -9,3 +9,5 @@ export const GAME_THUMBNAIL_HEIGHT = 300;
 
 export const CHANNEL_THUMBNAIL_WIDTH = 300;
 export const CHANNEL_THUMBNAIL_HEIGHT = 300;
+
+export const SERVER_LINK = "http://localhost:3000/";
