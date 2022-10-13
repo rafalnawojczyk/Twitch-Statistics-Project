@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
+import { useEffect } from "react";
 import TwoStatsColumns from "../components/layout/TwoStatsColumns";
 
 import TopList from "../components/statistics/TopList";
@@ -11,6 +12,12 @@ const HomePage: React.FC<{
     typedLiveChannels: string;
     typedWeeklyChannels: string;
 }> = props => {
+    // const [data=]
+
+    // useEffect( ()=> {
+    //     const data = await
+    // }, [])
+
     const topLiveChannels: TopStatsObj = JSON.parse(props.typedLiveChannels);
     const topLiveGames: TopStatsObj = JSON.parse(props.typedLiveGames);
     const topWeeklyChannels: TopStatsObj = JSON.parse(props.typedWeeklyChannels);

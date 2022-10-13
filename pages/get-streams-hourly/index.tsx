@@ -105,6 +105,14 @@ export async function getServerSideProps() {
 
         const wholeData = { statistics };
 
+        const hourlyTop = await fetch(`${process.env.SERVER}api/twitch-hourly-top-statistics`, {
+            method: "POST",
+            body: JSON.stringify({
+                hourlyGames: { topHourlyGames, totalViewers },
+                hourlyChannels: { topHourlyChannels, totalViewers },
+            }),
+        });
+
         const hourlyResponse = await fetch(
             `${process.env.SERVER}api/twitch-views-statistics-hourly`,
             {
@@ -113,18 +121,18 @@ export async function getServerSideProps() {
             }
         );
 
-        const topHourlyResponse = await fetch(
-            `${process.env.SERVER}api/twitch-top-channels-hourly`,
-            {
-                method: "POST",
-                body: JSON.stringify({ topHourlyChannels, totalViewers }),
-            }
-        );
+        // const topHourlyResponse = await fetch(
+        //     `${process.env.SERVER}api/twitch-top-channels-hourly`,
+        //     {
+        //         method: "POST",
+        //         body: JSON.stringify({ topHourlyChannels, totalViewers }),
+        //     }
+        // );
 
-        const topGamesResponse = await fetch(`${process.env.SERVER}api/twitch-top-games-hourly`, {
-            method: "POST",
-            body: JSON.stringify({ topHourlyGames, totalViewers }),
-        });
+        // const topGamesResponse = await fetch(`${process.env.SERVER}api/twitch-top-games-hourly`, {
+        //     method: "POST",
+        //     body: JSON.stringify({ topHourlyGames, totalViewers }),
+        // });
 
         const totalViewsTyped = new TotalViews(new Date().toISOString(), totalViewers);
 

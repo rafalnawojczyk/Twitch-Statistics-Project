@@ -30,7 +30,7 @@ const TopList: React.FC<{
     }, [numberOfItems, props.maxNumberOfItems]);
 
     const viewMoreHandler = () => {
-        if (props.maxNumberOfItems > numberOfItems) {
+        if (props.maxNumberOfItems >= numberOfItems) {
             setNumberOfItems(prevState => prevState + 5);
             return;
         }
