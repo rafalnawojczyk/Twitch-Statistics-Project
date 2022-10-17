@@ -1,0 +1,13 @@
+@import "../../styles/variables";
+
+.title {
+    font-size: 1.1rem;
+
+    text-align: right;
+    color: $font-color-grey;
+
+    &__upper {
+        word-spacing: 9999rem;
+        font-size: 1.2rem;
+    }
+}

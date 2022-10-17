@@ -159,8 +159,6 @@ export const getStaticProps: GetStaticProps = async context => {
         );
     }
 
-    console.log(JSON.parse(JSON.stringify(typedWeeklyChannels)));
-
     return {
         props: {
             typedLiveGames: {

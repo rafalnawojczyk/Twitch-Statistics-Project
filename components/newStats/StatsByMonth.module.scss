@@ -1,0 +1,29 @@
+@import "../../styles/mixins";
+
+.stats {
+    width: 70%;
+
+    &__grid {
+        display: grid;
+        column-gap: 1.5rem;
+
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+        grid-template-columns: 12fr 13fr 13fr 11fr 13fr 11fr 16fr 11fr;
+
+        align-items: center;
+        justify-items: left;
+
+        position: relative;
+
+        &:not(:last-child)::after {
+            content: "";
+            width: 100%;
+            position: absolute;
+            top: 100%;
+            opacity: 0.4;
+
+            @include horizontal-line;
+        }
+    }
+}

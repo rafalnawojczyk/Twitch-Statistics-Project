@@ -1,0 +1,41 @@
+@import "../../styles/variables";
+
+.stats {
+    &__amount {
+        justify-self: end;
+        font-size: 1.2rem;
+
+        &--bold {
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+    }
+    &__box {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 30% 70%;
+        row-gap: 0.5rem;
+    }
+}
+
+.activeChannels {
+    background-color: $fill-color-orange;
+}
+.peakViewers {
+    background-color: $fill-color-pink;
+}
+.peakChannels {
+    background-color: $fill-color-mint;
+}
+.avgViewers {
+    background-color: $fill-color-yellow;
+}
+.avgChannels {
+    background-color: $fill-color-orange;
+}
+.hoursWatched {
+    background-color: $fill-color-blue;
+}
+.gamesStreamed {
+    background-color: $fill-color-mint;
+}
