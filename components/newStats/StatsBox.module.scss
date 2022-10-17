@@ -1,5 +1,10 @@
 @import "../../styles/variables";
 
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
 .stats {
     &__amount {
         justify-self: end;

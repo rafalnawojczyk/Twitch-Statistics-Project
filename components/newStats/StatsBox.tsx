@@ -17,12 +17,16 @@ const StatsBox: React.FC<{
     statsIndicator: statsIndicator;
     maxAmount: number;
 }> = props => {
+    const showPercentage = props.prevAmount !== 0 ? true : false;
+
     return (
         <div className={styles.stats__box}>
             <GainPercentageIndicator
                 prevAmount={props.prevAmount}
                 actualAmount={props.actualAmount}
+                className={`${showPercentage ? "" : styles.hidden}`}
             />
+
             <span
                 className={`${styles.stats__amount} ${
                     props.actualAmount === props.maxAmount ? styles["stats__amount--bold"] : ""

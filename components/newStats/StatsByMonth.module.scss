@@ -3,6 +3,33 @@
 .stats {
     width: 70%;
 
+    &__dropdown {
+        position: absolute;
+        top: 110%;
+        left: 50%;
+
+        transform: translateX(-50%);
+    }
+
+    &__button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__header {
+        width: 70%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 1rem 3rem;
+    }
+
+    &__button-box {
+        position: relative;
+    }
+
     &__grid {
         display: grid;
         column-gap: 1.5rem;

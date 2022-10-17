@@ -1,2 +1,19 @@
+@import "../../styles/variables";
+
 .button {
+    cursor: pointer;
+    color: $font-color-primary;
+    background-color: $bg-color-light;
+
+    font-size: 1.6rem;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    border: none;
+    padding: 0.8rem 1.6rem;
+
+    border-radius: $border-radius-small;
+
+    &:hover {
+        background-color: $bg-color-grey-light;
+    }
 }

@@ -1,6 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { DUMMY_MAX_MONTHLY_DATA, DUMMY_MONTHLY_DATA, MONTHS_LABELS } from "../../config";
 import NewCard from "../layout/NewCard";
+import ExpandSvg from "../layout/svg/ExpandSvg";
+import Button from "../ui/Button";
+import DropdownSelector from "../ui/DropdownSelector";
 import StatsBox from "./StatsBox";
 import styles from "./StatsByMonth.module.scss";
 import StatsLabel from "./StatsLabel";
@@ -29,6 +32,7 @@ type statsIndicator =
 
 const StatsByMonth = () => {
     const [selectedYear, setSelectedYear] = useState(2022);
+    const [showYearSelector, setShowYearSelector] = useState(false);
 
     //TODO: PARSE IT FROM DB USING API ROUTE
     const data: monthlyDataObj = DUMMY_MONTHLY_DATA;
@@ -49,10 +53,65 @@ const StatsByMonth = () => {
         "gamesStreamed",
     ];
 
+    const yearSelectingShowHandler = (event: React.MouseEvent) => {
+        event.preventDefault();
+        setShowYearSelector(prevState => !prevState);
+    };
+
+    const yearSelectingHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        if (!(event.target instanceof HTMLButtonElement)) {
+            return;
+        }
+        const clickedYear = +event.target.dataset.value!;
+
+        if (clickedYear !== selectedYear) setSelectedYear(clickedYear);
+
+        setShowYearSelector(false);
+    };
+
+    const listedYears = Object.keys(data);
+
+    const statisticsMarkup = filteredData.map((month, index) => {
+        return (
+            <div key={MONTHS_LABELS[index]} className={styles.stats__grid}>
+                <StatsLabel title={`${MONTHS_LABELS[index]} ${selectedYear}`} />
+                {statisticsType.map(type => {
+                    return (
+                        <StatsBox
+                            key={month[type]}
+                            statsIndicator={type}
+                            actualAmount={month[type]}
+                            prevAmount={data[selectedYear - 1]?.[index]?.[type] || 0}
+                            maxAmount={maxFilteredData[type]}
+                        />
+                    );
+                })}
+            </div>
+        );
+    });
+
     return (
         <>
             <div className={styles.stats__header}>
                 <StatsTitle title="Twitch stats by month" />
+                <div className={styles["stats__button-box"]}>
+                    <Button
+                        type="button"
+                        onClick={yearSelectingShowHandler}
+                        className={styles.stats__button}
+                    >
+                        <p>{selectedYear}</p>
+                        <ExpandSvg className={styles["stats__header-icon"]} />
+                    </Button>
+                    {showYearSelector && (
+                        <DropdownSelector
+                            values={listedYears}
+                            className={styles.stats__dropdown}
+                            onClick={yearSelectingHandler}
+                        />
+                    )}
+                </div>
             </div>
             <NewCard className={styles.stats}>
                 <div className={styles.stats__grid}>
@@ -66,29 +125,7 @@ const StatsByMonth = () => {
                     <StatsLabel title="Games Streamed" upperTitle={true} />
                 </div>
 
-                {filteredData.map((month, index) => {
-                    return (
-                        <div className={styles.stats__grid}>
-                            <StatsLabel title={`${MONTHS_LABELS[index]} ${selectedYear}`} />
-                            {statisticsType.map(type => {
-                                return (
-                                    <StatsBox
-                                        statsIndicator={type}
-                                        actualAmount={month[type]}
-                                        prevAmount={data[selectedYear - 1][index][type]}
-                                        maxAmount={maxFilteredData[type]}
-                                    />
-                                );
-                            })}
-                            {/* ; // 7x statsBox which includes %loss/gain, actual number, and a bar. //
-                            it should take props like thisYearNumber, lastYearNumber, statsIndicator
-                            // stats indicator should be a className which will set some styles
-                            on(color for bar) // gain/loss% should take loss/gain %, check if its
-                            +/- and render things based on that // should make one mor ecomponent
-                            with arrow up and arrow down probably */}
-                        </div>
-                    );
-                })}
+                {statisticsMarkup}
             </NewCard>
         </>
     );

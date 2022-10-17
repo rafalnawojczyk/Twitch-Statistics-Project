@@ -1,0 +1,25 @@
+@import "../../styles/variables";
+
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    width: 14rem;
+    border-radius: $border-radius-small;
+    overflow: hidden;
+    gap: 1rem;
+    background-color: $bg-color-grey-light;
+
+    &__button {
+        background-color: $bg-color-grey-light;
+        border-radius: 0px !important;
+
+        &:hover {
+            background-color: lighten($bg-color-grey-light, 10%);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

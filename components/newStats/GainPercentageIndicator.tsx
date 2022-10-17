@@ -4,6 +4,7 @@ import styles from "./GainPercentageIndicator.module.scss";
 const GainPercentageIndicator: React.FC<{
     prevAmount: number;
     actualAmount: number;
+    className?: string;
 }> = props => {
     const diffDirection = props.actualAmount - props.prevAmount > 0 ? "gain" : "loss";
     const diffValue = Math.abs(
@@ -11,8 +12,8 @@ const GainPercentageIndicator: React.FC<{
     ).toFixed(1);
 
     return (
-        <div className={styles.percentage}>
-            {/* <Arrow className={styles[`percentage__${diffDirection}`]} /> */}
+        <div className={`${props.className} ${styles.percentage}`}>
+            <Arrow className={styles[`percentage__${diffDirection}`]} />
             <p className={styles[`percentage__amount`]}>{diffValue}%</p>
         </div>
     );

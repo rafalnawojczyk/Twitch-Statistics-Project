@@ -36,7 +36,7 @@ export const DUMMY_MAX_MONTHLY_DATA = {
             peakChannels: 234924,
             avgViewers: 2522643,
             avgChannels: 106891,
-            hoursWatched: 10009352334,
+            hoursWatched: 1872221076,
             gamesStreamed: 57647,
         },
     ],
@@ -74,7 +74,7 @@ export const DUMMY_MONTHLY_DATA = {
             peakChannels: 87331,
             avgViewers: 1357265,
             avgChannels: 52817,
-            hoursWatched: 10009352334,
+            hoursWatched: 1009352334,
             gamesStreamed: 57647,
         },
 
@@ -368,8 +368,8 @@ export const DUMMY_MONTHLY_DATA = {
             peakChannels: 132988,
             avgViewers: 2506029,
             avgChannels: 86309,
-            hoursWatched: 1939755464,
-            gamesStreamed: 40116,
+            hoursWatched: 1803922948,
+            gamesStreamed: 39398,
         },
     ],
 };
