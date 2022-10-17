@@ -1,4 +1,4 @@
-import { HOURLY_CHANNELS_AMOUNT, HOURLY_GAMES_AMMOUNT } from "../../config";
+import { HOURLY_CHANNELS_AMMOUNT, HOURLY_GAMES_AMMOUNT, MIN_VIEWIERS_AMOUNT } from "../../config";
 import Stats from "../../models/Stats";
 import TotalViews from "../../models/TotalViews";
 
@@ -21,10 +21,9 @@ export async function getServerSideProps() {
         const wholeData: Stats[] = [];
         const topHourlyChannels: Stats[] = [];
         let pagination;
-        let counter = HOURLY_CHANNELS_AMOUNT / 100;
+        let shouldFetch = true;
 
-        for (let i = 0; i < counter; i++) {
-            console.log(pagination);
+        while (shouldFetch) {
             let url = process.env.GET_STREAMS_API_URL!;
             if (i > 0) url = `${process.env.GET_STREAMS_API_URL}&after=${pagination}`;
 
@@ -56,6 +55,8 @@ export async function getServerSideProps() {
             if (i === 0) topHourlyChannels.push(...typedData);
             wholeData.push(...typedData);
             pagination = data.pagination.cursor;
+
+            if (data.data[0].viewer_count <= MIN_VIEWIERS_AMOUNT) shouldFetch = false;
         }
 
         const gamesViewers: { [key: string]: { gameStreaming: string; views: number } } = {};
@@ -73,7 +74,7 @@ export async function getServerSideProps() {
 
         //TODO: temporary
 
-        wholeData.length = 2000;
+        wholeData.length = HOURLY_CHANNELS_AMMOUNT;
 
         const topHourlyGamesResponse = await fetch(process.env.GET_GAMES_API_URL!, {
             method: "GET",

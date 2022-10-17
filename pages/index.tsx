@@ -2,6 +2,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import TwoStatsColumns from "../components/layout/TwoStatsColumns";
+import StatsByMonth from "../components/newStats/StatsByMonth";
 
 import TopList from "../components/statistics/TopList";
 import { SERVER_LINK } from "../config";
@@ -70,7 +71,9 @@ const HomePage: React.FC<{
                 <title>React Meetups</title>
                 <meta name="description" content="Browse a huge list of meetups" />
             </Head>
-            <TwoStatsColumns>
+
+            <StatsByMonth />
+            {/* <TwoStatsColumns>
                 <TopList
                     blur={isLoading}
                     listTitle="TOP LIVE CHANNELS"
@@ -81,7 +84,7 @@ const HomePage: React.FC<{
                     maxNumberOfItems={15}
                     type="channels"
                 />
-                {/* <TopList
+                <TopList
                     blur={isLoading}
                     listTitle="TOP LIVE GAMES"
                     listSubTitle="CURRENTLY WATCHING"
@@ -90,8 +93,8 @@ const HomePage: React.FC<{
                     numberOfItems={10}
                     maxNumberOfItems={15}
                     type="games"
-                /> */}
-            </TwoStatsColumns>
+                /> 
+            </TwoStatsColumns>*/}
         </>
     );
 };
