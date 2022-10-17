@@ -17,18 +17,18 @@
         display: inline-block;
         width: 100%;
         height: 100%;
-        width: 1rem;
-        font-size: 2rem;
-        color: green;
+        width: 0.8rem;
+
+        color: rgb(72, 249, 85);
     }
 
     &__loss {
         display: inline-block;
         width: 100%;
         height: 100%;
-        width: 1rem;
-        color: red;
-        font-size: 2rem;
+        width: 0.8rem;
+        color: rgb(255, 87, 76);
+
         rotate: 180deg;
     }
 }
