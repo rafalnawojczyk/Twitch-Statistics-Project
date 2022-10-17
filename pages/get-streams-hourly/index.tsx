@@ -24,6 +24,7 @@ export async function getServerSideProps() {
         let counter = HOURLY_CHANNELS_AMOUNT / 100;
 
         for (let i = 0; i < counter; i++) {
+            console.log(pagination);
             let url = process.env.GET_STREAMS_API_URL!;
             if (i > 0) url = `${process.env.GET_STREAMS_API_URL}&after=${pagination}`;
 
@@ -68,6 +69,11 @@ export async function getServerSideProps() {
             gamesViewers[stats.gameStreaming!].views += +stats.views;
             totalViewers += +stats.views;
         });
+        const sumHourlyChannels = wholeData.length;
+
+        //TODO: temporary
+
+        wholeData.length = 2000;
 
         const topHourlyGamesResponse = await fetch(process.env.GET_GAMES_API_URL!, {
             method: "GET",
@@ -85,9 +91,18 @@ export async function getServerSideProps() {
             })
             .sort((a: Stats, b: Stats) => b.views - a.views);
 
+        const sumHourlyGames: number = topHourlyGames.length;
+
         if (topHourlyGames.length > HOURLY_GAMES_AMMOUNT) topHourlyGames.length = 50;
 
-        return { wholeData, topHourlyGames, topHourlyChannels, totalViewers };
+        return {
+            wholeData,
+            topHourlyGames,
+            topHourlyChannels,
+            totalViewers,
+            sumHourlyGames,
+            sumHourlyChannels,
+        };
     };
 
     try {
@@ -98,6 +113,8 @@ export async function getServerSideProps() {
             topHourlyChannels,
             topHourlyGames,
             totalViewers,
+            sumHourlyChannels,
+            sumHourlyGames,
         } = responseData;
 
         const statistics: any = {};
@@ -118,6 +135,18 @@ export async function getServerSideProps() {
             {
                 method: "POST",
                 body: JSON.stringify(wholeData),
+            }
+        );
+
+        const hourlyStatistics = await fetch(
+            `${process.env.SERVER}api/twitch-overall-statistics-hourly`,
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    channels: sumHourlyChannels,
+                    games: sumHourlyGames,
+                    viewers: totalViewers,
+                }),
             }
         );
 

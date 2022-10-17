@@ -19,3 +19,8 @@
 // Use above data to create some kind of big chart on page, which will show streaming channels/total views corelation
 
 // https://streamscharts.com/overview
+
+// TODO: change in get-streams-hourly:
+// - games should be parsed like channels
+// check early hours how pagination looks if there are no channels/games
+//
