@@ -76,6 +76,7 @@ const TopList: React.FC<{
                             views={stats.views}
                             total={props.total}
                             image={imageUrl}
+                            additionalInfo={stats.gameStreaming}
                             className={className}
                         />
                     );

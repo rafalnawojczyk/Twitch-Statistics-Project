@@ -10,6 +10,7 @@ const TopListItem: React.FC<{
     image: string;
     total: number;
     className: string;
+    additionalInfo: string | number;
 }> = props => {
     const [showMoreContent, setshowMoreContent] = useState(false);
     const router = useRouter();
@@ -33,7 +34,12 @@ const TopListItem: React.FC<{
                     <ViewsBox views={props.views} total={props.total} />
                 </div>
 
-                {showMoreContent && <div>TUTAJ BĘDĄ STATYSTYKI</div>}
+                {showMoreContent && (
+                    <div className={styles["additional-info"]}>
+                        <p>{props.type === "games" ? "STREAMING CHANNELS:" : "GAME STREAMING:"}</p>
+                        <span>{props.additionalInfo}</span>
+                    </div>
+                )}
             </li>
         </>
     );

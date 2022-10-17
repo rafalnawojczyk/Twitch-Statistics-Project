@@ -1,6 +1,8 @@
+@import "../../styles/variables";
+
 .top-card {
     &__box {
-        background-color: #1a2e63;
+        background-color: $bg-color-light;
         padding: 1.5rem 0;
         text-align: center;
         position: relative;
@@ -32,6 +34,7 @@
 
 .list {
     transition: all 1s;
+    list-style: none;
     padding-bottom: 1rem;
 
     &:not(:last-child) {

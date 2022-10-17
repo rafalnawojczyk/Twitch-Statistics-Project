@@ -81,7 +81,7 @@ const HomePage: React.FC<{
                     maxNumberOfItems={15}
                     type="channels"
                 />
-                <TopList
+                {/* <TopList
                     blur={isLoading}
                     listTitle="TOP LIVE GAMES"
                     listSubTitle="CURRENTLY WATCHING"
@@ -90,7 +90,7 @@ const HomePage: React.FC<{
                     numberOfItems={10}
                     maxNumberOfItems={15}
                     type="games"
-                />
+                /> */}
             </TwoStatsColumns>
         </>
     );
