@@ -1,6 +1,10 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import HomepageCenter from "../components/layout/Homepage/HomepageCenter";
+import HomepageFullWidth from "../components/layout/Homepage/HomepageFullWidth";
+import HomepageLayout from "../components/layout/Homepage/HomepageLayout";
+import HomepageSidebar from "../components/layout/Homepage/HomepageSidebar";
 import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
 import LiveStatsTable from "../components/LiveStatsTable/LiveStatsTable";
 import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
@@ -71,31 +75,19 @@ const HomePage: React.FC<{
                 <title>React Meetups</title>
                 <meta name="description" content="Browse a huge list of meetups" />
             </Head>
-            <LiveStatisticsBar />
-            <StatsByMonth />
-            <LiveStatsTable />
-            {/* <TwoStatsColumns>
-                <TopList
-                    blur={isLoading}
-                    listTitle="TOP LIVE CHANNELS"
-                    listSubTitle="CURRENTLY WATCHING"
-                    total={topLiveChannels.totalViewers}
-                    statistics={topLiveChannels.statistics}
-                    numberOfItems={10}
-                    maxNumberOfItems={15}
-                    type="channels"
-                />
-                <TopList
-                    blur={isLoading}
-                    listTitle="TOP LIVE GAMES"
-                    listSubTitle="CURRENTLY WATCHING"
-                    total={topLiveGames.totalViewers}
-                    statistics={topLiveGames.statistics}
-                    numberOfItems={10}
-                    maxNumberOfItems={15}
-                    type="games"
-                /> 
-            </TwoStatsColumns>*/}
+            <HomepageLayout>
+                <HomepageFullWidth>
+                    <LiveStatisticsBar />
+                </HomepageFullWidth>
+                <HomepageCenter>
+                    <StatsByMonth />
+                </HomepageCenter>
+                <HomepageSidebar>
+                    <LiveStatsTable />
+                    <LiveStatsTable />
+                    <LiveStatsTable />
+                </HomepageSidebar>
+            </HomepageLayout>
         </>
     );
 };

@@ -92,7 +92,7 @@ const StatsByMonth = () => {
     });
 
     return (
-        <>
+        <div>
             <div className={styles.stats__header}>
                 <StatsTitle title="Twitch stats by month" />
                 <div className={styles["stats__button-box"]}>
@@ -127,7 +127,7 @@ const StatsByMonth = () => {
 
                 {statisticsMarkup}
             </Card>
-        </>
+        </div>
     );
 };
 

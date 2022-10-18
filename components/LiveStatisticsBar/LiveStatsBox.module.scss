@@ -37,6 +37,12 @@
         gap: 1.4rem;
         padding: 1.6rem 0.5rem 1rem 0.5rem;
         position: relative;
+        scale: 1;
+        transition: all 0.3s;
+
+        &:hover {
+            scale: 1.03;
+        }
 
         &::after {
             content: "";
