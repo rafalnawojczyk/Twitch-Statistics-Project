@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { DUMMY_MAX_MONTHLY_DATA, DUMMY_MONTHLY_DATA, MONTHS_LABELS } from "../../config";
-import NewCard from "../layout/NewCard";
+import Card from "../layout/Card";
 import ExpandSvg from "../layout/svg/ExpandSvg";
 import Button from "../ui/Button";
 import DropdownSelector from "../ui/DropdownSelector";
 import StatsBox from "./StatsBox";
 import styles from "./StatsByMonth.module.scss";
 import StatsLabel from "./StatsLabel";
-import StatsTitle from "./StatsTItle";
+import StatsTitle from "./StatsTitle";
 
 type monthlyDataObj = {
     [key: number]: {
@@ -113,7 +113,7 @@ const StatsByMonth = () => {
                     )}
                 </div>
             </div>
-            <NewCard className={styles.stats}>
+            <Card className={styles.stats}>
                 <div className={styles.stats__grid}>
                     <StatsLabel title="Month" upperTitle={true} />
                     <StatsLabel title="Active Channels" upperTitle={true} />
@@ -126,7 +126,7 @@ const StatsByMonth = () => {
                 </div>
 
                 {statisticsMarkup}
-            </NewCard>
+            </Card>
         </>
     );
 };

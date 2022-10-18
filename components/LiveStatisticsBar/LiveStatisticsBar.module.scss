@@ -1,0 +1,9 @@
+.live-box {
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 0 !important;
+    gap: 1px;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+}

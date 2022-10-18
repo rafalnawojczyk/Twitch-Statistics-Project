@@ -1,10 +1,9 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import TwoStatsColumns from "../components/layout/TwoStatsColumns";
-import StatsByMonth from "../components/newStats/StatsByMonth";
+import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
+import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
 
-import TopList from "../components/statistics/TopList";
 import { SERVER_LINK } from "../config";
 import Stats from "../models/Stats";
 import TopHourlyStats from "../models/TopHourlyStats";
@@ -71,7 +70,7 @@ const HomePage: React.FC<{
                 <title>React Meetups</title>
                 <meta name="description" content="Browse a huge list of meetups" />
             </Head>
-
+            <LiveStatisticsBar />
             <StatsByMonth />
             {/* <TwoStatsColumns>
                 <TopList

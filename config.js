@@ -373,3 +373,37 @@ export const DUMMY_MONTHLY_DATA = {
         },
     ],
 };
+
+export const DUMMY_LIVE_DATA = [
+    {
+        value: 1538920,
+        title: "Viewers now",
+        type: "activeViewers",
+        live: true,
+    },
+    {
+        value: 45510,
+        title: "Channels now",
+        type: "activeChannels",
+        live: true,
+    },
+    {
+        value: 98421,
+        title: "Games being streamed",
+        type: "gamesStreamed",
+        live: true,
+    },
+    { value: 15381000, title: "Total streamers", type: "totalChannels" },
+    {
+        value: 6642217,
+        title: "Peak online viewers",
+        type: "peakViewers",
+        date: "25 Jun, 2022",
+    },
+    {
+        value: 234924,
+        title: "Peak online channels",
+        type: "peakChannels",
+        date: "01 Dec, 2020",
+    },
+];
