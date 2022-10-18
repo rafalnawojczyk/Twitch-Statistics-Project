@@ -373,6 +373,51 @@ export const DUMMY_MONTHLY_DATA = {
         },
     ],
 };
+// "activeChannels" | "topChannels" | "topGames";
+export const DUMMY_LIVE_TABLE_DATA = {
+    activeChannels: {
+        title: "Channel",
+        subtitle: "Current Viewers",
+        type: "activeChannels",
+        stats: [
+            {
+                title: "Fextralife",
+                language: "EN",
+                followers: 1422000,
+                viewers: 27000,
+                image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
+            },
+            {
+                title: "Fextralife",
+                language: "EN",
+                followers: 1422000,
+                viewers: 27000,
+                image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
+            },
+            {
+                title: "Fextralife",
+                language: "EN",
+                followers: 1422000,
+                viewers: 27000,
+                image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
+            },
+            {
+                title: "Fextralife",
+                language: "EN",
+                followers: 1422000,
+                viewers: 27000,
+                image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
+            },
+            {
+                title: "Fextralife",
+                language: "EN",
+                followers: 1422000,
+                viewers: 27000,
+                image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
+            },
+        ],
+    },
+};
 
 export const DUMMY_LIVE_DATA = [
     {

@@ -1,0 +1,70 @@
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
+.activeChannels {
+    background-color: $fill-color-green;
+}
+
+.stats-list {
+    &__item {
+        position: relative;
+        display: grid;
+        grid-template-columns: 3fr 11fr 6fr;
+        gap: 1rem;
+        align-items: center;
+        padding: 0.5rem 2rem 0.5rem 2rem;
+        cursor: pointer;
+        background-color: $bg-color-light;
+        scale: 1;
+
+        transition: all 0.3s;
+
+        &:hover {
+            background-color: lighten($bg-color-light, 10%);
+            scale: 1.03;
+        }
+
+        &:not(:last-child)::after {
+            content: "";
+            width: 100%;
+            position: absolute;
+            top: 100%;
+            opacity: 0.4;
+            transform: translateY(-100%);
+            @include horizontal-line;
+        }
+    }
+    &__image {
+        border-radius: 50%;
+        width: 4rem;
+    }
+    &__title-box {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        gap: 0.3rem;
+    }
+    &__title {
+        font-size: 1.4rem;
+    }
+    &__subtitle {
+        opacity: 0.8;
+        font-size: 1rem;
+    }
+}
+
+.stats__value {
+    font-size: 1.4rem;
+    font-weight: bold;
+    align-self: end;
+    margin-bottom: 0.4rem;
+
+    &-box {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        justify-content: center;
+    }
+}

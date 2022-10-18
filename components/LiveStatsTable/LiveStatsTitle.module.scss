@@ -1,0 +1,31 @@
+@import "../../styles/mixins";
+
+.title {
+    &__box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1.3rem;
+        opacity: 0.8;
+        // margin-bottom: 1rem;
+        padding: 0.8rem 2rem 1.4rem 2rem;
+
+        position: relative;
+        overflow: hidden;
+        &::after {
+            content: "";
+            width: 140% !important;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            opacity: 0.4;
+            transform: translate(-50%, -100%);
+
+            @include horizontal-line;
+        }
+    }
+
+    &__subtitle {
+        max-width: 6ch;
+    }
+}

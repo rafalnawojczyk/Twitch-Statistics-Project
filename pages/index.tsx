@@ -2,6 +2,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
+import LiveStatsTable from "../components/LiveStatsTable/LiveStatsTable";
 import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
 
 import { SERVER_LINK } from "../config";
@@ -72,6 +73,7 @@ const HomePage: React.FC<{
             </Head>
             <LiveStatisticsBar />
             <StatsByMonth />
+            <LiveStatsTable />
             {/* <TwoStatsColumns>
                 <TopList
                     blur={isLoading}
