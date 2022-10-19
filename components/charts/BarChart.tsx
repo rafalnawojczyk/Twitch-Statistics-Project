@@ -14,9 +14,6 @@ import BarChartLabel from "./BarChartLabel";
 import { useState } from "react";
 
 const BarChart = () => {
-    const [date, setDate] = useState("");
-    const [value, setValue] = useState("");
-
     const data = [
         {
             name: "13 Oct, 2022 07:30",
@@ -335,19 +332,11 @@ const BarChart = () => {
         },
     ];
 
-    const changeDetailsHandler = (date: string, value: number) => {
-        setDate(date);
-        setValue(value.toLocaleString());
-    };
-
     return (
         <div className={styles.chart__wrapper}>
-            <div className={styles.chart__details}>
-                <p>{date}</p>
-                <p>{value}</p>
-            </div>
             <ResponsiveContainer>
                 <BarCharts
+                    margin={{ top: 10, right: 5, bottom: 5, left: 5 }}
                     syncId={"langChart"}
                     barCategoryGap="1%"
                     width={100}
@@ -355,9 +344,9 @@ const BarChart = () => {
                     data={data}
                 >
                     <Tooltip
-                        content={<BarChartLabel onMouse={changeDetailsHandler} />}
+                        content={<BarChartLabel />}
                         cursor={{ fill: "rgba(255, 207, 42, .8)" }}
-                        position={{ y: -100 }}
+                        position={{ x: 0, y: 0 }}
                     />
                     <Bar dataKey="value" fill="rgba(255, 207, 42, .5)" />
                 </BarCharts>

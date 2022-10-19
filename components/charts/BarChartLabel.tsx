@@ -1,8 +1,14 @@
-const BarChartLabel = ({ active, payload, label, onMouse }) => {
-    if (active && payload && payload.length) {
-        onMouse(payload[0].payload.name, +payload[0].payload.value);
-    }
+import styles from "./BarChartLabel.module.scss";
 
+const BarChartLabel = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className={styles.chart__details}>
+                <p>{payload[0].payload.name}</p>
+                <p>{+payload[0].payload.value.toLocaleString()}</p>
+            </div>
+        );
+    }
     return null;
 };
 

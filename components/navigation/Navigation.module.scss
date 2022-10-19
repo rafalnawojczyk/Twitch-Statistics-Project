@@ -6,6 +6,7 @@
     justify-content: space-between;
     padding: 2rem 8rem;
     position: relative;
+    overflow: hidden;
 
     &::after {
         content: "";

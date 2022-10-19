@@ -8,15 +8,20 @@
         justify-self: center;
         flex-direction: column;
         margin-top: 1rem;
+        position: relative;
     }
 
-    &__details {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 90%;
-        font-size: 1.3rem;
-        opacity: 0.8;
-        margin-bottom: -0.2rem;
-    }
+    // &__details {
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: space-between;
+    //     width: 90%;
+    //     font-size: 1.3rem;
+    //     opacity: 0.8;
+    //     margin-bottom: -0.2rem;
+
+    //     // position: absolute;
+    //     // top: 100%;
+    //     // left: 0;
+    // }
 }

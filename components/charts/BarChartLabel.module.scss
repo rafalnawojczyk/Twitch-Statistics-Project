@@ -1,0 +1,12 @@
+.chart {
+    &__details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 120%;
+        font-size: 1.3rem;
+        opacity: 0.8;
+
+        transform: translateY(-50%);
+    }
+}

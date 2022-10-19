@@ -2,7 +2,7 @@
 
 .stats {
     display: grid;
-    grid-template-columns: 84fr 40fr;
+    grid-template-columns: 60fr 40fr;
 
     &__charts {
         grid-column: 2 / 3;
@@ -19,7 +19,7 @@
 
         padding-bottom: 0.2rem;
         padding-top: 0.2rem;
-        grid-template-columns: 10fr 40fr 12fr 12fr;
+        grid-template-columns: 20fr 46fr 24fr 24fr;
 
         align-items: center;
         justify-items: end;
