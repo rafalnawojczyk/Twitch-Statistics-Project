@@ -8,6 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/recharts": "^1.8.23",
+    "d3": "^7.6.1",
+    "d3-scale": "^4.0.2",
     "dotenv": "^16.0.2",
     "formik": "^2.2.9",
     "mongodb": "^4.10.0",
@@ -15,10 +18,13 @@
     "next-images": "^1.8.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-google-charts": "^4.0.0",
     "react-tooltip": "^4.4.0",
+    "recharts": "^2.1.15",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.0",
     "@types/node": "^18.8.2",
     "@types/react": "^18.0.1",
     "sass": "^1.55.0",

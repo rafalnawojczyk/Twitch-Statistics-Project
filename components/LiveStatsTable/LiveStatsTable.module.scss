@@ -1,8 +1,33 @@
+@import "../../styles/variables";
+
 .stats {
     padding: 0 !important;
 
     &__list {
         list-style: none;
+    }
+
+    &__button {
+        width: 100%;
+        border-radius: 0 !important;
+        scale: 1;
+        font-size: 1.3rem !important;
+        padding: 1.3rem 2rem !important;
+        background-color: lighten($bg-color-light, 10%) !important;
+
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: lighten($bg-color-light, 15%) !important;
+            scale: 1.03;
+        }
+    }
+
+    &__icon {
+        display: inline-flex;
+        padding: 1rem;
+        margin-right: 0.5rem;
+        margin-top: 1rem;
     }
 }
 

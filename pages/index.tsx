@@ -1,10 +1,12 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import AreaChart from "../components/charts/AreaChart";
 import HomepageCenter from "../components/layout/Homepage/HomepageCenter";
 import HomepageFullWidth from "../components/layout/Homepage/HomepageFullWidth";
 import HomepageLayout from "../components/layout/Homepage/HomepageLayout";
 import HomepageSidebar from "../components/layout/Homepage/HomepageSidebar";
+import HomepageTwoColumns from "../components/layout/Homepage/HomepageTwoColumns";
 import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
 import LiveStatsTable from "../components/LiveStatsTable/LiveStatsTable";
 import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
@@ -79,6 +81,14 @@ const HomePage: React.FC<{
                 <HomepageFullWidth>
                     <LiveStatisticsBar />
                 </HomepageFullWidth>
+
+                <HomepageTwoColumns>
+                    <AreaChart title="Twitch concurrent viewers" color="rgb(141, 250, 148)" />
+                </HomepageTwoColumns>
+                <HomepageTwoColumns>
+                    <AreaChart title="Twitch concurrent channels" color="rgb(255, 154, 67)" />
+                </HomepageTwoColumns>
+
                 <HomepageCenter>
                     <StatsByMonth />
                 </HomepageCenter>

@@ -1,7 +1,8 @@
 .sidebar {
-    grid-column: 8 / 11;
+    grid-column: 16 / 21;
 
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    justify-content: center;
 }

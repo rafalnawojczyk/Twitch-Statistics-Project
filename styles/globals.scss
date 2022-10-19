@@ -33,3 +33,9 @@ h5,
 h6 {
     font-family: "Lato", sans-serif;
 }
+
+.recharts-tooltip-wrapper {
+    &:focus {
+        outline: none;
+    }
+}

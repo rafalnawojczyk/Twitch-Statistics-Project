@@ -21,6 +21,7 @@ const LiveStatisticsBar = () => {
             {data.map(stats => {
                 return (
                     <LiveStatsBox
+                        key={stats.title}
                         title={stats.title}
                         live={stats.live}
                         value={stats.value}

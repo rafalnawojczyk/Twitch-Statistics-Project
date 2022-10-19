@@ -1,0 +1,43 @@
+@import "../../styles/variables";
+
+.tooltip {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background-color: rgba($bg-color-dark, 0.9);
+    border-radius: $border-radius-small;
+    padding: 1rem;
+    &__box {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        opacity: 0.9;
+    }
+
+    &__date {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+
+    &__label {
+        font-size: 1.2rem;
+    }
+
+    &__value {
+        margin-left: 1rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        letter-spacing: 0.6px;
+    }
+}
+
+.Channels {
+    color: rgb(141, 250, 148);
+}
+
+.Viewers {
+    color: rgb(255, 154, 67);
+}

@@ -1,0 +1,19 @@
+.chart {
+    &__wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 15rem;
+        margin-bottom: 1rem;
+        padding: 2rem 1rem 0.5rem 1rem !important;
+    }
+}
+
+.icon {
+    display: inline-flex;
+    padding: 1rem;
+    margin-right: 0.8rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
