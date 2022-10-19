@@ -26,6 +26,7 @@ const AreaChart: React.FC<{ color: string; title: string }> = props => {
             <Card className={styles.chart__wrapper}>
                 <ResponsiveContainer>
                     <AreaCharts
+                        syncId={"stats"}
                         width={100}
                         height={60}
                         data={data}

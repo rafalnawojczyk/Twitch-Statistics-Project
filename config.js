@@ -1615,3 +1615,66 @@ export const DUMMY_CHART_LIVE_DATA = [
         previousWeekViewers: 2680000,
     },
 ];
+
+export const DUMMY_LANGUAGE_DATA = [
+    {
+        title: "English",
+        averageViewers: 1139261,
+        averageChannels: 33994,
+        chartData: [],
+    },
+    {
+        title: "Spanish",
+        averageViewers: 239261,
+        averageChannels: 6900,
+        chartData: [],
+    },
+    {
+        title: "Portuguese",
+        averageViewers: 164000,
+        averageChannels: 4174,
+        chartData: [],
+    },
+    {
+        title: "French",
+        averageViewers: 139000,
+        averageChannels: 3370,
+        chartData: [],
+    },
+    {
+        title: "German",
+        averageViewers: 159000,
+        averageChannels: 3700,
+        chartData: [],
+    },
+    {
+        title: "Russian",
+        averageViewers: 179000,
+        averageChannels: 2939,
+        chartData: [],
+    },
+    {
+        title: "Korean",
+        averageViewers: 125000,
+        averageChannels: 1900,
+        chartData: [],
+    },
+    {
+        title: "Italian",
+        averageViewers: 38000,
+        averageChannels: 915,
+        chartData: [],
+    },
+    {
+        title: "Japanese",
+        averageViewers: 84000,
+        averageChannels: 2300,
+        chartData: [],
+    },
+    {
+        title: "Turkish",
+        averageViewers: 35000,
+        averageChannels: 663,
+        chartData: [],
+    },
+];

@@ -2,6 +2,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import AreaChart from "../components/charts/AreaChart";
+import LanguageStatsTable from "../components/LanguageStatsTable/LanguageStatsTable";
 import HomepageCenter from "../components/layout/Homepage/HomepageCenter";
 import HomepageFullWidth from "../components/layout/Homepage/HomepageFullWidth";
 import HomepageLayout from "../components/layout/Homepage/HomepageLayout";
@@ -10,7 +11,6 @@ import HomepageTwoColumns from "../components/layout/Homepage/HomepageTwoColumns
 import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
 import LiveStatsTable from "../components/LiveStatsTable/LiveStatsTable";
 import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
-
 import { SERVER_LINK } from "../config";
 import Stats from "../models/Stats";
 import TopHourlyStats from "../models/TopHourlyStats";
@@ -91,6 +91,7 @@ const HomePage: React.FC<{
 
                 <HomepageCenter>
                     <StatsByMonth />
+                    <LanguageStatsTable />
                 </HomepageCenter>
                 <HomepageSidebar>
                     <LiveStatsTable />

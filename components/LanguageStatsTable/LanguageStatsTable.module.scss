@@ -1,0 +1,50 @@
+@import "../../styles/mixins";
+
+.stats {
+    display: grid;
+    grid-template-columns: 84fr 40fr;
+
+    &__charts {
+        grid-column: 2 / 3;
+        grid-row: 1/ 11;
+    }
+
+    &__value {
+        font-size: 1.2rem;
+    }
+
+    &__grid {
+        display: grid;
+        column-gap: 1.5rem;
+
+        padding-bottom: 0.2rem;
+        padding-top: 0.2rem;
+        grid-template-columns: 10fr 40fr 12fr 12fr;
+
+        align-items: center;
+        justify-items: end;
+
+        position: relative;
+
+        &:not(:last-child)::after {
+            content: "";
+            width: 100%;
+            position: absolute;
+            top: 100%;
+            opacity: 0.4;
+
+            @include horizontal-line;
+        }
+    }
+}
+
+.center {
+    text-align: center;
+    word-spacing: normal;
+    justify-self: center;
+}
+
+.left {
+    text-align: start;
+    justify-self: start;
+}
