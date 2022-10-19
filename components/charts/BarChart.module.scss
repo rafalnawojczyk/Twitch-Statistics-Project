@@ -1,8 +1,22 @@
-.wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-    height: 4rem;
-    justify-self: center;
+.chart {
+    &__wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        height: 3rem;
+        justify-self: center;
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
+    &__details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;
+        font-size: 1.3rem;
+        opacity: 0.8;
+        margin-bottom: -0.2rem;
+    }
 }

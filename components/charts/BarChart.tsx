@@ -10,328 +10,342 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
+import BarChartLabel from "./BarChartLabel";
+import { useState } from "react";
 
 const BarChart = () => {
+    const [date, setDate] = useState("");
+    const [value, setValue] = useState("");
+
     const data = [
         {
-            name: "Page A",
-            uv: 3200,
+            name: "13 Oct, 2022 07:30",
+            value: 3200,
             pv: 2400,
         },
         {
-            name: "Page B",
-            uv: 3000,
+            name: "13 Oct, 2022 07:30",
+            value: 3000,
             pv: 1398,
         },
         {
-            name: "Page C",
-            uv: 2000,
+            name: "14 Oct, 2022 12:10",
+            value: 2000,
             pv: 5000,
         },
         {
-            name: "Page D",
-            uv: 2780,
+            name: "15 Oct, 2022 07:30",
+            value: 2780,
             pv: 3908,
         },
         {
-            name: "Page E",
-            uv: 1890,
+            name: "16 Oct, 2022 08:10",
+            value: 1890,
             pv: 4200,
         },
         {
-            name: "Page F",
-            uv: 2390,
+            name: "17 Oct, 2022 10:20",
+            value: 2390,
             pv: 3800,
         },
         {
-            name: "Page G",
-            uv: 3490,
+            name: "18 Oct, 2022 12:30",
+            value: 3490,
             pv: 4300,
         },
         {
-            name: "Page A",
-            uv: 3200,
+            name: "13 Oct, 2022 07:30",
+            value: 3200,
             pv: 2400,
         },
         {
-            name: "Page B",
-            uv: 3000,
+            name: "13 Oct, 2022 07:30",
+            value: 3000,
             pv: 1398,
         },
         {
-            name: "Page C",
-            uv: 2000,
+            name: "14 Oct, 2022 12:10",
+            value: 2000,
             pv: 5000,
         },
         {
-            name: "Page D",
-            uv: 2780,
+            name: "15 Oct, 2022 07:30",
+            value: 2780,
             pv: 3908,
         },
         {
-            name: "Page E",
-            uv: 1890,
+            name: "16 Oct, 2022 08:10",
+            value: 1890,
             pv: 4200,
         },
         {
-            name: "Page F",
-            uv: 2390,
+            name: "17 Oct, 2022 10:20",
+            value: 2390,
             pv: 3800,
         },
         {
-            name: "Page G",
-            uv: 3490,
+            name: "18 Oct, 2022 12:30",
+            value: 3490,
             pv: 4300,
         },
         {
-            name: "Page A",
-            uv: 3200,
+            name: "13 Oct, 2022 07:30",
+            value: 3200,
             pv: 2400,
         },
         {
-            name: "Page B",
-            uv: 3000,
+            name: "13 Oct, 2022 07:30",
+            value: 3000,
             pv: 1398,
         },
         {
-            name: "Page C",
-            uv: 2000,
+            name: "14 Oct, 2022 12:10",
+            value: 2000,
             pv: 5000,
         },
         {
-            name: "Page D",
-            uv: 2780,
+            name: "15 Oct, 2022 07:30",
+            value: 2780,
             pv: 3908,
         },
         {
-            name: "Page E",
-            uv: 1890,
+            name: "16 Oct, 2022 08:10",
+            value: 1890,
             pv: 4200,
         },
         {
-            name: "Page F",
-            uv: 2390,
+            name: "17 Oct, 2022 10:20",
+            value: 2390,
             pv: 3800,
         },
         {
-            name: "Page G",
-            uv: 3490,
+            name: "18 Oct, 2022 12:30",
+            value: 3490,
             pv: 4300,
         },
         {
-            name: "Page A",
-            uv: 3200,
+            name: "13 Oct, 2022 07:30",
+            value: 3200,
             pv: 2400,
         },
         {
-            name: "Page B",
-            uv: 3000,
+            name: "13 Oct, 2022 07:30",
+            value: 3000,
             pv: 1398,
         },
         {
-            name: "Page C",
-            uv: 2000,
+            name: "14 Oct, 2022 12:10",
+            value: 2000,
             pv: 5000,
         },
         {
-            name: "Page D",
-            uv: 2780,
+            name: "15 Oct, 2022 07:30",
+            value: 2780,
             pv: 3908,
         },
         {
-            name: "Page E",
-            uv: 1890,
+            name: "16 Oct, 2022 08:10",
+            value: 1890,
             pv: 4200,
         },
         {
-            name: "Page F",
-            uv: 2390,
+            name: "17 Oct, 2022 10:20",
+            value: 2390,
             pv: 3800,
         },
         {
-            name: "Page G",
-            uv: 3490,
+            name: "18 Oct, 2022 12:30",
+            value: 3490,
             pv: 4300,
         },
         {
-            name: "Page A",
-            uv: 3200,
+            name: "13 Oct, 2022 07:30",
+            value: 3200,
             pv: 2400,
         },
         {
-            name: "Page B",
-            uv: 3000,
+            name: "13 Oct, 2022 07:30",
+            value: 3000,
             pv: 1398,
         },
         {
-            name: "Page C",
-            uv: 2000,
+            name: "14 Oct, 2022 12:10",
+            value: 2000,
             pv: 5000,
         },
         {
-            name: "Page D",
-            uv: 2780,
+            name: "15 Oct, 2022 07:30",
+            value: 2780,
             pv: 3908,
         },
         {
-            name: "Page E",
-            uv: 1890,
+            name: "16 Oct, 2022 08:10",
+            value: 1890,
             pv: 4200,
         },
         {
-            name: "Page F",
-            uv: 2390,
+            name: "17 Oct, 2022 10:20",
+            value: 2390,
             pv: 3800,
         },
         {
-            name: "Page G",
-            uv: 3490,
+            name: "18 Oct, 2022 12:30",
+            value: 3490,
             pv: 4300,
         },
         {
-            name: "Page A",
-            uv: 3200,
+            name: "13 Oct, 2022 07:30",
+            value: 3200,
             pv: 2400,
         },
         {
-            name: "Page B",
-            uv: 3000,
+            name: "13 Oct, 2022 07:30",
+            value: 3000,
             pv: 1398,
         },
         {
-            name: "Page C",
-            uv: 2000,
+            name: "14 Oct, 2022 12:10",
+            value: 2000,
             pv: 5000,
         },
         {
-            name: "Page D",
-            uv: 2780,
+            name: "15 Oct, 2022 07:30",
+            value: 2780,
             pv: 3908,
         },
         {
-            name: "Page E",
-            uv: 1890,
+            name: "16 Oct, 2022 08:10",
+            value: 1890,
             pv: 4200,
         },
         {
-            name: "Page F",
-            uv: 2390,
+            name: "17 Oct, 2022 10:20",
+            value: 2390,
             pv: 3800,
         },
         {
-            name: "Page G",
-            uv: 3490,
+            name: "18 Oct, 2022 12:30",
+            value: 3490,
             pv: 4300,
         },
         {
-            name: "Page A",
-            uv: 3200,
+            name: "13 Oct, 2022 07:30",
+            value: 3200,
             pv: 2400,
         },
         {
-            name: "Page B",
-            uv: 3000,
+            name: "13 Oct, 2022 07:30",
+            value: 3000,
             pv: 1398,
         },
         {
-            name: "Page C",
-            uv: 2000,
+            name: "14 Oct, 2022 12:10",
+            value: 2000,
             pv: 5000,
         },
         {
-            name: "Page D",
-            uv: 2780,
+            name: "15 Oct, 2022 07:30",
+            value: 2780,
             pv: 3908,
         },
         {
-            name: "Page E",
-            uv: 1890,
+            name: "16 Oct, 2022 08:10",
+            value: 1890,
             pv: 4200,
         },
         {
-            name: "Page F",
-            uv: 2390,
+            name: "17 Oct, 2022 10:20",
+            value: 2390,
             pv: 3800,
         },
         {
-            name: "Page G",
-            uv: 3490,
+            name: "18 Oct, 2022 12:30",
+            value: 3490,
             pv: 4300,
         },
         {
-            name: "Page A",
-            uv: 3200,
+            name: "13 Oct, 2022 07:30",
+            value: 3200,
             pv: 2400,
         },
         {
-            name: "Page B",
-            uv: 3000,
+            name: "13 Oct, 2022 07:30",
+            value: 3000,
             pv: 1398,
         },
         {
-            name: "Page C",
-            uv: 2000,
+            name: "14 Oct, 2022 12:10",
+            value: 2000,
             pv: 5000,
         },
         {
-            name: "Page D",
-            uv: 2780,
+            name: "15 Oct, 2022 07:30",
+            value: 2780,
             pv: 3908,
         },
         {
-            name: "Page E",
-            uv: 1890,
+            name: "16 Oct, 2022 08:10",
+            value: 1890,
             pv: 4200,
         },
         {
-            name: "Page F",
-            uv: 2390,
+            name: "17 Oct, 2022 10:20",
+            value: 2390,
             pv: 3800,
         },
         {
-            name: "Page G",
-            uv: 3490,
+            name: "18 Oct, 2022 12:30",
+            value: 3490,
             pv: 4300,
         },
         {
-            name: "Page A",
-            uv: 3200,
+            name: "13 Oct, 2022 07:30",
+            value: 3200,
             pv: 2400,
         },
         {
-            name: "Page B",
-            uv: 3000,
+            name: "13 Oct, 2022 07:30",
+            value: 3000,
             pv: 1398,
         },
         {
-            name: "Page C",
-            uv: 2000,
+            name: "14 Oct, 2022 12:10",
+            value: 2000,
             pv: 5000,
         },
         {
-            name: "Page D",
-            uv: 2780,
+            name: "15 Oct, 2022 07:30",
+            value: 2780,
             pv: 3908,
         },
         {
-            name: "Page E",
-            uv: 1890,
+            name: "16 Oct, 2022 08:10",
+            value: 1890,
             pv: 4200,
         },
         {
-            name: "Page F",
-            uv: 2390,
+            name: "17 Oct, 2022 10:20",
+            value: 2390,
             pv: 3800,
         },
         {
-            name: "Page G",
-            uv: 3490,
+            name: "18 Oct, 2022 12:30",
+            value: 3490,
             pv: 4300,
         },
     ];
 
+    const changeDetailsHandler = (date: string, value: number) => {
+        setDate(date);
+        setValue(value.toLocaleString());
+    };
+
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.chart__wrapper}>
+            <div className={styles.chart__details}>
+                <p>{date}</p>
+                <p>{value}</p>
+            </div>
             <ResponsiveContainer>
                 <BarCharts
                     syncId={"langChart"}
@@ -341,11 +355,11 @@ const BarChart = () => {
                     data={data}
                 >
                     <Tooltip
-                        content={<div></div>}
-                        cursor={{ fill: "rgb(255, 207, 42)" }}
+                        content={<BarChartLabel onMouse={changeDetailsHandler} />}
+                        cursor={{ fill: "rgba(255, 207, 42, .8)" }}
                         position={{ y: -100 }}
                     />
-                    <Bar dataKey="pv" fill="rgba(255, 207, 42, .5)" />
+                    <Bar dataKey="value" fill="rgba(255, 207, 42, .5)" />
                 </BarCharts>
             </ResponsiveContainer>
         </div>
