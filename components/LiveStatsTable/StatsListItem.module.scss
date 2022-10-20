@@ -4,6 +4,13 @@
 .activeChannels {
     background-color: $fill-color-green;
 }
+.activeGames {
+    background-color: $fill-color-orange;
+}
+
+.topChannels {
+    background-color: $fill-color-salmon;
+}
 
 .stats-list {
     &__item {

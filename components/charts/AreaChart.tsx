@@ -1,15 +1,14 @@
 import Card from "../layout/Card";
 import styles from "./AreaChart.module.scss";
 import { AreaChart as AreaCharts, Area, Tooltip, ResponsiveContainer } from "recharts";
-import { DUMMY_CHART_LIVE_DATA } from "../../config";
+
 import CustomTooltip from "./CustomTooltip";
-import LiveStatsTitle from "../LiveStatsTable/LiveStatsTitle";
 import StatsTitle from "../StatsByMonth/StatsTitle";
 import LiveIndicator from "../layout/svg/LiveIndicator";
+import AreaChartData from "../../models/AreaChartData";
 
-const data = DUMMY_CHART_LIVE_DATA;
-
-const AreaChart: React.FC<{ color: string; title: string }> = props => {
+const AreaChart: React.FC<{ color: string; title: string; data: AreaChartData[] }> = props => {
+    const { data } = props;
     const randomClass = Math.abs(Math.random() * 1000) + "";
     const randomClass2 = Math.abs(Math.random() * 1000) + "";
 
@@ -54,14 +53,14 @@ const AreaChart: React.FC<{ color: string; title: string }> = props => {
                         <Tooltip cursor={false} content={<CustomTooltip />} />
                         <Area
                             type="monotone"
-                            dataKey="previousWeekViewers"
+                            dataKey="previousValue"
                             stroke={"rgba(241, 241, 241, 0.5)"}
                             fill={`url(#${randomClass2})`}
                             strokeDasharray="4 4"
                         />
                         <Area
                             type="monotone"
-                            dataKey="thisWeekViewers"
+                            dataKey="actualValue"
                             stroke={props.color}
                             fill={`url(#${randomClass})`}
                         />

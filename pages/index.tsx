@@ -11,7 +11,20 @@ import HomepageTwoColumns from "../components/layout/Homepage/HomepageTwoColumns
 import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
 import LiveStatsTable from "../components/LiveStatsTable/LiveStatsTable";
 import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
-import { SERVER_LINK } from "../config";
+import {
+    SERVER_LINK,
+    DUMMY_LANGUAGE_DATA,
+    DUMMY_LIVE_TABLE_DATA,
+    DUMMY_MONTHLY_DATA,
+    DUMMY_MAX_MONTHLY_DATA,
+    DUMMY_LIVE_DATA,
+    DUMMY_CHART_LIVE_DATA,
+} from "../config";
+import AreaChartData from "../models/AreaChartData";
+import LanguageStats from "../models/LanguageStats";
+import LiveBarStats from "../models/LiveBarStats";
+import LiveTableData from "../models/LiveTableData";
+import MonthlyData from "../models/MonthlyData";
 import Stats from "../models/Stats";
 import TopHourlyStats from "../models/TopHourlyStats";
 
@@ -28,75 +41,54 @@ const HomePage: React.FC<{
         statistics: Stats[];
     };
 }> = props => {
-    const [topLiveChannels, setTopLiveChannels] = useState<{
-        statistics: Stats[];
-        totalViewers: number;
-    }>(props.typedLiveChannels);
-    const [topLiveGames, setTopLiveGames] = useState<{
-        statistics: Stats[];
-        totalViewers: number;
-    }>(props.typedLiveGames);
-    const [topWeeklyChannels, setTopWeeklyChannels] = useState<{ statistics: Stats[] }>(
-        props.typedWeeklyChannels
-    );
-
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchTopData = async () => {
-            const response = await fetch(`${SERVER_LINK}api/twitch-get-top-statistics`);
-            const data: TopHourlyStats = await response.json();
-
-            if (!data.hourlyGames || !data.hourlyChannels || !data.weeklyTop) {
-                throw new Error();
-            }
-
-            setTopLiveChannels(data.hourlyChannels);
-            setTopLiveGames(data.hourlyGames);
-            setTopWeeklyChannels(data.weeklyTop);
-
-            setIsLoading(false);
-        };
-
-        try {
-            fetchTopData();
-        } catch (err) {
-            // change state of error and add informations about API error on frontend
-        }
-        // prepare dummy data so it will be shown on screen while loading blurred with loading spinner above it
-        // prepare API route to get all needed informations to parse homepage.
-    }, []);
-
-    // const topLiveChannels: TopStatsObj = JSON.parse(props.typedLiveChannels);
-    // const topLiveGames: TopStatsObj = JSON.parse(props.typedLiveGames);
-    // const topWeeklyChannels: TopStatsObj = JSON.parse(props.typedWeeklyChannels);
+    // TODO: THINGS THAT SHOULD BE PARSED IN SERVER SIDE
+    const languageStatsData: LanguageStats[] = DUMMY_LANGUAGE_DATA;
+    const liveStatsData: {
+        [key: string]: LiveTableData;
+    } = DUMMY_LIVE_TABLE_DATA;
+    const monthlyData: MonthlyData = DUMMY_MONTHLY_DATA;
+    const maxMonthlyData: MonthlyData = DUMMY_MAX_MONTHLY_DATA;
+    const liveBarData: LiveBarStats[] = DUMMY_LIVE_DATA;
+    const areaChartDataChannels: AreaChartData[] = DUMMY_CHART_LIVE_DATA;
+    const areaChartDataViewers: AreaChartData[] = DUMMY_CHART_LIVE_DATA;
 
     return (
         <>
             <Head>
-                <title>React Meetups</title>
-                <meta name="description" content="Browse a huge list of meetups" />
+                <title>Twitch statistics and charts | TWITCHSTATISTICS</title>
+                <meta
+                    name="description"
+                    content="Browse a huge list of Twitch statistics and charts. Live charts for streamers and games."
+                />
             </Head>
             <HomepageLayout>
                 <HomepageFullWidth>
-                    <LiveStatisticsBar />
+                    <LiveStatisticsBar data={liveBarData} />
                 </HomepageFullWidth>
 
                 <HomepageTwoColumns>
-                    <AreaChart title="Twitch concurrent viewers" color="rgb(141, 250, 148)" />
+                    <AreaChart
+                        data={areaChartDataViewers}
+                        title="Twitch concurrent viewers"
+                        color="rgb(141, 250, 148)"
+                    />
                 </HomepageTwoColumns>
                 <HomepageTwoColumns>
-                    <AreaChart title="Twitch concurrent channels" color="rgb(255, 154, 67)" />
+                    <AreaChart
+                        data={areaChartDataChannels}
+                        title="Twitch concurrent channels"
+                        color="rgb(255, 154, 67)"
+                    />
                 </HomepageTwoColumns>
 
                 <HomepageCenter>
-                    <StatsByMonth />
-                    <LanguageStatsTable />
+                    <StatsByMonth data={monthlyData} maxData={maxMonthlyData} />
+                    <LanguageStatsTable data={languageStatsData} />
                 </HomepageCenter>
                 <HomepageSidebar>
-                    <LiveStatsTable />
-                    <LiveStatsTable />
-                    <LiveStatsTable />
+                    <LiveStatsTable data={liveStatsData.activeChannels} />
+                    <LiveStatsTable data={liveStatsData.activeGames} />
+                    <LiveStatsTable data={liveStatsData.topChannels} />
                 </HomepageSidebar>
             </HomepageLayout>
         </>
@@ -104,10 +96,6 @@ const HomePage: React.FC<{
 };
 
 export default HomePage;
-
-// get top live games
-// get top live channels
-// get top channels from last 7 days
 
 export const getStaticProps: GetStaticProps = async context => {
     const typedLiveGames: {

@@ -9,12 +9,18 @@
         transition: all 0.3s;
     }
 
+    &__title {
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+        background-color: transparent;
+    }
+
     &__wrapper {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: 20rem;
+        height: 24rem;
         justify-self: center;
         flex-direction: column;
         margin-top: 1rem;

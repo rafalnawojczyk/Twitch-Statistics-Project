@@ -10,7 +10,7 @@ const CustomTooltip = ({ active, payload }) => {
                         {payload[0].payload.type}
                     </span>
                     <p className={styles.tooltip__value}>
-                        {payload[0].payload.thisWeekViewers.toLocaleString()}
+                        {payload[0].payload.actualValue.toLocaleString()}
                     </p>
                 </div>
                 <div className={styles.tooltip__box}>
@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload }) => {
                         {payload[0].payload.type}, 7 days ago
                     </span>
                     <p className={styles.tooltip__value}>
-                        {payload[0].payload.previousWeekViewers.toLocaleString()}
+                        {payload[0].payload.previousValue.toLocaleString()}
                     </p>
                 </div>
             </div>
@@ -29,7 +29,3 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 export default CustomTooltip;
-
-// payload[0].payload.name - date
-// payload[0].payload.previousWeekViewers
-// payload[0].payload.thisWeekViewers

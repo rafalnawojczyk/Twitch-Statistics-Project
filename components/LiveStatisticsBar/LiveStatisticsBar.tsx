@@ -1,4 +1,4 @@
-import { DUMMY_LIVE_DATA } from "../../config";
+import LiveBarStats from "../../models/LiveBarStats";
 import Card from "../layout/Card";
 import styles from "./LiveStatisticsBar.module.scss";
 import LiveStatsBox from "./LiveStatsBox";
@@ -11,11 +11,8 @@ type statsType =
     | "peakViewers"
     | "peakChannels";
 
-const LiveStatisticsBar = () => {
-    // TODO: Fetch from DB
-
-    const data = DUMMY_LIVE_DATA;
-
+const LiveStatisticsBar: React.FC<{ data: LiveBarStats[] }> = props => {
+    const { data } = props;
     return (
         <Card className={styles["live-box"]}>
             {data.map(stats => {

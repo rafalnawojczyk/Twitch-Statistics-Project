@@ -1,22 +1,24 @@
 import Card from "../layout/Card";
 import LiveStatsTitle from "./LiveStatsTitle";
 import styles from "./LiveStatsTable.module.scss";
-import { DUMMY_LIVE_TABLE_DATA } from "../../config";
 import StatsListItem from "./StatsListItem";
 import StatsTitle from "../StatsByMonth/StatsTitle";
 
 import Button from "../ui/Button";
 import { useRouter } from "next/router";
 import LiveIndicator from "../layout/svg/LiveIndicator";
+import LiveTableData from "../../models/LiveTableData";
 
-const LiveStatsTable = () => {
-    const data = DUMMY_LIVE_TABLE_DATA.activeChannels;
+const LiveStatsTable: React.FC<{ data: LiveTableData }> = props => {
+    const { data } = props;
+
     const maxValue = Math.max(...data.stats.map(stats => stats.viewers));
+    console.log(maxValue);
     const router = useRouter();
+    const url = data.type === "activeGames" ? "/games" : "/channels";
 
     const clickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        const url = data.type === "activeGames" ? "/games" : "/channels";
 
         router.push(`${url}`);
     };
@@ -24,7 +26,7 @@ const LiveStatsTable = () => {
     return (
         <div className={styles.wrapper}>
             <StatsTitle
-                title="Top LIVE Channels"
+                title={`Top ${data.live ? "LIVE " : ""}${data.title}`}
                 icon={
                     <Card className={styles.stats__icon}>
                         <LiveIndicator />
@@ -41,6 +43,7 @@ const LiveStatsTable = () => {
                             maxValue={maxValue}
                             type={data.type}
                             data={stats}
+                            url={`${url}/`}
                         />
                     ))}
                 </ul>

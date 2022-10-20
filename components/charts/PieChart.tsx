@@ -1,72 +1,31 @@
-import { useState, useCallback } from "react";
-import { Label, Sector } from "recharts";
-import { ResponsiveContainer, Pie, PieChart as PieCharts, Cell, Tooltip } from "recharts";
+import { useState, useCallback, useEffect } from "react";
+import { ResponsiveContainer, Pie, PieChart as PieCharts, Cell, Sector } from "recharts";
 import { COLORS_ARRAY } from "../../config";
 import styles from "./PieChart.module.scss";
 
-const PieChart = () => {
-    const colors = COLORS_ARRAY;
+const PieChart: React.FC<{ title: string; data: { name: string; value: number }[] }> = props => {
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const data = [
-        {
-            name: "Group A",
-            value: 400,
-        },
-        {
-            name: "Group B",
-            value: 300,
-        },
-        {
-            name: "Group C",
-            value: 300,
-        },
-        {
-            name: "Group D",
-            value: 200,
-        },
-        {
-            name: "Group E",
-            value: 278,
-        },
-        {
-            name: "Group F",
-            value: 189,
-        },
-        {
-            name: "Group A",
-            value: 400,
-        },
-        {
-            name: "Group B",
-            value: 300,
-        },
-        {
-            name: "Group C",
-            value: 300,
-        },
-        {
-            name: "Group D",
-            value: 200,
-        },
-        {
-            name: "Group E",
-            value: 278,
-        },
-        {
-            name: "Group F",
-            value: 189,
-        },
-    ];
+    const colors = COLORS_ARRAY;
+    const data = props.data;
+    const maxIndex = data.length - 1;
 
-    // TODO: ADD A FUNCTION THAT WILL CHANGE ACTIVEINDEX EACH 3 SECONDS. EACH MOUSEOVER SHOULD RESET THAT TIMER
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveIndex(prevIndex => {
+                let finalIndex = ++prevIndex;
+                finalIndex = finalIndex > maxIndex ? 0 : finalIndex;
+                return finalIndex;
+            });
+        }, 2000);
+        return () => clearInterval(interval);
+    }, []);
 
     const renderActiveShape = (props: any) => {
         const RADIAN = Math.PI / 180;
         const {
             cx,
             cy,
-
             innerRadius,
             outerRadius,
             startAngle,
@@ -96,6 +55,7 @@ const PieChart = () => {
                     x={cx}
                     y={cy}
                     dy={0}
+                    fontSize={12}
                     textAnchor="middle"
                     className={styles.chart__value}
                     fill={"rgba(255,255,255, .8)"}
@@ -127,32 +87,6 @@ const PieChart = () => {
         );
     };
 
-    // const renderCustomizedLabel = ({
-    //     cx,
-    //     cy,
-    //     midAngle,
-    //     innerRadius,
-    //     outerRadius,
-    //     percent,
-    //     index,
-    // }) => {
-    //     const RADIAN = Math.PI / 180;
-    //     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    //     const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    //     const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    //     return (
-    //         <text
-    //             x={x}
-    //             y={y}
-    //             fill="white"
-    //             textAnchor={x > cx ? "start" : "end"}
-    //             dominantBaseline="central"
-    //         >
-    //             {`${(percent * 100).toFixed(0)}%`}
-    //         </text>
-    //     );
-    // };
     const onPieEnter = useCallback(
         (_, index) => {
             setActiveIndex(index);
@@ -162,6 +96,7 @@ const PieChart = () => {
 
     return (
         <div className={styles.chart__wrapper}>
+            <h4 className={styles.chart__title}>{props.title}</h4>
             <ResponsiveContainer>
                 <PieCharts width={730} height={250}>
                     <Pie
@@ -172,13 +107,14 @@ const PieChart = () => {
                         nameKey="name"
                         cx="50%"
                         cy="50%"
+                        fill={"transparent"}
                         labelLine={false}
                         paddingAngle={3}
                         innerRadius={70}
                         outerRadius={90}
                         onMouseEnter={onPieEnter}
                     >
-                        {data.map((entry, index) => (
+                        {data?.map((entry, index) => (
                             <Cell
                                 key={`cell-${index}`}
                                 fill={colors[index % colors.length]}
