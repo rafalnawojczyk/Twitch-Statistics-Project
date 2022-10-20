@@ -6,7 +6,11 @@
 
     &__charts {
         grid-column: 2 / 3;
-        grid-row: 1/ 11;
+        grid-row: 1/ 12;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
     }
 
     &__value {
@@ -19,7 +23,7 @@
 
         padding-bottom: 0.2rem;
         padding-top: 0.2rem;
-        grid-template-columns: 20fr 46fr 24fr 24fr;
+        grid-template-columns: 20fr 60fr 24fr 24fr;
 
         align-items: center;
         justify-items: end;

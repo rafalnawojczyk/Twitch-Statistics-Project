@@ -1678,3 +1678,16 @@ export const DUMMY_LANGUAGE_DATA = [
         chartData: [],
     },
 ];
+
+export const COLORS_ARRAY = [
+    "#a256ee",
+    " rgba(158, 161, 250, 1)",
+    " rgb(255, 154, 67)",
+    " rgb(255, 73, 139)",
+    "rgb(118, 249, 202)",
+    "rgb(255, 207, 42)",
+    "rgb(110, 196, 255)",
+    "rgb(141, 250, 148)",
+    " rgb(255, 87, 76)",
+    " rgb(156, 140, 255)",
+];

@@ -1,17 +1,7 @@
 import styles from "./BarChart.module.scss";
 
-import {
-    BarChart as BarCharts,
-    CartesianGrid,
-    Bar,
-    ResponsiveContainer,
-    Legend,
-    Tooltip,
-    XAxis,
-    YAxis,
-} from "recharts";
+import { BarChart as BarCharts, Bar, ResponsiveContainer, Tooltip } from "recharts";
 import BarChartLabel from "./BarChartLabel";
-import { useState } from "react";
 
 const BarChart = () => {
     const data = [

@@ -1,3 +1,4 @@
+import PieChart from "../charts/PieChart";
 import { DUMMY_LANGUAGE_DATA } from "../../config";
 import BarChart from "../charts/BarChart";
 import Card from "../layout/Card";
@@ -37,7 +38,10 @@ const LanguageStatsTable = () => {
                         </div>
                     );
                 })}
-                <div className={styles.stats__charts}>ROUND CHARTS</div>
+                <div className={styles.stats__charts}>
+                    <PieChart />
+                    <PieChart />
+                </div>
             </Card>
         </div>
     );
