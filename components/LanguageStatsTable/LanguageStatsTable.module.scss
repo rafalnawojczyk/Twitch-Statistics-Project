@@ -4,6 +4,10 @@
     display: grid;
     grid-template-columns: 60fr 40fr;
 
+    &__header {
+        padding: 1rem 3rem;
+    }
+
     &__charts {
         grid-column: 2 / 3;
         grid-row: 1/ 12;

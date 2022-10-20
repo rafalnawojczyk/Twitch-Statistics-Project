@@ -50,7 +50,9 @@ const LanguageStatsTable: React.FC<{ data: LanguageStats[] }> = props => {
 
     return (
         <div>
-            <StatsTitle title="Twitch stats by month" />
+            <div className={styles.stats__header}>
+                <StatsTitle title="Twitch stats by month" />
+            </div>
             <Card className={styles.stats}>
                 {dataIsLoading && <LoadingSpinner />}
                 {!dataIsLoading && (

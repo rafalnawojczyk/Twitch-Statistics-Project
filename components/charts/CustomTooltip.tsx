@@ -15,7 +15,7 @@ const CustomTooltip = ({ active, payload }) => {
                 </div>
                 <div className={styles.tooltip__box}>
                     <span className={` ${styles.tooltip__label}`}>
-                        {payload[0].payload.type}, 7 days ago
+                        {payload[0].payload.type} 7 days ago
                     </span>
                     <p className={styles.tooltip__value}>
                         {payload[0].payload.previousValue.toLocaleString()}

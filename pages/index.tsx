@@ -19,6 +19,7 @@ import {
     DUMMY_MAX_MONTHLY_DATA,
     DUMMY_LIVE_DATA,
     DUMMY_CHART_LIVE_DATA,
+    DUMMY_CHART_LIVE_VIEWERS_DATA,
 } from "../config";
 import AreaChartData from "../models/AreaChartData";
 import LanguageStats from "../models/LanguageStats";
@@ -50,7 +51,7 @@ const HomePage: React.FC<{
     const maxMonthlyData: MonthlyData = DUMMY_MAX_MONTHLY_DATA;
     const liveBarData: LiveBarStats[] = DUMMY_LIVE_DATA;
     const areaChartDataChannels: AreaChartData[] = DUMMY_CHART_LIVE_DATA;
-    const areaChartDataViewers: AreaChartData[] = DUMMY_CHART_LIVE_DATA;
+    const areaChartDataViewers: AreaChartData[] = DUMMY_CHART_LIVE_VIEWERS_DATA;
 
     return (
         <>
