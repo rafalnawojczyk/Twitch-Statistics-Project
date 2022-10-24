@@ -1,182 +1,120 @@
-import { HOURLY_CHANNELS_AMMOUNT, HOURLY_GAMES_AMMOUNT, MIN_VIEWIERS_AMOUNT } from "../../config";
-import Stats from "../../models/Stats";
-import TotalViews from "../../models/TotalViews";
+import { HOURLY_TOP_AMOUNT } from "../../config";
+import DataFromStreamsApi from "../../models/DataFromStreamsApi";
+import UnformattedStatsObj from "../../models/UnformattedStatsObj";
 
-const GetStreams: React.FC<{ wholeData: { statistics: {} } }> = props => {
-    return <p>{JSON.stringify(props.wholeData)}</p>;
+const GetStreams: React.FC<{ streamsData: DataFromStreamsApi }> = props => {
+    return <p>{JSON.stringify(props.streamsData)}</p>;
 };
 
 export async function getServerSideProps() {
     const getStream = async () => {
+        // 1. GET AUTH
         const authorizationObject = await fetch(`${process.env.SERVER}api/twitch-oauth-token`);
         const authorizationData: { data: { accessToken: string; tokenType: string }; ok: boolean } =
             await authorizationObject.json();
-
         if (!authorizationData.ok) throw new Error("Getting token failed.");
-
         let { accessToken, tokenType } = authorizationData.data;
         tokenType = tokenType.slice(0, 1).toUpperCase() + tokenType.slice(1);
-
         const authorization = `${tokenType} ${accessToken}`;
-        const wholeData: Stats[] = [];
-        const topHourlyChannels: Stats[] = [];
-        let pagination;
-        let shouldFetch = true;
 
-        while (shouldFetch) {
-            let url = process.env.GET_STREAMS_API_URL!;
-            if (i > 0) url = `${process.env.GET_STREAMS_API_URL}&after=${pagination}`;
+        // 2. GET STREAMS
+        const getStreamsResponse = await fetch(
+            `${process.env.SERVER}api/NEWtwitch-get-top-streams`,
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    authorization,
+                }),
+            }
+        );
+        const { streamsData }: { streamsData: DataFromStreamsApi[] } =
+            await getStreamsResponse.json();
 
-            const response = await fetch(url, {
-                method: "GET",
-                headers: {
-                    authorization: authorization,
-                    "Client-Id": process.env.TWITCH_CLIENT_ID!,
-                },
-            });
-            const data = await response.json();
-            const typedData: Stats[] = data.data.map(
-                (el: {
-                    user_name: string;
-                    viewer_count: number;
-                    thumbnail_url: string;
-                    user_id: string;
-                    game_name: string;
-                }) =>
-                    new Stats(
-                        el.user_name,
-                        +el.viewer_count,
-                        el.thumbnail_url,
-                        el.user_id,
-                        el.game_name
-                    )
-            );
+        const topHourlyChannels: DataFromStreamsApi[] = [];
+        let totalChannels = streamsData.length;
+        let totalViewers = 0;
+        let totalGames = 0;
+        const languageStats: UnformattedStatsObj = {};
+        const gamesStats: UnformattedStatsObj = {};
 
-            if (i === 0) topHourlyChannels.push(...typedData);
-            wholeData.push(...typedData);
-            pagination = data.pagination.cursor;
+        streamsData.forEach(stats => {
+            languageStats[stats.language] = languageStats[stats.language] || {
+                title: stats.language,
+                views: 0,
+                channels: 0,
+            };
+            languageStats[stats.language].views += stats.viewerCount;
+            languageStats[stats.language].channels!++;
 
-            if (data.data[0].viewer_count <= MIN_VIEWIERS_AMOUNT) shouldFetch = false;
-        }
-
-        const gamesViewers: { [key: string]: { gameStreaming: string; views: number } } = {};
-        let totalViewers: number = 0;
-
-        wholeData.forEach((stats: Stats) => {
-            gamesViewers[stats.gameStreaming!] = gamesViewers[stats.gameStreaming!] || {
-                gameStreaming: stats.gameStreaming,
+            gamesStats[stats.gameName] = gamesStats[stats.gameName] || {
+                title: stats.gameName,
                 views: 0,
             };
-            gamesViewers[stats.gameStreaming!].views += +stats.views;
-            totalViewers += +stats.views;
-        });
-        const sumHourlyChannels = wholeData.length;
-
-        //TODO: temporary
-
-        wholeData.length = HOURLY_CHANNELS_AMMOUNT;
-
-        const topHourlyGamesResponse = await fetch(process.env.GET_GAMES_API_URL!, {
-            method: "GET",
-            headers: {
-                authorization: authorization,
-                "Client-Id": process.env.TWITCH_CLIENT_ID!,
-            },
+            gamesStats[stats.gameName].views += stats.viewerCount;
+            totalViewers += stats.viewerCount;
         });
 
-        const topHourlyGamesData = await topHourlyGamesResponse.json();
-        const topHourlyGames = topHourlyGamesData.data
-            .map((el: { name: string; id: string; box_art_url: string }) => {
-                if (gamesViewers[el.name])
-                    return new Stats(el.name, gamesViewers[el.name].views, el.box_art_url, el.id);
-            })
-            .sort((a: Stats, b: Stats) => b.views - a.views);
+        totalGames = Object.keys(gamesStats).length;
 
-        const sumHourlyGames: number = topHourlyGames.length;
+        // 3. Language stats:
+        const languageResponse = await fetch(`${process.env.SERVER}api/NEWpost-language-stats`, {
+            method: "POST",
+            body: JSON.stringify({
+                languageStats,
+            }),
+        });
 
-        if (topHourlyGames.length > HOURLY_GAMES_AMMOUNT) topHourlyGames.length = 50;
+        // 4. Games stats:
+        // const gamesResponse = await fetch(`${process.env.SERVER}api/NEWpost-games-stats`, {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         authorization,
+        //         gamesStats,
+        //         totalGames,
+        //     }),
+        // });
+
+        // 5. Live data for tables
+        // const liveStatsResponse = await fetch(`${process.env.SERVER}api/NEWpost-live-stats-data`, {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         authorization,
+        //         activeChannels: streamsData.slice(0, HOURLY_TOP_AMOUNT),
+        //         activeGames: gamesStats,
+        //     }),
+        // });
+
+        // 6. Data for area charts
+        const chartsResponse = await fetch(`${process.env.SERVER}api/NEWpost-area-chart-data`, {
+            method: "POST",
+            body: JSON.stringify({
+                totalGames,
+                totalChannels,
+                totalViewers,
+            }),
+        });
+
+        // 7. Data for live bar
+        const liveBarResponse = await fetch(`${process.env.SERVER}api/NEWpost-live-bar-data`, {
+            method: "POST",
+            body: JSON.stringify({
+                totalGames,
+                totalChannels,
+                totalViewers,
+            }),
+        });
 
         return {
-            wholeData,
-            topHourlyGames,
-            topHourlyChannels,
-            totalViewers,
-            sumHourlyGames,
-            sumHourlyChannels,
+            streamsData,
         };
     };
 
     try {
-        const responseData = await getStream();
-
-        const {
-            wholeData: initialData,
-            topHourlyChannels,
-            topHourlyGames,
-            totalViewers,
-            sumHourlyChannels,
-            sumHourlyGames,
-        } = responseData;
-
-        const statistics: any = {};
-        initialData.forEach(channel => (statistics[channel.id] = channel.views));
-
-        const wholeData = { statistics };
-
-        const hourlyTop = await fetch(`${process.env.SERVER}api/twitch-hourly-top-statistics`, {
-            method: "POST",
-            body: JSON.stringify({
-                hourlyGames: { topHourlyGames, totalViewers },
-                hourlyChannels: { topHourlyChannels, totalViewers },
-            }),
-        });
-
-        const hourlyResponse = await fetch(
-            `${process.env.SERVER}api/twitch-views-statistics-hourly`,
-            {
-                method: "POST",
-                body: JSON.stringify(wholeData),
-            }
-        );
-
-        const hourlyStatistics = await fetch(
-            `${process.env.SERVER}api/twitch-overall-statistics-hourly`,
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    channels: sumHourlyChannels,
-                    games: sumHourlyGames,
-                    viewers: totalViewers,
-                }),
-            }
-        );
-
-        // const topHourlyResponse = await fetch(
-        //     `${process.env.SERVER}api/twitch-top-channels-hourly`,
-        //     {
-        //         method: "POST",
-        //         body: JSON.stringify({ topHourlyChannels, totalViewers }),
-        //     }
-        // );
-
-        // const topGamesResponse = await fetch(`${process.env.SERVER}api/twitch-top-games-hourly`, {
-        //     method: "POST",
-        //     body: JSON.stringify({ topHourlyGames, totalViewers }),
-        // });
-
-        const totalViewsTyped = new TotalViews(new Date().toISOString(), totalViewers);
-
-        const hourlyViewsResponse = await fetch(
-            `${process.env.SERVER}api/twitch-total-views-hourly`,
-            {
-                method: "POST",
-                body: JSON.stringify(totalViewsTyped),
-            }
-        );
+        const { streamsData } = await getStream();
 
         return {
             props: {
-                wholeData,
+                streamsData,
             },
         };
     } catch (err) {

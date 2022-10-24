@@ -13,7 +13,7 @@ const LiveStatsTable: React.FC<{ data: LiveTableData }> = props => {
     const { data } = props;
 
     const maxValue = Math.max(...data.stats.map(stats => stats.viewers));
-    console.log(maxValue);
+
     const router = useRouter();
     const url = data.type === "activeGames" ? "/games" : "/channels";
 

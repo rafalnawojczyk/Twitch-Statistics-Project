@@ -1,6 +1,6 @@
 export default interface AreaChartData {
     name: string;
     actualValue: number;
-    type: string;
+    type: "Channels" | "Viewers" | "Games";
     previousValue: number;
 }

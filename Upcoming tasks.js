@@ -12,3 +12,4 @@
 //
 // TODO: TO run API routes each hours use cron-jobs in vercel
 // https://vercel.com/docs/concepts/solutions/cron-jobs
+// SWR VERCEL to revalidate on demand
