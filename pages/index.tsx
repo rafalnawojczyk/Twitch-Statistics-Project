@@ -10,7 +10,16 @@ import HomepageTwoColumns from "../components/layout/Homepage/HomepageTwoColumns
 import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
 import LiveStatsTable from "../components/LiveStatsTable/LiveStatsTable";
 import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
-import { SERVER } from "../config";
+import {
+    DUMMY_CHART_LIVE_DATA,
+    DUMMY_CHART_LIVE_VIEWERS_DATA,
+    DUMMY_LANGUAGE_DATA,
+    DUMMY_LIVE_DATA,
+    DUMMY_LIVE_TABLE_DATA,
+    DUMMY_MAX_MONTHLY_DATA,
+    DUMMY_MONTHLY_DATA,
+    SERVER,
+} from "../config";
 import AreaChartData from "../models/AreaChartData";
 import HomepageData from "../models/HomepageData";
 import LanguageStats from "../models/LanguageStats";
@@ -78,13 +87,36 @@ const HomePage: React.FC<{ homepageData: HomepageData }> = ({ homepageData }) =>
 export default HomePage;
 
 export const getStaticProps: GetStaticProps = async context => {
-    const response = await fetch(`${SERVER}api/get-homepage-data`);
-    const homepageData: HomepageData = (await response.json()).data;
+    const getHomepageData = async () => {
+        const response = await fetch(`${SERVER}api/get-homepage-data`);
+        const homepageData: HomepageData = (await response.json()).data;
 
-    return {
-        props: {
-            homepageData,
-        },
-        revalidate: 3600,
+        return { ...homepageData };
     };
+
+    try {
+        const homepageData = await getHomepageData();
+        return {
+            props: {
+                homepageData,
+            },
+            revalidate: 3600,
+        };
+    } catch (err: any) {
+        return {
+            props: {
+                languageStats: DUMMY_LANGUAGE_DATA,
+                liveStats: DUMMY_LIVE_TABLE_DATA,
+                areaCharts: {
+                    viewers: DUMMY_CHART_LIVE_VIEWERS_DATA,
+                    channels: DUMMY_CHART_LIVE_DATA,
+                    games: DUMMY_CHART_LIVE_DATA,
+                },
+                liveBar: DUMMY_LIVE_DATA,
+                monthlyOverview: DUMMY_MONTHLY_DATA,
+                maxMonthlyOverview: DUMMY_MAX_MONTHLY_DATA,
+            },
+            revalidate: 3600,
+        };
+    }
 };
