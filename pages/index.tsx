@@ -1,4 +1,6 @@
 import { GetStaticProps } from "next";
+import { MongoClient } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 import Head from "next/head";
 import AreaChart from "../components/charts/AreaChart";
 import LanguageStatsTable from "../components/LanguageStatsTable/LanguageStatsTable";
@@ -10,16 +12,7 @@ import HomepageTwoColumns from "../components/layout/Homepage/HomepageTwoColumns
 import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
 import LiveStatsTable from "../components/LiveStatsTable/LiveStatsTable";
 import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
-import {
-    DUMMY_CHART_LIVE_DATA,
-    DUMMY_CHART_LIVE_VIEWERS_DATA,
-    DUMMY_LANGUAGE_DATA,
-    DUMMY_LIVE_DATA,
-    DUMMY_LIVE_TABLE_DATA,
-    DUMMY_MAX_MONTHLY_DATA,
-    DUMMY_MONTHLY_DATA,
-    SERVER,
-} from "../config";
+import { SERVER } from "../config";
 import AreaChartData from "../models/AreaChartData";
 import HomepageData from "../models/HomepageData";
 import LanguageStats from "../models/LanguageStats";
@@ -28,10 +21,11 @@ import LiveTableData from "../models/LiveTableData";
 import MonthlyData from "../models/MonthlyData";
 
 const HomePage: React.FC<{ homepageData: HomepageData }> = ({ homepageData }) => {
-    const languageStatsData: LanguageStats[] = Object.values(homepageData.languageStats).slice(
-        0,
-        10
-    );
+    // const languageStatsData: LanguageStats[] = Object.values(homepageData.languageStats).slice(
+    //     0,
+    //     10
+    // );
+    const languageStatsData: LanguageStats[] = homepageData.languageStats.slice(0, 10);
     const liveStatsData: {
         [key: string]: LiveTableData;
     } = homepageData.liveStats;
@@ -88,8 +82,19 @@ export default HomePage;
 
 export const getStaticProps: GetStaticProps = async context => {
     const getHomepageData = async () => {
-        const response = await fetch(`${SERVER}api/get-homepage-data`);
-        const homepageData: HomepageData = (await response.json()).data;
+        const client = await MongoClient.connect(
+            `mongodb+srv://${process.env.DB_CLIENT_ID}:${process.env.DB_CLIENT_PASSWORD}@cluster0.9v1xfdu.mongodb.net/twitchStatistics?retryWrites=true&w=majority`
+        );
+        const db = client.db();
+
+        const twitchStatisticsCollection = db.collection("homepageData");
+
+        const response = await twitchStatisticsCollection.find({}).toArray();
+
+        const homepageData: HomepageData = response[0].data;
+
+        //close connection
+        client.close();
 
         return { ...homepageData };
     };
@@ -103,18 +108,10 @@ export const getStaticProps: GetStaticProps = async context => {
             revalidate: 3600,
         };
     } catch (err: any) {
+        console.log(err);
         return {
             props: {
-                languageStats: DUMMY_LANGUAGE_DATA,
-                liveStats: DUMMY_LIVE_TABLE_DATA,
-                areaCharts: {
-                    viewers: DUMMY_CHART_LIVE_VIEWERS_DATA,
-                    channels: DUMMY_CHART_LIVE_DATA,
-                    games: DUMMY_CHART_LIVE_DATA,
-                },
-                liveBar: DUMMY_LIVE_DATA,
-                monthlyOverview: DUMMY_MONTHLY_DATA,
-                maxMonthlyOverview: DUMMY_MAX_MONTHLY_DATA,
+                err,
             },
             revalidate: 3600,
         };

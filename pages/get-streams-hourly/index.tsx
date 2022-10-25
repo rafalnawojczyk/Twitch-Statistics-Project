@@ -120,7 +120,7 @@ export async function getServerSideProps() {
 
         // 8. Data for homepage
         const homepageData: HomepageData = {
-            languageStats: languageObj,
+            languageStats: [...languageObj],
             liveStats: liveStatsObj,
             areaCharts: areaChartsObj,
             liveBar: liveBarObj,

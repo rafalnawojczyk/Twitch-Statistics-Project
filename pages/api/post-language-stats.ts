@@ -57,7 +57,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         {},
         {
             createdAt: date.toISOString(),
-            data: newData,
+            data: [...newData],
         }
     );
 
