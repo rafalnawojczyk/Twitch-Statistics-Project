@@ -1,5 +1,5 @@
 import styles from "./Logo.module.scss";
-import logoImage from "../../public/logo.png";
+const logoImage = require("../../public/logo.png");
 import React from "react";
 import { useRouter } from "next/router";
 
