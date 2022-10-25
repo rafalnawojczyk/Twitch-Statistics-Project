@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
-import { HOURLY_GAMES_AMMOUNT } from "../../config";
+import { GET_GAMES_API_URL, HOURLY_GAMES_AMMOUNT } from "../../config";
 import DataFromStreamsApi from "../../models/DataFromStreamsApi";
 import HistoricalLiveData from "../../models/HistoricalLiveData";
 import LiveTableData from "../../models/LiveTableData";
@@ -44,7 +44,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // 2nd - activeGames obj
 
-    const gamesResponse = await fetch(process.env.GET_GAMES_API_URL!, {
+    const gamesResponse = await fetch(GET_GAMES_API_URL!, {
         method: "GET",
         headers: {
             authorization: data.authorization,

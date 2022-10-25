@@ -1,10 +1,12 @@
+import { SERVER } from "../../config";
+
 const GetDailyStreams: React.FC<{ message: string }> = props => {
     return <p>{props.message}</p>;
 };
 
 export async function getServerSideProps() {
     try {
-        const response = await fetch(`${process.env.SERVER}api/twitch-daily-statistics`, {
+        const response = await fetch(`${SERVER}api/twitch-daily-statistics`, {
             method: "POST",
         });
 

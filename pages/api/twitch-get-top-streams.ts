@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { MIN_VIEWIERS_AMOUNT } from "../../config";
+import { GET_STREAMS_API_URL, MIN_VIEWIERS_AMOUNT } from "../../config";
 import DataFromStreamsApi from "../../models/DataFromStreamsApi";
 import TwitchGetStreamsResponse from "../../models/TwitchGetStreamsResponse";
 
@@ -13,8 +13,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let shouldFetch = true;
 
     while (shouldFetch) {
-        let url = process.env.GET_STREAMS_API_URL!;
-        if (pagination.length !== 0) url = `${process.env.GET_STREAMS_API_URL}&after=${pagination}`;
+        let url = GET_STREAMS_API_URL!;
+        if (pagination.length !== 0) url = `${GET_STREAMS_API_URL}&after=${pagination}`;
 
         const response = await fetch(url, {
             method: "GET",

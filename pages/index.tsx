@@ -10,6 +10,7 @@ import HomepageTwoColumns from "../components/layout/Homepage/HomepageTwoColumns
 import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
 import LiveStatsTable from "../components/LiveStatsTable/LiveStatsTable";
 import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
+import { SERVER } from "../config";
 import AreaChartData from "../models/AreaChartData";
 import HomepageData from "../models/HomepageData";
 import LanguageStats from "../models/LanguageStats";
@@ -77,7 +78,7 @@ const HomePage: React.FC<{ homepageData: HomepageData }> = ({ homepageData }) =>
 export default HomePage;
 
 export const getStaticProps: GetStaticProps = async context => {
-    const response = await fetch(`${process.env.SERVER}api/get-homepage-data`);
+    const response = await fetch(`${SERVER}api/get-homepage-data`);
     const homepageData: HomepageData = (await response.json()).data;
 
     return {

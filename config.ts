@@ -1,3 +1,11 @@
+export const TWITCH_AUTH_API_URL = "https://id.twitch.tv/oauth2/token";
+export const MONTHLY_SUMMARY_API_URL = "https://twitchtracker.com/api/channels/summary/";
+export const GET_STREAMS_API_URL = "https://api.twitch.tv/helix/streams?first=100";
+export const GET_GAMES_API_URL = "https://api.twitch.tv/helix/games/top?first=50";
+export const GET_USER_API_URL = "https://api.twitch.tv/helix/users";
+export const GET_WEEKLY_SUMMARY_API_URL = "https://twitchtracker.com/api/channels/summary/";
+export const SERVER = "http://localhost:3000/";
+
 export const HOURLY_CHANNELS_AMOUNT = 2000;
 export const DAILY_CHANNELS_AMMOUNT = 100;
 export const HOURLY_TOP_AMOUNT = 50;
