@@ -5,7 +5,7 @@ const BarChartLabel = ({ active, payload, label }) => {
         return (
             <div className={styles.chart__details}>
                 <p>{payload[0].payload.name}</p>
-                <p>{+payload[0].payload.value.toLocaleString()}</p>
+                <p className={styles["align-right"]}>{payload[0].payload.value.toLocaleString()}</p>
             </div>
         );
     }

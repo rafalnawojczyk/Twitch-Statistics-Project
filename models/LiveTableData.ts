@@ -5,8 +5,9 @@ export default interface LiveTableData {
     type: "activeChannels" | "activeGames" | "topChannels";
     stats: {
         title: string;
-        language: string;
-        followers: number;
+        id: string;
+        language?: string;
+        followers?: number;
         viewers: number;
         image: string;
     }[];

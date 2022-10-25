@@ -37,15 +37,17 @@ const LiveStatsTable: React.FC<{ data: LiveTableData }> = props => {
             <Card className={styles.stats}>
                 <LiveStatsTitle title={data.title} subtitle={data.subtitle} />
                 <ul className={styles.stats__list}>
-                    {data.stats.map(stats => (
-                        <StatsListItem
-                            key={Math.random()}
-                            maxValue={maxValue}
-                            type={data.type}
-                            data={stats}
-                            url={`${url}/`}
-                        />
-                    ))}
+                    {data.stats.slice(0, 5).map(stats => {
+                        return (
+                            <StatsListItem
+                                key={Math.random()}
+                                maxValue={maxValue}
+                                type={data.type}
+                                data={stats}
+                                url={`${url}/`}
+                            />
+                        );
+                    })}
                 </ul>
                 <Button type="button" onClick={clickHandler} className={styles.stats__button}>
                     Go to full table

@@ -1,6 +1,5 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
 import AreaChart from "../components/charts/AreaChart";
 import LanguageStatsTable from "../components/LanguageStatsTable/LanguageStatsTable";
 import HomepageCenter from "../components/layout/Homepage/HomepageCenter";
@@ -11,47 +10,26 @@ import HomepageTwoColumns from "../components/layout/Homepage/HomepageTwoColumns
 import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
 import LiveStatsTable from "../components/LiveStatsTable/LiveStatsTable";
 import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
-import {
-    SERVER_LINK,
-    DUMMY_LANGUAGE_DATA,
-    DUMMY_LIVE_TABLE_DATA,
-    DUMMY_MONTHLY_DATA,
-    DUMMY_MAX_MONTHLY_DATA,
-    DUMMY_LIVE_DATA,
-    DUMMY_CHART_LIVE_DATA,
-    DUMMY_CHART_LIVE_VIEWERS_DATA,
-} from "../config";
 import AreaChartData from "../models/AreaChartData";
+import HomepageData from "../models/HomepageData";
 import LanguageStats from "../models/LanguageStats";
 import LiveBarStats from "../models/LiveBarStats";
 import LiveTableData from "../models/LiveTableData";
 import MonthlyData from "../models/MonthlyData";
-import Stats from "../models/Stats";
-import TopHourlyStats from "../models/TopHourlyStats";
 
-const HomePage: React.FC<{
-    typedLiveGames: {
-        statistics: Stats[];
-        totalViewers: number;
-    };
-    typedLiveChannels: {
-        statistics: Stats[];
-        totalViewers: number;
-    };
-    typedWeeklyChannels: {
-        statistics: Stats[];
-    };
-}> = props => {
-    // TODO: THINGS THAT SHOULD BE PARSED IN SERVER SIDE
-    const languageStatsData: LanguageStats[] = DUMMY_LANGUAGE_DATA;
+const HomePage: React.FC<{ homepageData: HomepageData }> = ({ homepageData }) => {
+    const languageStatsData: LanguageStats[] = Object.values(homepageData.languageStats).slice(
+        0,
+        10
+    );
     const liveStatsData: {
         [key: string]: LiveTableData;
-    } = DUMMY_LIVE_TABLE_DATA;
-    const monthlyData: MonthlyData = DUMMY_MONTHLY_DATA;
-    const maxMonthlyData: MonthlyData = DUMMY_MAX_MONTHLY_DATA;
-    const liveBarData: LiveBarStats[] = DUMMY_LIVE_DATA;
-    const areaChartDataChannels: AreaChartData[] = DUMMY_CHART_LIVE_DATA;
-    const areaChartDataViewers: AreaChartData[] = DUMMY_CHART_LIVE_VIEWERS_DATA;
+    } = homepageData.liveStats;
+    const monthlyData: MonthlyData = homepageData.monthlyOverview;
+    const maxMonthlyData: MonthlyData = homepageData.maxMonthlyOverview;
+    const liveBarData: LiveBarStats[] = homepageData.liveBar;
+    const areaChartDataChannels: AreaChartData[] = homepageData.areaCharts.channels;
+    const areaChartDataViewers: AreaChartData[] = homepageData.areaCharts.viewers;
 
     return (
         <>
@@ -99,70 +77,12 @@ const HomePage: React.FC<{
 export default HomePage;
 
 export const getStaticProps: GetStaticProps = async context => {
-    const typedLiveGames: {
-        statistics: Stats[];
-        totalViewers: number;
-    } = {
-        statistics: [],
-        totalViewers: 12425568,
-    };
-
-    const typedLiveChannels: {
-        statistics: Stats[];
-        totalViewers: number;
-    } = {
-        statistics: [],
-        totalViewers: 12425568,
-    };
-
-    const typedWeeklyChannels: {
-        statistics: Stats[];
-    } = {
-        statistics: [],
-    };
-
-    for (let i = 0; i < 10; i++) {
-        typedLiveGames.statistics.push(
-            new Stats(
-                "World of Tanks",
-                214124,
-                "https://static-cdn.jtvnw.net/ttv-boxart/27546-285x380.jpg",
-                `${Math.random()}WorldOfTanks`,
-                "null"
-            )
-        );
-
-        typedLiveChannels.statistics.push(
-            new Stats(
-                "Skill4ltu",
-                124125,
-                "https://static-cdn.jtvnw.net/jtv_user_pictures/3240ed60-0ad4-4bb4-afd9-b608b60e850c-profile_image-70x70.png",
-                `${Math.random()}skill4ltu`,
-                "World of Tanks"
-            )
-        );
-        typedWeeklyChannels.statistics.push(
-            new Stats(
-                "Skill4ltu",
-                124125,
-                "https://static-cdn.jtvnw.net/jtv_user_pictures/3240ed60-0ad4-4bb4-afd9-b608b60e850c-profile_image-70x70.png",
-                `${Math.random()}skill4ltu`,
-                "World of Tanks"
-            )
-        );
-    }
+    const response = await fetch(`${process.env.SERVER}api/NEWget-homepage-data`);
+    const homepageData: HomepageData = (await response.json()).data;
 
     return {
         props: {
-            typedLiveGames: {
-                statistics: JSON.parse(JSON.stringify(typedLiveGames.statistics)),
-                totalViewers: typedLiveGames.totalViewers,
-            },
-            typedLiveChannels: {
-                statistics: JSON.parse(JSON.stringify(typedLiveChannels.statistics)),
-                totalViewers: typedLiveChannels.totalViewers,
-            },
-            typedWeeklyChannels: JSON.parse(JSON.stringify(typedLiveChannels)),
+            homepageData,
         },
         revalidate: 3600,
     };

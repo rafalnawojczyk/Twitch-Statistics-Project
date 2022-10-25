@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { prepareImage } from "../../utils/utils";
 import GainColorBar from "../StatsByMonth/GainColorBar";
 import styles from "./StatsListItem.module.scss";
 
@@ -33,7 +34,10 @@ const StatsListItem: React.FC<{
 
     return (
         <li className={styles["stats-list__item"]} onClick={clickHandler}>
-            <img className={styles["stats-list__image"]} src={data.image}></img>
+            <img
+                className={styles["stats-list__image"]}
+                src={prepareImage(data.image, props.type)}
+            ></img>
             <div className={styles["stats-list__title-box"]}>
                 <h4 className={styles["stats-list__title"]}>{data.title}</h4>
                 <span className={styles["stats-list__subtitle"]}>

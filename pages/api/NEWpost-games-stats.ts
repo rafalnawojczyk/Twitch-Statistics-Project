@@ -10,24 +10,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const data: { gamesStats: UnformattedStatsObj; totalGames: number; authorization: string } =
         JSON.parse(req.body);
 
-    const topHourlyGamesResponse = await fetch(process.env.GET_GAMES_API_URL!, {
-        method: "GET",
-        headers: {
-            authorization: data.authorization,
-            "Client-Id": process.env.TWITCH_CLIENT_ID!,
-        },
-    });
-
-    const topHourlyGamesData = await topHourlyGamesResponse.json();
-    const topHourlyGames = topHourlyGamesData.data
-        .map((el: { name: string; id: string; box_art_url: string }) => {
-            if (data.gamesStats[el.name])
-                return new Stats(el.name, data.gamesStats[el.name].views, el.box_art_url, el.id);
-        })
-        .sort((a: Stats, b: Stats) => b.views - a.views);
-
-    if (topHourlyGames.length > HOURLY_GAMES_AMMOUNT) topHourlyGames.length = 50;
-
     // const client = await MongoClient.connect(
     //     `mongodb+srv://${process.env.DB_CLIENT_ID}:${process.env.DB_CLIENT_PASSWORD}@cluster0.9v1xfdu.mongodb.net/twitchStatistics?retryWrites=true&w=majority`
     // );

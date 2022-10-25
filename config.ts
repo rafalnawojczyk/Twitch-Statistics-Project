@@ -8,7 +8,7 @@ export const DAILY_CHANNELS_AMMOUNT = 100;
 export const HOURLY_TOP_AMOUNT = 50;
 export const HOURLY_GAMES_AMMOUNT = 50;
 export const WEEKLY_TOP_AMMOUNT = 50;
-export const MIN_VIEWIERS_AMOUNT = 2;
+export const MIN_VIEWIERS_AMOUNT = 1;
 
 export const GAME_THUMBNAIL_WIDTH = 225;
 export const GAME_THUMBNAIL_HEIGHT = 300;
@@ -417,6 +417,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -424,6 +425,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -431,6 +433,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -438,6 +441,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -445,6 +449,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -460,6 +465,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -467,6 +473,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -474,6 +481,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -481,6 +489,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -488,6 +497,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -503,6 +513,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -510,6 +521,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -517,6 +529,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -524,6 +537,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",
@@ -531,6 +545,7 @@ export const DUMMY_LIVE_TABLE_DATA: { [key: string]: LiveTableData } = {
             {
                 title: "Fextralife",
                 language: "EN",
+                id: "fextralife",
                 followers: 1422000,
                 viewers: 27000,
                 image: "https://static-cdn.jtvnw.net/jtv_user_pictures/a28b0d37-81d0-415a-8ed8-1a1f998ea26d-profile_image-50x50.png",

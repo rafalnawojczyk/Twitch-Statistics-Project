@@ -31,6 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             userLogin: el.user_login,
             userName: el.user_name,
             gameName: el.game_name,
+            gameId: el.game_id,
             title: el.title,
             viewerCount: el.viewer_count,
             language: el.language,

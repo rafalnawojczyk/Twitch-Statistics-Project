@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import LanguageStats from "../../models/LanguageStats";
 import UnformattedStatsObj from "../../models/UnformattedStatsObj";
-import { getFormattedDate, getLanguage } from "../../utils/utils";
+import { getFormattedDate } from "../../utils/utils";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "POST") return;
@@ -15,10 +15,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const db = client.db();
 
     const twitchStatisticsCollection = db.collection("languageStats");
-
-    // TODO: TEMPORARY FOR FIRST RUN TO GET THINGS INTO DB
-    const date = new Date();
-    const formattedDate = getFormattedDate(date);
 
     const response = await twitchStatisticsCollection.find().toArray();
 
@@ -55,6 +51,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return newLangStats;
     });
 
+    const finalData = newData.sort((a, b) => a.averageViewers - b.averageViewers);
+
     const result = await twitchStatisticsCollection.replaceOne(
         {},
         {
@@ -66,7 +64,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     client.close();
 
     // set status on response
-    res.status(201).json({ message: "Data updated succesfully" });
+
+    res.status(201).json({
+        ok: true,
+        from: "languageStats",
+        date: date.toISOString(),
+        data: {
+            ...newData,
+        },
+    });
 };
 
 export default handler;
