@@ -42,7 +42,7 @@ const StatsListItem: React.FC<{
             <div className={styles["stats-list__title-box"]}>
                 <h4 className={styles["stats-list__title"]}>{data.title}</h4>
                 <span className={styles["stats-list__subtitle"]}>
-                    {data.language} • {numFormatter(20000)} Followers
+                    {data.language?.toUpperCase()} • {numFormatter(20000)} Followers
                 </span>
             </div>
             <div className={styles["stats__value-box"]}>
