@@ -21,11 +21,11 @@ import LiveTableData from "../models/LiveTableData";
 import MonthlyData from "../models/MonthlyData";
 
 const HomePage: React.FC<{ homepageData: HomepageData }> = ({ homepageData }) => {
-    // const languageStatsData: LanguageStats[] = Object.values(homepageData.languageStats).slice(
-    //     0,
-    //     10
-    // );
-    const languageStatsData: LanguageStats[] = homepageData.languageStats.slice(0, 10);
+    const languageStatsData: LanguageStats[] = Object.values(homepageData.languageStats).slice(
+        0,
+        10
+    );
+    // const languageStatsData: LanguageStats[] = homepageData.languageStats.slice(0, 10);
     const liveStatsData: {
         [key: string]: LiveTableData;
     } = homepageData.liveStats;
