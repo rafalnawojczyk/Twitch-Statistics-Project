@@ -148,7 +148,7 @@ export async function getServerSideProps() {
                 homepageData,
             },
         };
-    } catch (err) {
+    } catch (err: any) {
         // ******* TEMPORARY *******
         console.log(err);
         return {

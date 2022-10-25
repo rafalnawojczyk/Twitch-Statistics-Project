@@ -1,6 +1,8 @@
+import { TooltipProps } from "recharts";
+import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import styles from "./CustomTooltip.module.scss";
 
-const CustomTooltip = ({ active, payload }) => {
+const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>) => {
     if (active && payload && payload.length) {
         return (
             <div className={styles.tooltip}>

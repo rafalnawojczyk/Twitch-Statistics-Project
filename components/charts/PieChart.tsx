@@ -88,7 +88,7 @@ const PieChart: React.FC<{ title: string; data: { name: string; value: number }[
     };
 
     const onPieEnter = useCallback(
-        (_, index) => {
+        (_: any, index: number) => {
             setActiveIndex(index);
         },
         [setActiveIndex]

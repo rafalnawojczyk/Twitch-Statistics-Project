@@ -99,6 +99,7 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
                     id="checkbox"
                     name="checkbox"
                     type="checkbox"
+                    // @ts-ignore
                     value={formik.values.checkbox}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -150,6 +151,7 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
                             id="checkbox"
                             name="checkbox"
                             type="checkbox"
+                            // @ts-ignore
                             value={formik.values.checkbox}
                         />
                         <label htmlFor="checkbox">Remember me</label>
@@ -181,13 +183,3 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
 };
 
 export default LoginForm;
-
-{
-    /* <div>
-<label>
-    <Field type="checkbox" name="checked" value="Remember me" />
-    Remember me
-</label>
-<Link href="/login/new-password">Forgot password</Link>
-</div> */
-}
