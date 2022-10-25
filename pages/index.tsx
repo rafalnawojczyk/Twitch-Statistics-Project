@@ -88,10 +88,3 @@ export const getStaticProps: GetStaticProps = async context => {
         revalidate: 3600,
     };
 };
-
-export async function getStaticPaths() {
-    return {
-        fallback: true,
-        paths: [],
-    };
-}
