@@ -77,7 +77,7 @@ const HomePage: React.FC<{ homepageData: HomepageData }> = ({ homepageData }) =>
 export default HomePage;
 
 export const getStaticProps: GetStaticProps = async context => {
-    const response = await fetch(`${process.env.SERVER}api/NEWget-homepage-data`);
+    const response = await fetch(`${process.env.SERVER}api/get-homepage-data`);
     const homepageData: HomepageData = (await response.json()).data;
 
     return {

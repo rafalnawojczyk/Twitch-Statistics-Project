@@ -24,15 +24,12 @@ export async function getServerSideProps() {
         const authorization = `${tokenType} ${accessToken}`;
 
         // 2. GET STREAMS
-        const getStreamsResponse = await fetch(
-            `${process.env.SERVER}api/NEWtwitch-get-top-streams`,
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    authorization,
-                }),
-            }
-        );
+        const getStreamsResponse = await fetch(`${process.env.SERVER}api/twitch-get-top-streams`, {
+            method: "POST",
+            body: JSON.stringify({
+                authorization,
+            }),
+        });
         const { streamsData }: { streamsData: DataFromStreamsApi[] } =
             await getStreamsResponse.json();
 
@@ -64,7 +61,7 @@ export async function getServerSideProps() {
         totalGames = Object.keys(gamesStats).length;
 
         // 3. Language stats:
-        const languageResponse = await fetch(`${process.env.SERVER}api/NEWpost-language-stats`, {
+        const languageResponse = await fetch(`${process.env.SERVER}api/post-language-stats`, {
             method: "POST",
             body: JSON.stringify({
                 languageStats,
@@ -72,18 +69,8 @@ export async function getServerSideProps() {
         });
         const languageObj: LanguageStats[] = (await languageResponse.json()).data;
 
-        // 4. Games stats:
-        // const gamesResponse = await fetch(`${process.env.SERVER}api/NEWpost-games-stats`, {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         authorization,
-        //         gamesStats,
-        //         totalGames,
-        //     }),
-        // });
-
         // 5. Live data for tables
-        const liveStatsResponse = await fetch(`${process.env.SERVER}api/NEWpost-live-stats-data`, {
+        const liveStatsResponse = await fetch(`${process.env.SERVER}api/post-live-stats-data`, {
             method: "POST",
             body: JSON.stringify({
                 authorization,
@@ -99,7 +86,7 @@ export async function getServerSideProps() {
         } = (await liveStatsResponse.json()).data;
 
         // 6. Data for area charts
-        const chartsResponse = await fetch(`${process.env.SERVER}api/NEWpost-area-chart-data`, {
+        const chartsResponse = await fetch(`${process.env.SERVER}api/post-area-chart-data`, {
             method: "POST",
             body: JSON.stringify({
                 totalGames,
@@ -114,7 +101,7 @@ export async function getServerSideProps() {
         } = (await chartsResponse.json()).data;
 
         // 7. Data for live bar
-        const liveBarResponse = await fetch(`${process.env.SERVER}api/NEWpost-live-bar-data`, {
+        const liveBarResponse = await fetch(`${process.env.SERVER}api/post-live-bar-data`, {
             method: "POST",
             body: JSON.stringify({
                 totalGames,
@@ -126,7 +113,7 @@ export async function getServerSideProps() {
         const liveBarObj: LiveBarStats[] = (await liveBarResponse.json()).data;
 
         // 8. Get Monthly data for homepage
-        const monthlyDataResponse = await fetch(`${process.env.SERVER}api/NEWget-monthly-data`);
+        const monthlyDataResponse = await fetch(`${process.env.SERVER}api/get-monthly-data`);
         const monthlyDataObj = await monthlyDataResponse.json();
         const monthlyData: MonthlyData = monthlyDataObj.data.monthlyOverview;
         const maxMonthlyData: MonthlyData = monthlyDataObj.data.maxMonthlyOverview;
@@ -141,7 +128,7 @@ export async function getServerSideProps() {
             maxMonthlyOverview: maxMonthlyData,
         };
 
-        const homepageResponse = await fetch(`${process.env.SERVER}api/NEWpost-homepage-data`, {
+        const homepageResponse = await fetch(`${process.env.SERVER}api/post-homepage-data`, {
             method: "POST",
             body: JSON.stringify({
                 ...homepageData,
