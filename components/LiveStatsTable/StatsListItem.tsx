@@ -9,8 +9,9 @@ const StatsListItem: React.FC<{
     maxValue: number;
     data: {
         title: string;
-        language: string;
-        followers: number;
+        id: string;
+        language?: string;
+        followers?: number;
         viewers: number;
         image: string;
     };
@@ -41,7 +42,7 @@ const StatsListItem: React.FC<{
             <div className={styles["stats-list__title-box"]}>
                 <h4 className={styles["stats-list__title"]}>{data.title}</h4>
                 <span className={styles["stats-list__subtitle"]}>
-                    {data.language} • {numFormatter(data.followers)} Followers
+                    {data.language} • {numFormatter(20000)} Followers
                 </span>
             </div>
             <div className={styles["stats__value-box"]}>
