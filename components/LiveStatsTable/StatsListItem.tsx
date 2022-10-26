@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { prepareImage } from "../../utils/utils";
+import { numFormatter, prepareImage } from "../../utils/utils";
 import GainColorBar from "../StatsByMonth/GainColorBar";
 import styles from "./StatsListItem.module.scss";
 
@@ -17,14 +17,7 @@ const StatsListItem: React.FC<{
     };
 }> = props => {
     const router = useRouter();
-    function numFormatter(num: number) {
-        if (num > 999 && num < 1000000) {
-            return (num / 1000).toFixed(1) + "K";
-        } else if (num > 1000000) {
-            return (num / 1000000).toFixed(1) + "M";
-        }
-        return num + "";
-    }
+
     const data = props.data;
 
     const clickHandler = () => {
