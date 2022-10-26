@@ -5,7 +5,7 @@ import Card from "../layout/Card";
 import StatsLabel from "../StatsByMonth/StatsLabel";
 import StatsTitle from "../StatsByMonth/StatsTitle";
 import styles from "./LanguageStatsTable.module.scss";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import LanguageStats from "../../models/LanguageStats";
 
@@ -24,6 +24,31 @@ const LanguageStatsTable: React.FC<{ data: LanguageStats[] }> = props => {
             value: number;
         }[]
     >();
+
+    const [pieChartActiveIndex, setPieChartActiveIndex] = useState(0);
+
+    useEffect(() => {
+        if (viewersChartData && channelsChartData) {
+            const maxIndex = channelsChartData.length - 1;
+            const interval = setInterval(() => {
+                setPieChartActiveIndex(prevIndex => {
+                    let finalIndex = ++prevIndex;
+                    finalIndex = finalIndex > maxIndex ? 0 : finalIndex;
+                    return finalIndex;
+                });
+            }, 2000);
+            return () => clearInterval(interval);
+        }
+        const maxIndex = channelsChartData ? channelsChartData.length - 1 : 2;
+        const interval = setInterval(() => {
+            setPieChartActiveIndex(prevIndex => {
+                let finalIndex = ++prevIndex;
+                finalIndex = finalIndex > maxIndex ? 0 : finalIndex;
+                return finalIndex;
+            });
+        }, 2000);
+        return () => clearInterval(interval);
+    }, []);
 
     useEffect(() => {
         setViewersChartData(
@@ -46,6 +71,10 @@ const LanguageStatsTable: React.FC<{ data: LanguageStats[] }> = props => {
         );
 
         setDataIsLoading(false);
+    }, []);
+
+    const onPieEnter = useCallback((_: any, index: number) => {
+        setPieChartActiveIndex(index);
     }, []);
 
     return (
@@ -87,8 +116,18 @@ const LanguageStatsTable: React.FC<{ data: LanguageStats[] }> = props => {
                             );
                         })}
                         <div className={styles.stats__charts}>
-                            <PieChart data={viewersChartData!} title="Average Conc. Viewers" />
-                            <PieChart data={channelsChartData!} title="Average Conc. Channels" />
+                            <PieChart
+                                onPieEnter={onPieEnter}
+                                index={pieChartActiveIndex}
+                                data={viewersChartData!}
+                                title="Average Conc. Viewers"
+                            />
+                            <PieChart
+                                onPieEnter={onPieEnter}
+                                index={pieChartActiveIndex}
+                                data={channelsChartData!}
+                                title="Average Conc. Channels"
+                            />
                         </div>
                     </>
                 )}

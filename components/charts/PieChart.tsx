@@ -1,25 +1,16 @@
-import { useState, useCallback, useEffect } from "react";
 import { ResponsiveContainer, Pie, PieChart as PieCharts, Cell, Sector } from "recharts";
 import { COLORS_ARRAY } from "../../config";
 import styles from "./PieChart.module.scss";
 
-const PieChart: React.FC<{ title: string; data: { name: string; value: number }[] }> = props => {
-    const [activeIndex, setActiveIndex] = useState(0);
-
+const PieChart: React.FC<{
+    index: number;
+    title: string;
+    onPieEnter: (_: any, index: number) => void;
+    data: { name: string; value: number }[];
+}> = props => {
     const colors = COLORS_ARRAY;
     const data = props.data;
     const maxIndex = data.length - 1;
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex(prevIndex => {
-                let finalIndex = ++prevIndex;
-                finalIndex = finalIndex > maxIndex ? 0 : finalIndex;
-                return finalIndex;
-            });
-        }, 2000);
-        return () => clearInterval(interval);
-    }, []);
 
     const renderActiveShape = (props: any) => {
         const RADIAN = Math.PI / 180;
@@ -87,13 +78,6 @@ const PieChart: React.FC<{ title: string; data: { name: string; value: number }[
         );
     };
 
-    const onPieEnter = useCallback(
-        (_: any, index: number) => {
-            setActiveIndex(index);
-        },
-        [setActiveIndex]
-    );
-
     return (
         <div className={styles.chart__wrapper}>
             <h4 className={styles.chart__title}>{props.title}</h4>
@@ -101,7 +85,7 @@ const PieChart: React.FC<{ title: string; data: { name: string; value: number }[
                 <PieCharts width={730} height={250}>
                     <Pie
                         data={data}
-                        activeIndex={activeIndex}
+                        activeIndex={props.index}
                         activeShape={renderActiveShape}
                         dataKey="value"
                         nameKey="name"
@@ -112,7 +96,7 @@ const PieChart: React.FC<{ title: string; data: { name: string; value: number }[
                         paddingAngle={3}
                         innerRadius={70}
                         outerRadius={90}
-                        onMouseEnter={onPieEnter}
+                        onMouseEnter={props.onPieEnter}
                     >
                         {data?.map((entry, index) => (
                             <Cell
