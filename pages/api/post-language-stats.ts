@@ -35,10 +35,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         };
         newChartData.push(newChartObj);
 
-        const newAverageViewers =
-            newChartData.reduce((a, b) => a + b.value, 0) / newChartData.length;
-        const newAverageChannels =
-            newChartData.reduce((a, b) => a + b.channels, 0) / newChartData.length;
+        const newAverageViewers = Math.trunc(
+            newChartData.reduce((a, b) => a + b.value, 0) / newChartData.length
+        );
+        const newAverageChannels = Math.trunc(
+            newChartData.reduce((a, b) => a + b.channels, 0) / newChartData.length
+        );
 
         const newLangStats: LanguageStats = {
             title: lang.title,
