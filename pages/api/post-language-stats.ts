@@ -51,7 +51,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return newLangStats;
     });
 
-    const finalData = newData.sort((a, b) => a.averageViewers - b.averageViewers);
+    const finalData = newData.sort((a, b) => b.averageViewers - a.averageViewers);
 
     const result = await twitchStatisticsCollection.replaceOne(
         {},
