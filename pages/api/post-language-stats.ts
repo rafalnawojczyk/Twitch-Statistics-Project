@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const formattedDate = getFormattedDate(date);
 
     const newData = oldData.map(lang => {
-        const newChartData = lang.chartData.slice(1);
+        const newChartData = lang.chartData.length > 168 ? lang.chartData.slice(1) : lang.chartData;
         const newChartObj: {
             name: string;
             value: number;

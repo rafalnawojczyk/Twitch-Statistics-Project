@@ -39,11 +39,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             language: channel.language,
             viewers: channel.viewerCount,
             image: channel.imageUrl,
+            followers: 225123,
         })),
     };
 
     // 2nd - activeGames obj
-
+    // TODO - instead of followers add streaming channels
     const gamesResponse = await fetch(GET_GAMES_API_URL!, {
         method: "GET",
         headers: {
@@ -61,6 +62,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 id: game.id,
                 viewers: data.activeGames[game.id].views,
                 image: game.box_art_url,
+                followers: data.activeGames[game.id].channels,
             };
         })
         .sort((a, b) => b.viewers - a.viewers);
