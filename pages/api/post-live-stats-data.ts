@@ -117,7 +117,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     const historicalDataArray = Object.values(historicalChannelsData).sort(
-        (a, b) => a.viewers - b.viewers
+        (a, b) => b.viewers - a.viewers
     );
     if (historicalDataArray.length > HOURLY_GAMES_AMMOUNT)
         historicalDataArray.length = HOURLY_GAMES_AMMOUNT;

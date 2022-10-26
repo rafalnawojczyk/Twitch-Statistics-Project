@@ -1,6 +1,5 @@
 import { GetStaticProps } from "next";
 import { MongoClient } from "mongodb";
-import { NextApiRequest, NextApiResponse } from "next";
 import Head from "next/head";
 import AreaChart from "../components/charts/AreaChart";
 import LanguageStatsTable from "../components/LanguageStatsTable/LanguageStatsTable";
@@ -12,7 +11,6 @@ import HomepageTwoColumns from "../components/layout/Homepage/HomepageTwoColumns
 import LiveStatisticsBar from "../components/LiveStatisticsBar/LiveStatisticsBar";
 import LiveStatsTable from "../components/LiveStatsTable/LiveStatsTable";
 import StatsByMonth from "../components/StatsByMonth/StatsByMonth";
-import { SERVER } from "../config";
 import AreaChartData from "../models/AreaChartData";
 import HomepageData from "../models/HomepageData";
 import LanguageStats from "../models/LanguageStats";
