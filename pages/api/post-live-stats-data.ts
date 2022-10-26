@@ -40,11 +40,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             viewers: channel.viewerCount,
             image: channel.imageUrl,
             followers: 225123,
+            streamTitle: channel.title,
         })),
     };
 
     // 2nd - activeGames obj
-    // TODO - instead of followers add streaming channels
+
     const gamesResponse = await fetch(GET_GAMES_API_URL!, {
         method: "GET",
         headers: {

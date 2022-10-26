@@ -33,6 +33,24 @@ const StatsListItem: React.FC<{
         router.push(url);
     };
 
+    let descriptionMarkup = (
+        <span className={styles["stats-list__subtitle"]}>
+            {data.language?.toUpperCase()} • {numFormatter(data.followers!)} Followers
+        </span>
+    );
+
+    if (props.type === "activeGames") {
+        descriptionMarkup = (
+            <span className={styles["stats-list__subtitle"]}>
+                {numFormatter(data.followers!)} Channels
+            </span>
+        );
+    }
+
+    if (props.type === "topChannels") {
+        descriptionMarkup = <></>;
+    }
+
     return (
         <li className={styles["stats-list__item"]} onClick={clickHandler}>
             <img
@@ -41,9 +59,7 @@ const StatsListItem: React.FC<{
             ></img>
             <div className={styles["stats-list__title-box"]}>
                 <h4 className={styles["stats-list__title"]}>{data.title}</h4>
-                <span className={styles["stats-list__subtitle"]}>
-                    {data.language?.toUpperCase()} • {numFormatter(20000)} Followers
-                </span>
+                {descriptionMarkup}
             </div>
             <div className={styles["stats__value-box"]}>
                 <span className={styles["stats__value"]}>{numFormatter(data.viewers)}</span>

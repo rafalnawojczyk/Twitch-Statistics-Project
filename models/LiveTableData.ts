@@ -10,5 +10,6 @@ export default interface LiveTableData {
         followers?: number;
         viewers: number;
         image: string;
+        streamTitle?: string;
     }[];
 }

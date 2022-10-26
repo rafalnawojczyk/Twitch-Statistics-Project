@@ -53,9 +53,11 @@ export async function getServerSideProps() {
                 title: stats.gameName,
                 id: stats.gameId,
                 views: 0,
+                channels: 0,
             };
             gamesStats[stats.gameId].views += stats.viewerCount;
             totalViewers += stats.viewerCount;
+            gamesStats[stats.gameId].channels!++;
         });
 
         totalGames = Object.keys(gamesStats).length;
