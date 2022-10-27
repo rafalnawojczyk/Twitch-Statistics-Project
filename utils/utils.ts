@@ -21,7 +21,7 @@ export const getLanguage = (code: string) => {
 
 export const prepareImage = (
     image: string,
-    type: "activeChannels" | "activeGames" | "topChannels" | "previewImage"
+    type: "activeChannels" | "activeGames" | "topChannels" | "previewImage" | "previewGame"
 ) => {
     let width = GAME_THUMBNAIL_WIDTH + "";
     let height = GAME_THUMBNAIL_HEIGHT + "";
@@ -34,6 +34,11 @@ export const prepareImage = (
     if (type === "previewImage") {
         width = 320 + "";
         height = 180 + "";
+    }
+
+    if (type === "previewGame") {
+        width = 90 + "";
+        height = 120 + "";
     }
 
     const changedWidth = image.replace("{width}", width).replace("%7Bwidth%7D", width);

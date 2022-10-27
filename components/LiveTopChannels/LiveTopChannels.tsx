@@ -97,10 +97,7 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                         onClick={channelClickHandler.bind(null, channel.title)}
                     >
                         <StatsLabel title={index + 1 + ""} />
-                        <img
-                            className={styles.stats__image}
-                            src={prepareImage(channel.image, "activeChannels")}
-                        />
+                        <img className={styles.stats__image} src={channel.profileImg} />
                         <StatsLabel title={channel.title} className={styles.stats__title} />
                         {/* <StreamTitleTicker
                             title={channel.streamTitle!}
@@ -119,7 +116,15 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                             title={channel.language!.toUpperCase()}
                             className={styles.stats__language}
                         />
-                        <img className={styles.stats__image} src={channel.profileImg} />
+                        <img
+                            className={styles["stats__game-image"]}
+                            src={prepareImage(
+                                channel.gameImg!
+                                    ? channel.gameImg
+                                    : "https://static-cdn.jtvnw.net/ttv-boxart/31376_IGDB-{width}x{height}.jpg",
+                                "previewGame"
+                            )}
+                        />
 
                         <div className={styles["stats__value-box"]}>
                             <span className={styles["stats__value"]}>

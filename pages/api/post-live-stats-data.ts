@@ -28,6 +28,42 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const historicalData: HistoricalLiveData = response[0]?.historicalData;
 
+    // 2nd - activeGames obj
+
+    const gamesResponse = await fetch(GET_GAMES_API_URL!, {
+        method: "GET",
+        headers: {
+            authorization: data.authorization,
+            "Client-Id": process.env.TWITCH_CLIENT_ID!,
+        },
+    });
+    const gamesResponseData: TwitchGetTopGamesResponse[] = (await gamesResponse.json()).data;
+
+    const newGamesArray = gamesResponseData
+        .filter(el => data.activeGames[el.id])
+        .map(game => {
+            return {
+                title: game.name,
+                id: game.id,
+                viewers: data.activeGames[game.id].views,
+                image: game.box_art_url,
+                followers: data.activeGames[game.id].channels,
+            };
+        })
+        .sort((a, b) => b.viewers - a.viewers);
+
+    const savedGamesArray = [...newGamesArray];
+
+    if (newGamesArray.length > HOURLY_GAMES_AMMOUNT) newGamesArray.length = HOURLY_GAMES_AMMOUNT;
+
+    const newActiveGames: LiveTableData = {
+        live: true,
+        title: "Games",
+        subtitle: "Current viewers",
+        type: "activeGames",
+        stats: newGamesArray,
+    };
+
     // GET FOLLOWERS
     const updatedActiveResponse = await fetch(`${SERVER}api/twitch-get-followers`, {
         method: "POST",
@@ -64,53 +100,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         title: "Channels",
         subtitle: "Current viewers",
         type: "activeChannels",
-        stats: updatedActiveChannels.map(channel => ({
-            title: channel.userName,
-            id: channel.userId,
-            language: channel.language,
-            viewers: channel.viewerCount,
-            image: channel.imageUrl,
-            followers: channel.followers,
-            streamTitle: channel.title,
-            description: channel.description,
-            createdAt: channel.createdAt,
-            broadcasterType: channel.broadcasterType,
-            profileImg: channel.profileImg,
-        })),
-    };
+        stats: updatedActiveChannels.map(channel => {
+            const gameObj = savedGamesArray.find(el => el.id === channel.gameId);
+            const gameImg = gameObj?.image;
 
-    // 2nd - activeGames obj
-
-    const gamesResponse = await fetch(GET_GAMES_API_URL!, {
-        method: "GET",
-        headers: {
-            authorization: data.authorization,
-            "Client-Id": process.env.TWITCH_CLIENT_ID!,
-        },
-    });
-    const gamesResponseData: TwitchGetTopGamesResponse[] = (await gamesResponse.json()).data;
-
-    const newGamesArray = gamesResponseData
-        .filter(el => data.activeGames[el.id])
-        .map(game => {
             return {
-                title: game.name,
-                id: game.id,
-                viewers: data.activeGames[game.id].views,
-                image: game.box_art_url,
-                followers: data.activeGames[game.id].channels,
+                title: channel.userName,
+                id: channel.userId,
+                language: channel.language,
+                viewers: channel.viewerCount,
+                image: channel.imageUrl,
+                followers: channel.followers,
+                streamTitle: channel.title,
+                gameImg,
+                gameId: channel.gameId,
+                description: channel.description,
+                createdAt: channel.createdAt,
+                broadcasterType: channel.broadcasterType,
+                profileImg: channel.profileImg,
             };
-        })
-        .sort((a, b) => b.viewers - a.viewers);
-
-    if (newGamesArray.length > HOURLY_GAMES_AMMOUNT) newGamesArray.length = HOURLY_GAMES_AMMOUNT;
-
-    const newActiveGames: LiveTableData = {
-        live: true,
-        title: "Games",
-        subtitle: "Current viewers",
-        type: "activeGames",
-        stats: newGamesArray,
+        }),
     };
 
     // 3rd -  topChannels obj

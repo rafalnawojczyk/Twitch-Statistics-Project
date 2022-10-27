@@ -49,6 +49,20 @@
         padding: 0 1rem;
     }
 
+    &__game-image {
+        aspect-ratio: 45/ 60;
+        height: 4rem;
+        border-radius: $border-radius-small;
+        position: relative;
+        z-index: 1000;
+        scale: 1;
+        transition: all 0.3s ease;
+        &:hover {
+            scale: 2;
+            z-index: 1500000;
+        }
+    }
+
     &__image {
         width: 3.8rem;
         height: 3.8rem;

@@ -12,6 +12,8 @@ export default interface LiveTableData {
         image: string;
         streamTitle?: string;
         profileImg?: string;
+        gameImg?: string;
+        gameId?: string;
         broadcasterType?: "partner" | "affiliate" | "";
         createdAt?: string;
         description?: string;
