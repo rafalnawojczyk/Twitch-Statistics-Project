@@ -14,6 +14,7 @@ const StatsListItem: React.FC<{
         followers?: number;
         viewers: number;
         image: string;
+        profileImg?: string;
     };
 }> = props => {
     const router = useRouter();
@@ -50,7 +51,11 @@ const StatsListItem: React.FC<{
         <li className={styles["stats-list__item"]} onClick={clickHandler}>
             <img
                 className={styles["stats-list__image"]}
-                src={prepareImage(data.image, props.type)}
+                src={
+                    props.type === "activeGames"
+                        ? prepareImage(data.image, props.type)
+                        : data.profileImg
+                }
             ></img>
             <div className={styles["stats-list__title-box"]}>
                 <h4 className={styles["stats-list__title"]}>{data.title}</h4>

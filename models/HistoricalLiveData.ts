@@ -14,5 +14,10 @@ export default interface HistoricalLiveData {
         followers?: number;
         viewers: number;
         image: string;
+        streamTitle?: string;
+        profileImg?: string;
+        broadcasterType?: "partner" | "affiliate" | "";
+        createdAt?: string;
+        description?: string;
     }[][];
 }

@@ -128,11 +128,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const historicalChannelsData: {
         [key: string]: {
-            id: string;
             title: string;
-            language: string;
+            id: string;
+            language?: string;
+            followers?: number;
             viewers: number;
             image: string;
+            streamTitle?: string;
+            profileImg?: string;
+            broadcasterType?: "partner" | "affiliate" | "";
+            createdAt?: string;
+            description?: string;
         };
     } = {};
 
@@ -145,6 +151,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     language: channel.language!,
                     image: channel.image,
                     viewers: channel.viewers,
+                    followers: channel.followers,
+                    streamTitle: channel.title,
+                    description: channel.description,
+                    createdAt: channel.createdAt,
+                    broadcasterType: channel.broadcasterType,
+                    profileImg: channel.profileImg,
                 };
             }
 
