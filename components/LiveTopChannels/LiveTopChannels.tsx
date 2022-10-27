@@ -13,7 +13,6 @@ import GainColorBar from "../StatsByMonth/GainColorBar";
 import StatsLabel from "../StatsByMonth/StatsLabel";
 import StatsTitle from "../StatsByMonth/StatsTitle";
 import styles from "./LiveTopChannels.module.scss";
-import StreamTitleTicker from "./StreamTitleTicker";
 
 const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
     const router = useRouter();
@@ -103,14 +102,11 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                             className={styles[`stats__preview-image`]}
                             src={prepareImage(channel.image, "previewImage")}
                         />
-                        <StreamTitleTicker
+
+                        <StatsLabel
                             title={channel.streamTitle!}
                             className={styles["stats__stream-title"]}
                         />
-                        {/* <StatsLabel
-                            title={channel.streamTitle!}
-                            className={styles["stats__stream-title"]}
-                        /> */}
                         <StatsLabel
                             title={channel.language!.toUpperCase()}
                             className={styles.stats__language}
