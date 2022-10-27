@@ -67,6 +67,14 @@
         width: 3.8rem;
         height: 3.8rem;
         border-radius: 10000px;
+        position: relative;
+        z-index: 1000;
+        scale: 1;
+        transition: all 0.3s ease;
+        &:hover {
+            scale: 2;
+            z-index: 1500000;
+        }
     }
 
     &__preview-image {
