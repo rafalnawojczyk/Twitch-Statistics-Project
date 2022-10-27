@@ -1,10 +1,11 @@
 import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
-import { GET_GAMES_API_URL, HOURLY_GAMES_AMMOUNT } from "../../config";
+import { GET_GAMES_API_URL, HOURLY_GAMES_AMMOUNT, SERVER } from "../../config";
 import DataFromStreamsApi from "../../models/DataFromStreamsApi";
 import HistoricalLiveData from "../../models/HistoricalLiveData";
 import LiveTableData from "../../models/LiveTableData";
 import TwitchGetTopGamesResponse from "../../models/TwitchGetTopGamesResponse";
+import TwitchGetUsersResponse from "../../models/TwitchGetUsersResponse";
 import UnformattedStatsObj from "../../models/UnformattedStatsObj";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -28,6 +29,34 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const historicalData: HistoricalLiveData = response[0]?.historicalData;
 
     // GET FOLLOWERS
+    const updatedActiveResponse = await fetch(`${SERVER}api/twitch-get-followers`, {
+        method: "POST",
+        body: JSON.stringify({
+            authorization: data.authorization,
+            topChannels: data.activeChannels,
+        }),
+    });
+
+    const updatedActiveChannels: DataFromStreamsApi[] = (await updatedActiveResponse.json()).data;
+
+    // GET USER INFO
+    const idList = data.activeChannels.map(el => el.userId);
+    const userInfoResponse = await fetch(`${SERVER}api/twitch-get-user-info`, {
+        method: "POST",
+        body: JSON.stringify({
+            authorization: data.authorization,
+            idList: idList,
+        }),
+    });
+
+    const userInfo: TwitchGetUsersResponse = (await userInfoResponse.json()).data;
+
+    userInfo.data.forEach((user, index) => {
+        data.activeChannels[index].profileImg = user.profile_image_url;
+        data.activeChannels[index].broadcasterType = user.broadcaster_type;
+        data.activeChannels[index].createdAt = user.created_at;
+        data.activeChannels[index].description = user.description;
+    });
 
     // 1st - activeChannels obj
     const newActiveChannels: LiveTableData = {
@@ -35,14 +64,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         title: "Channels",
         subtitle: "Current viewers",
         type: "activeChannels",
-        stats: data.activeChannels.map(channel => ({
+        stats: updatedActiveChannels.map(channel => ({
             title: channel.userName,
             id: channel.userId,
             language: channel.language,
             viewers: channel.viewerCount,
             image: channel.imageUrl,
-            followers: 225123,
+            followers: channel.followers,
             streamTitle: channel.title,
+            description: channel.description,
+            createdAt: channel.createdAt,
+            broadcasterType: channel.broadcasterType,
+            profileImg: channel.profileImg,
         })),
     };
 

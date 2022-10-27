@@ -7,6 +7,10 @@ export default interface DataFromStreamsApi {
     title: string;
     viewerCount: number;
     language: string;
+    profileImg?: string;
+    description?: string;
+    createdAt?: string;
+    broadcasterType?: "partner" | "affiliate" | "";
     imageUrl: string;
     followers?: number;
 }

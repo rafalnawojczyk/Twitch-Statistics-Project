@@ -6,9 +6,8 @@ import TwitchGetFollowersResponse from "../../models/TwitchGetFollowersResponse"
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "POST") return;
 
-    const requestData: { authorization: string; topChannels: DataFromStreamsApi[] } = JSON.parse(
-        req.body
-    );
+    const requestData: { authorization: string; topChannels: DataFromStreamsApi[] } =
+        await JSON.parse(req.body);
 
     const newChannels = [...requestData.topChannels];
 
