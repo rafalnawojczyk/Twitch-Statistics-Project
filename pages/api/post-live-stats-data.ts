@@ -52,10 +52,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const userInfo: TwitchGetUsersResponse = (await userInfoResponse.json()).data;
 
     userInfo.data.forEach((user, index) => {
-        data.activeChannels[index].profileImg = user.profile_image_url;
-        data.activeChannels[index].broadcasterType = user.broadcaster_type;
-        data.activeChannels[index].createdAt = user.created_at;
-        data.activeChannels[index].description = user.description;
+        updatedActiveChannels[index].profileImg = user.profile_image_url;
+        updatedActiveChannels[index].broadcasterType = user.broadcaster_type;
+        updatedActiveChannels[index].createdAt = user.created_at;
+        updatedActiveChannels[index].description = user.description;
     });
 
     // 1st - activeChannels obj

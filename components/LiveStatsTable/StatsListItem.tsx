@@ -44,6 +44,8 @@ const StatsListItem: React.FC<{
         descriptionMarkup = <></>;
     }
 
+    console.log(data.profileImg);
+    console.log(data.image);
     return (
         <li className={styles["stats-list__item"]} onClick={clickHandler}>
             <img

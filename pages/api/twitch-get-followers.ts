@@ -10,9 +10,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         await JSON.parse(req.body);
 
     const newChannels = [...requestData.topChannels];
+    const updatedChannels = [];
 
-    newChannels.map(async el => {
-        const url = `${GET_USER_FOLLOWERS_API_URL!}to_id=${el.userId}`;
+    for (let i = 0; i < newChannels.length; i++) {
+        const url = `${GET_USER_FOLLOWERS_API_URL!}to_id=${newChannels[i].userId}`;
         const response = await fetch(url, {
             method: "GET",
             headers: {
@@ -23,11 +24,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const data: TwitchGetFollowersResponse = await response.json();
 
-        return { ...el, followers: data.total };
-    });
+        const finalData = { ...newChannels[i], followers: data.total };
+
+        updatedChannels.push(finalData);
+    }
 
     // set status on response
-    res.status(201).json({ data: newChannels });
+    res.status(201).json({ data: updatedChannels });
 };
 
 export default handler;
