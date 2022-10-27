@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { MAX_TOP_LIVE_CHANNELS, SERVER } from "../../config";
 import LiveTableData from "../../models/LiveTableData";
 import { numFormatter, prepareImage } from "../../utils/utils";
@@ -22,11 +23,43 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
         router.push(url);
     };
 
-    const channelsList = data.stats;
-    channelsList.length =
-        channelsList.length > MAX_TOP_LIVE_CHANNELS ? channelsList.length : MAX_TOP_LIVE_CHANNELS;
+    const channelsArr = [...data.stats];
 
+    channelsArr.length =
+        channelsArr.length > MAX_TOP_LIVE_CHANNELS ? channelsArr.length : MAX_TOP_LIVE_CHANNELS;
+
+    const [channelsList, setChannelsList] = useState(channelsArr);
+    // [a, b] a: 0 - followers, 1 - viewers; b: 0 - decrementally 1 - incrementally
+    const [sortBy, setSortBy] = useState<[number, number]>([1, 0]);
+
+    useEffect(() => {
+        const sortingType = sortBy[0] === 0 ? "followers" : "viewers";
+        const sortingDir = sortBy[1] === 0 ? "+" : "-";
+        const newChannelsList = channelsArr.sort((a, b) => {
+            if (sortingDir === "-") return a[sortingType]! - b[sortingType]!;
+
+            return b[sortingType]! - a[sortingType]!;
+        });
+
+        setChannelsList(prevList => newChannelsList);
+    }, [sortBy]);
+
+    console.log(channelsList);
     const maxValue = Math.max(...channelsList.map(el => el.viewers));
+    const maxFollowersValue = Math.max(...channelsList.map(el => el.followers!));
+
+    const sortingHandler = (event: React.MouseEvent<HTMLSpanElement>) => {
+        let sortingType = 1;
+
+        if (event.currentTarget.textContent == "Followers ") {
+            sortingType = 0;
+        }
+        setSortBy(prevSorting => {
+            const invertedDir = prevSorting[1] === 0 ? 1 : 0;
+            const sortingDir = prevSorting[0] === sortingType ? invertedDir : 0;
+            return [sortingType, sortingDir];
+        });
+    };
 
     return (
         <>
@@ -45,13 +78,19 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                     <ListIcon className={styles.stats__icon} />
                     <ImageIcon className={styles.stats__icon} />
                     <StatsLabel title="Channel name" />
+                    <StatsLabel title="Preview" />
                     <StatsLabel title="Stream title" />
                     <LanguageIcon className={styles.stats__icon} />
                     <GameIcon className={styles.stats__icon} />
-                    <StatsLabel title="Live viewers" />
+                    <div onClick={sortingHandler}>
+                        <StatsLabel title="Live viewers" />
+                    </div>
+                    <div onClick={sortingHandler}>
+                        <StatsLabel title="Followers" />
+                    </div>
                 </div>
 
-                {data.stats.map((channel, index) => (
+                {channelsList.map((channel, index) => (
                     <div
                         key={channel.id}
                         className={styles.stats}
@@ -67,6 +106,11 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                             title={channel.streamTitle!}
                             className={styles["stats__stream-title"]}
                         /> */}
+
+                        <img
+                            className={styles[`stats__preview-image`]}
+                            src={prepareImage(channel.image, "previewImage")}
+                        />
                         <StatsLabel
                             title={channel.streamTitle!}
                             className={styles["stats__stream-title"]}
@@ -75,10 +119,7 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                             title={channel.language!.toUpperCase()}
                             className={styles.stats__language}
                         />
-                        <img
-                            className={styles.stats__image}
-                            src={prepareImage(channel.image, "activeChannels")}
-                        />
+                        <img className={styles.stats__image} src={channel.profileImg} />
 
                         <div className={styles["stats__value-box"]}>
                             <span className={styles["stats__value"]}>
@@ -87,6 +128,17 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                             <GainColorBar
                                 actualAmount={channel.viewers}
                                 maxAmount={maxValue}
+                                className={styles["stats__value-bar"]}
+                            />
+                        </div>
+
+                        <div className={styles["stats__value-box"]}>
+                            <span className={styles["stats__value"]}>
+                                {numFormatter(channel.followers!)}
+                            </span>
+                            <GainColorBar
+                                actualAmount={channel.followers!}
+                                maxAmount={maxFollowersValue}
                                 className={styles["stats__value-bar"]}
                             />
                         </div>

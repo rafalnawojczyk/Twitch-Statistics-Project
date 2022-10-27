@@ -6,19 +6,20 @@
 }
 .stats {
     display: grid;
-    grid-template-columns: 4fr 6fr 10fr 40fr 6fr 6fr 10fr;
+    grid-template-columns: 4fr 6fr 10fr 10fr 40fr 6fr 6fr 10fr 10fr;
     align-items: center;
     justify-items: center;
     height: 5rem;
 
+    position: relative;
+    z-index: 10;
     scale: 1;
     transition: all 0.3s;
     cursor: pointer;
 
-    &:hover {
-        scale: 1.01;
-    }
     &:nth-child(even) {
+        position: relative;
+        z-index: 10;
         background-color: lighten($bg-color-light, 3%);
     }
     &__language {
@@ -52,6 +53,21 @@
         width: 3.8rem;
         height: 3.8rem;
         border-radius: 10000px;
+    }
+
+    &__preview-image {
+        max-width: 6.4rem;
+        height: 3.2rem;
+        border-radius: $border-radius-small;
+        position: relative;
+        z-index: 1000;
+        scale: 1;
+        transition: all 0.3s ease;
+
+        &:hover {
+            scale: 2;
+            z-index: 1500000;
+        }
     }
 
     &__list {
