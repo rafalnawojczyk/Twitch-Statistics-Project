@@ -8,7 +8,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const requestData: { authorization: string; idList: string[] } = JSON.parse(req.body);
 
     const url = `${GET_USER_INFO_URL!}${requestData.idList.map(id => `&id=${id}`).join("")}`;
-    console.log(url);
 
     const response = await fetch(url, {
         method: "GET",
@@ -19,8 +18,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     const data: TwitchGetUsersResponse = await response.json();
-
-    console.log(data);
 
     // set status on response
     res.status(201).json({ data });
