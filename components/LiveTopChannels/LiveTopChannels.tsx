@@ -44,7 +44,6 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
         setChannelsList(prevList => newChannelsList);
     }, [sortBy]);
 
-    console.log(channelsList);
     const maxValue = Math.max(...channelsList.map(el => el.viewers));
     const maxFollowersValue = Math.max(...channelsList.map(el => el.followers!));
 
@@ -99,19 +98,19 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                         <StatsLabel title={index + 1 + ""} />
                         <img className={styles.stats__image} src={channel.profileImg} />
                         <StatsLabel title={channel.title} className={styles.stats__title} />
-                        {/* <StreamTitleTicker
-                            title={channel.streamTitle!}
-                            className={styles["stats__stream-title"]}
-                        /> */}
 
                         <img
                             className={styles[`stats__preview-image`]}
                             src={prepareImage(channel.image, "previewImage")}
                         />
-                        <StatsLabel
+                        <StreamTitleTicker
                             title={channel.streamTitle!}
                             className={styles["stats__stream-title"]}
                         />
+                        {/* <StatsLabel
+                            title={channel.streamTitle!}
+                            className={styles["stats__stream-title"]}
+                        /> */}
                         <StatsLabel
                             title={channel.language!.toUpperCase()}
                             className={styles.stats__language}
