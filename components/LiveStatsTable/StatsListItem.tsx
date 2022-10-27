@@ -41,10 +41,6 @@ const StatsListItem: React.FC<{
         );
     }
 
-    if (props.type === "topChannels") {
-        descriptionMarkup = <></>;
-    }
-
     return (
         <li className={styles["stats-list__item"]} onClick={clickHandler}>
             <img
