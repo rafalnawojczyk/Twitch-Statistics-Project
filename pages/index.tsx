@@ -103,7 +103,7 @@ export const getStaticProps: GetStaticProps = async context => {
             props: {
                 homepageData,
             },
-            revalidate: 3600,
+            revalidate: 900,
         };
     } catch (err: any) {
         console.log(err);
@@ -111,7 +111,7 @@ export const getStaticProps: GetStaticProps = async context => {
             props: {
                 err,
             },
-            revalidate: 3600,
+            revalidate: 900,
         };
     }
 };
