@@ -8,4 +8,5 @@ export default interface DataFromStreamsApi {
     viewerCount: number;
     language: string;
     imageUrl: string;
+    followers?: number;
 }
