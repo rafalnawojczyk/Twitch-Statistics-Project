@@ -27,6 +27,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const historicalData: HistoricalLiveData = response[0]?.historicalData;
 
+    // GET FOLLOWERS
+
     // 1st - activeChannels obj
     const newActiveChannels: LiveTableData = {
         live: true,

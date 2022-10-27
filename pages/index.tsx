@@ -23,7 +23,7 @@ const HomePage: React.FC<{ homepageData: HomepageData }> = ({ homepageData }) =>
         0,
         10
     );
-    // const languageStatsData: LanguageStats[] = homepageData.languageStats.slice(0, 10);
+
     const liveStatsData: {
         [key: string]: LiveTableData;
     } = homepageData.liveStats;

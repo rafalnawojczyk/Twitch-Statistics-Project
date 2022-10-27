@@ -9,6 +9,7 @@ export const GET_STREAMS_API_URL = "https://api.twitch.tv/helix/streams?first=10
 export const GET_GAMES_API_URL = "https://api.twitch.tv/helix/games/top?first=50";
 export const GET_USER_API_URL = "https://api.twitch.tv/helix/users";
 export const GET_WEEKLY_SUMMARY_API_URL = "https://twitchtracker.com/api/channels/summary/";
+export const GET_USER_FOLLOWERS_API_URL = "'https://api.twitch.tv/helix/users/follows?";
 export const SERVER = "http://localhost:3000/";
 
 export const MAX_TOP_LIVE_CHANNELS = 50;
