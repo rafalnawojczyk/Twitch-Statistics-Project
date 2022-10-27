@@ -40,6 +40,7 @@ const LanguageStatsTable: React.FC<{ data: LanguageStats[] }> = props => {
             return () => clearInterval(interval);
         }
         const maxIndex = channelsChartData ? channelsChartData.length - 1 : 2;
+
         const interval = setInterval(() => {
             setPieChartActiveIndex(prevIndex => {
                 let finalIndex = ++prevIndex;
@@ -48,7 +49,7 @@ const LanguageStatsTable: React.FC<{ data: LanguageStats[] }> = props => {
             });
         }, 2000);
         return () => clearInterval(interval);
-    }, []);
+    }, [viewersChartData, channelsChartData]);
 
     useEffect(() => {
         setViewersChartData(
