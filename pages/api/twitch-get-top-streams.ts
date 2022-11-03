@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { GET_STREAMS_API_URL, MIN_VIEWIERS_AMOUNT } from "../../config";
+import { GET_STREAMS_API_URL, MIN_VIEWERS_AMOUNT } from "../../config";
 import DataFromStreamsApi from "../../models/DataFromStreamsApi";
 import TwitchGetStreamsResponse from "../../models/TwitchGetStreamsResponse";
 
@@ -41,7 +41,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         streamsData.push(...typedData);
         pagination = data.pagination.cursor;
 
-        if (data.data[0].viewer_count <= MIN_VIEWIERS_AMOUNT) shouldFetch = false;
+        if (data.data[0].viewer_count <= MIN_VIEWERS_AMOUNT) shouldFetch = false;
     }
 
     // set status on response

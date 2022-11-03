@@ -15,10 +15,12 @@ export const DAILY_CHANNELS_AMMOUNT = 100;
 export const HOURLY_TOP_AMOUNT = 50;
 export const HOURLY_GAMES_AMMOUNT = 50;
 export const WEEKLY_TOP_AMMOUNT = 50;
-export const MIN_VIEWIERS_AMOUNT = 1;
+export const MIN_VIEWERS_AMOUNT = 1;
 
 export const GAME_THUMBNAIL_WIDTH = 225;
 export const GAME_THUMBNAIL_HEIGHT = 300;
+
+export const CHART_DATA_AMOUNT = 168;
 
 export const CHANNEL_THUMBNAIL_WIDTH = 300;
 export const CHANNEL_THUMBNAIL_HEIGHT = 300;

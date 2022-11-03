@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
+import { CHART_DATA_AMOUNT } from "../../config";
 import LanguageStats from "../../models/LanguageStats";
 import UnformattedStatsObj from "../../models/UnformattedStatsObj";
 import { getFormattedDate } from "../../utils/utils";
@@ -23,7 +24,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const formattedDate = getFormattedDate(date);
 
     const newData = oldData.map(lang => {
-        const newChartData = lang.chartData.length > 168 ? lang.chartData.slice(1) : lang.chartData;
+        const newChartData =
+            lang.chartData.length > CHART_DATA_AMOUNT ? lang.chartData.slice(1) : lang.chartData;
         const newChartObj: {
             name: string;
             value: number;

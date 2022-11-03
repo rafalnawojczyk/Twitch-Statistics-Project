@@ -1,19 +1,24 @@
 import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
-import { GET_GAMES_API_URL, HOURLY_GAMES_AMMOUNT, SERVER } from "../../config";
+import { CHART_DATA_AMOUNT, HOURLY_GAMES_AMMOUNT, SERVER } from "../../config";
 import DataFromStreamsApi from "../../models/DataFromStreamsApi";
 import HistoricalLiveData from "../../models/HistoricalLiveData";
 import LiveTableData from "../../models/LiveTableData";
-import TwitchGetTopGamesResponse from "../../models/TwitchGetTopGamesResponse";
 import TwitchGetUsersResponse from "../../models/TwitchGetUsersResponse";
-import UnformattedStatsObj from "../../models/UnformattedStatsObj";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "POST") return;
 
     const data: {
         activeChannels: DataFromStreamsApi[];
-        activeGames: UnformattedStatsObj;
+        activeGames: LiveTableData;
+        savedGames: {
+            title: string;
+            id: string;
+            viewers: number;
+            image: string;
+            followers: number | undefined;
+        }[];
         authorization: string;
     } = JSON.parse(req.body);
 
@@ -27,42 +32,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const response = await twitchStatisticsCollection.find().toArray();
 
     const historicalData: HistoricalLiveData = response[0]?.historicalData;
-
-    // 2nd - activeGames obj
-
-    const gamesResponse = await fetch(GET_GAMES_API_URL!, {
-        method: "GET",
-        headers: {
-            authorization: data.authorization,
-            "Client-Id": process.env.TWITCH_CLIENT_ID!,
-        },
-    });
-    const gamesResponseData: TwitchGetTopGamesResponse[] = (await gamesResponse.json()).data;
-
-    const newGamesArray = gamesResponseData
-        .filter(el => data.activeGames[el.id])
-        .map(game => {
-            return {
-                title: game.name,
-                id: game.id,
-                viewers: data.activeGames[game.id].views,
-                image: game.box_art_url,
-                followers: data.activeGames[game.id].channels,
-            };
-        })
-        .sort((a, b) => b.viewers - a.viewers);
-
-    const savedGamesArray = [...newGamesArray];
-
-    if (newGamesArray.length > HOURLY_GAMES_AMMOUNT) newGamesArray.length = HOURLY_GAMES_AMMOUNT;
-
-    const newActiveGames: LiveTableData = {
-        live: true,
-        title: "Games",
-        subtitle: "Current viewers",
-        type: "activeGames",
-        stats: newGamesArray,
-    };
 
     // GET FOLLOWERS
     const updatedActiveResponse = await fetch(`${SERVER}api/twitch-get-followers`, {
@@ -101,7 +70,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         subtitle: "Current viewers",
         type: "activeChannels",
         stats: updatedActiveChannels.map(channel => {
-            const gameObj = savedGamesArray.find(el => el.id === channel.gameId);
+            const gameObj = data.savedGames.find(el => el.id === channel.gameId);
             const gameImg = gameObj?.image;
 
             return {
@@ -126,14 +95,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const newHistoricalData: HistoricalLiveData = { activeChannels: [], activeGames: [] };
     if (historicalData && historicalData.activeChannels) {
         historicalData.activeChannels.length =
-            historicalData.activeChannels.length >= 168
-                ? 168
+            historicalData.activeChannels.length >= CHART_DATA_AMOUNT
+                ? CHART_DATA_AMOUNT
                 : historicalData.activeChannels.length;
         newHistoricalData.activeChannels = historicalData.activeChannels.slice(1);
     }
 
     newHistoricalData.activeChannels.push([...newActiveChannels.stats]);
-    newHistoricalData.activeGames.push([...newActiveGames.stats]);
+    newHistoricalData.activeGames.push([...data.activeGames.stats]);
 
     const historicalChannelsData: {
         [key: string]: {
@@ -197,7 +166,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             createdAt: date,
             data: {
                 activeChannels: newActiveChannels,
-                activeGames: newActiveGames,
+                activeGames: data.activeGames,
                 topChannels: newTopChannels,
             },
             historicalData: newHistoricalData,
@@ -214,7 +183,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         date: date,
         data: {
             activeChannels: newActiveChannels,
-            activeGames: newActiveGames,
+            activeGames: data.activeGames,
             topChannels: newTopChannels,
         },
     });

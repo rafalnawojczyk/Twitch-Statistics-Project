@@ -71,13 +71,35 @@ export async function getServerSideProps() {
         });
         const languageObj: LanguageStats[] = (await languageResponse.json()).data;
 
-        // 5. Live data for tables
+        // 5. Live data for tables - GAMES
+        const liveGamesResponse = await fetch(`${SERVER}api/post-live-games-data`, {
+            method: "POST",
+            body: JSON.stringify({
+                authorization,
+                activeGames: gamesStats,
+            }),
+        });
+
+        const liveGamesData: {
+            savedGames: {
+                title: string;
+                id: string;
+                viewers: number;
+                image: string;
+                followers: number | undefined;
+            }[];
+            activeGames: LiveTableData;
+        } = (await liveGamesResponse.json()).data;
+
+        // 6. Live data for tables - CHANNELS
+
         const liveStatsResponse = await fetch(`${SERVER}api/post-live-stats-data`, {
             method: "POST",
             body: JSON.stringify({
                 authorization,
+                activeGames: liveGamesData.activeGames,
                 activeChannels: streamsData.slice(0, HOURLY_TOP_AMOUNT),
-                activeGames: gamesStats,
+                savedGames: liveGamesData.savedGames,
             }),
         });
 
