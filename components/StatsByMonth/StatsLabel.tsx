@@ -7,7 +7,7 @@ const StatsLabel: React.FC<{ title: string; upperTitle?: boolean; className?: st
                 props.upperTitle ? styles.title__upper : ""
             }`}
         >
-            {props.title}{" "}
+            {props.title}
         </span>
     );
 };

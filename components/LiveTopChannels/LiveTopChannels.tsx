@@ -49,7 +49,7 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
     const sortingHandler = (event: React.MouseEvent<HTMLSpanElement>) => {
         let sortingType = 1;
 
-        if (event.currentTarget.textContent == "Followers ") {
+        if (event.currentTarget.textContent == "Followers") {
             sortingType = 0;
         }
         setSortBy(prevSorting => {

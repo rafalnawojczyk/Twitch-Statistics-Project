@@ -1,0 +1,25 @@
+@import "../../styles/variables";
+
+.stats {
+    &__value-box {
+        grid-column: auto !important;
+        height: 100%;
+        display: flex;
+        width: 80%;
+        flex-direction: column;
+
+        justify-content: center;
+    }
+
+    &__value {
+        font-size: 1.3rem;
+        color: #fff;
+        text-align: end;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+
+    &__value-bar {
+        background-color: $fill-color-orange;
+    }
+}

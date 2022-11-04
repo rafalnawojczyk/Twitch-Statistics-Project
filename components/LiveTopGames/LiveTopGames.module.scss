@@ -6,10 +6,10 @@
 }
 .stats {
     display: grid;
-    grid-template-columns: 4fr 6fr 10fr 10fr 40fr 6fr 6fr 10fr 10fr;
+    grid-template-columns: 4fr 6fr 30fr 40fr 15fr 15fr 15fr 15fr 15fr;
     align-items: center;
     justify-items: center;
-    height: 5rem;
+    height: 6rem;
 
     position: relative;
     z-index: 10;
@@ -35,8 +35,10 @@
     }
 
     &__title {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         color: #fff;
+
+        overflow: hidden;
     }
 
     &__stream-title {
@@ -51,7 +53,7 @@
 
     &__game-image {
         aspect-ratio: 45/ 60;
-        height: 4rem;
+        height: 5rem;
         border-radius: $border-radius-small;
         position: relative;
         z-index: 1000;
@@ -61,6 +63,13 @@
             scale: 2;
             z-index: 1500000;
         }
+    }
+
+    &__subtitle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center !important;
     }
 
     &__image {

@@ -1,18 +1,18 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+
 import { MAX_TOP_LIVE_CHANNELS } from "../../config";
-import LiveTableData from "../../models/LiveTableData";
-import { numFormatter, prepareImage } from "../../utils/utils";
+import LiveTableData, { StatsArr } from "../../models/LiveTableData";
+import { prepareImage } from "../../utils/utils";
+import BarChart from "../charts/BarChart";
 import Card from "../layout/Card";
-import GameIcon from "../layout/svg/GameIcon";
 import ImageIcon from "../layout/svg/ImageIcon";
-import LanguageIcon from "../layout/svg/LanguageIcon";
 import ListIcon from "../layout/svg/ListIcon";
 import LiveIndicator from "../layout/svg/LiveIndicator";
-import GainColorBar from "../StatsByMonth/GainColorBar";
 import StatsLabel from "../StatsByMonth/StatsLabel";
 import StatsTitle from "../StatsByMonth/StatsTitle";
 import styles from "./LiveTopGames.module.scss";
+import TopGamesBox from "./TopGamesBox";
 
 const LiveTopGames: React.FC<{ data: LiveTableData }> = ({ data }) => {
     const router = useRouter();
@@ -28,36 +28,72 @@ const LiveTopGames: React.FC<{ data: LiveTableData }> = ({ data }) => {
         gamesArr.length > MAX_TOP_LIVE_CHANNELS ? gamesArr.length : MAX_TOP_LIVE_CHANNELS;
 
     const [gamesList, setGamesList] = useState(gamesArr);
-    // [a, b]
-    //  a: 0 Average Viewers 1 Peak Viewers 2Peak Channel 3 Average Channels 4 Viewers per Channel
-    //  b: 0 - decrementally 1 - incrementally
-    // TODO: CHange this into more robust sorting system for 4 data types here
-    const [sortBy, setSortBy] = useState<[number, number]>([1, 0]);
+
+    const [sortBy, setSortBy] = useState<[0 | 1 | 2 | 3 | 4, 0 | 1]>([1, 0]);
 
     useEffect(() => {
-        const sortingType = sortBy[0] === 0 ? "followers" : "viewers";
-        const sortingDir = sortBy[1] === 0 ? "+" : "-";
-        const newgamesList = gamesArr.sort((a, b) => {
-            if (sortingDir === "-") return a[sortingType]! - b[sortingType]!;
+        const sortingName: (
+            | "averageViewers"
+            | "peakViewers"
+            | "peakChannels"
+            | "averageChannels"
+            | "viewersPerChannel"
+        )[] = [
+            "averageViewers",
+            "peakViewers",
+            "peakChannels",
+            "averageChannels",
+            "viewersPerChannel",
+        ];
 
+        const sortingType:
+            | "averageViewers"
+            | "peakViewers"
+            | "peakChannels"
+            | "averageChannels"
+            | "viewersPerChannel" = sortingName[sortBy[0]];
+
+        const sortingDir = sortBy[1] === 0 ? "+" : "-";
+        const newGamesList = gamesArr.sort((a, b) => {
+            if (sortingDir === "-") return a[sortingType]! - b[sortingType]!;
             return b[sortingType]! - a[sortingType]!;
         });
 
-        setGamesList(prevList => newgamesList);
+        setGamesList(prevList => newGamesList);
     }, [sortBy]);
 
-    const maxAverageViewers = Math.max(...gamesList.map(el => el.averageViewers!));
-    const maxPeakViewers = Math.max(...gamesList.map(el => el.peakViewers!));
-    const maxPeakChannels = Math.max(...gamesList.map(el => el.peakChannels!));
-    const maxAverageChannels = Math.max(...gamesList.map(el => el.averageChannels!));
-    const maxViewersPerChannel = Math.max(...gamesList.map(el => el.viewersPerChannel!));
+    const maxAverageViewers = Math.max(
+        ...gamesList.filter(a => a.averageViewers).map(el => el.averageViewers!)
+    );
+    const maxPeakViewers = Math.max(
+        ...gamesList.filter(a => a.peakViewers).map(el => el.peakViewers!)
+    );
+    const maxPeakChannels = Math.max(
+        ...gamesList.filter(a => a.peakChannels).map(el => el.peakChannels!)
+    );
+    const maxAverageChannels = Math.max(
+        ...gamesList.filter(a => a.averageChannels).map(el => el.averageChannels!)
+    );
+    const maxViewersPerChannel = Math.max(
+        ...gamesList.filter(a => a.viewersPerChannel).map(el => el.viewersPerChannel!)
+    );
 
     const sortingHandler = (event: React.MouseEvent<HTMLSpanElement>) => {
-        let sortingType = 1;
+        const sortingTypes = [
+            "Average Viewers",
+            "Peak Viewers",
+            "Peak Channels",
+            "Average Channels",
+            "Viewers/Channel",
+        ];
 
-        if (event.currentTarget.textContent == "Followers ") {
-            sortingType = 0;
-        }
+        const sortingType = sortingTypes.indexOf(event.currentTarget.textContent!) as
+            | 0
+            | 1
+            | 2
+            | 3
+            | 4;
+
         setSortBy(prevSorting => {
             const invertedDir = prevSorting[1] === 0 ? 1 : 0;
             const sortingDir = prevSorting[0] === sortingType ? invertedDir : 0;
@@ -69,7 +105,7 @@ const LiveTopGames: React.FC<{ data: LiveTableData }> = ({ data }) => {
         <>
             <div className={styles.wrapper}>
                 <StatsTitle
-                    title={`Top 20 LIVE games statistics`}
+                    title={`Top 50 LIVE games statistics`}
                     icon={
                         <Card className={styles.stats__icon}>
                             <LiveIndicator />
@@ -77,6 +113,7 @@ const LiveTopGames: React.FC<{ data: LiveTableData }> = ({ data }) => {
                     }
                 />
             </div>
+
             <Card className={styles.card}>
                 <div className={styles.stats}>
                     <ListIcon className={styles.stats__icon} />
@@ -96,64 +133,36 @@ const LiveTopGames: React.FC<{ data: LiveTableData }> = ({ data }) => {
                         <StatsLabel title="Average Channels" />
                     </div>
                     <div onClick={sortingHandler}>
-                        <StatsLabel title="Viewers per Channel" />
+                        <StatsLabel title="Viewers/Channel" />
                     </div>
                 </div>
 
-                {gamesList.map((channel, index) => (
+                {gamesList.map((game, index) => (
                     <div
-                        key={channel.id}
+                        key={game.id}
                         className={styles.stats}
-                        onClick={gameClickHandler.bind(null, channel.title)}
+                        onClick={gameClickHandler.bind(null, game.title)}
                     >
                         <StatsLabel title={index + 1 + ""} />
-                        <img className={styles.stats__image} src={channel.profileImg} />
-                        <StatsLabel title={channel.title} className={styles.stats__title} />
-
-                        <img
-                            className={styles[`stats__preview-image`]}
-                            src={prepareImage(channel.image, "previewImage")}
-                        />
-
-                        <StatsLabel
-                            title={channel.streamTitle!}
-                            className={styles["stats__stream-title"]}
-                        />
-                        <StatsLabel
-                            title={channel.language!.toUpperCase()}
-                            className={styles.stats__language}
-                        />
                         <img
                             className={styles["stats__game-image"]}
-                            src={prepareImage(
-                                channel.gameImg!
-                                    ? channel.gameImg
-                                    : "https://static-cdn.jtvnw.net/ttv-boxart/31376_IGDB-{width}x{height}.jpg",
-                                "previewGame"
-                            )}
+                            src={prepareImage(game.image, "previewGame")}
+                        />
+                        <StatsLabel title={game.title} className={styles.stats__title} />
+                        <BarChart data={game.chartData!} />
+                        <TopGamesBox amount={game.averageViewers!} maxAmount={maxAverageViewers} />
+                        <TopGamesBox amount={game.peakViewers!} maxAmount={maxPeakViewers} />
+
+                        <TopGamesBox amount={game.peakChannels!} maxAmount={maxPeakChannels} />
+                        <TopGamesBox
+                            amount={game.averageChannels!}
+                            maxAmount={maxAverageChannels}
                         />
 
-                        <div className={styles["stats__value-box"]}>
-                            <span className={styles["stats__value"]}>
-                                {numFormatter(channel.viewers)}
-                            </span>
-                            <GainColorBar
-                                actualAmount={channel.viewers}
-                                maxAmount={12}
-                                className={styles["stats__value-bar"]}
-                            />
-                        </div>
-
-                        <div className={styles["stats__value-box"]}>
-                            <span className={styles["stats__value"]}>
-                                {numFormatter(channel.followers!)}
-                            </span>
-                            <GainColorBar
-                                actualAmount={channel.followers!}
-                                maxAmount={maxFollowersValue}
-                                className={styles["stats__value-bar"]}
-                            />
-                        </div>
+                        <TopGamesBox
+                            amount={game.viewersPerChannel!}
+                            maxAmount={maxViewersPerChannel}
+                        />
                     </div>
                 ))}
             </Card>

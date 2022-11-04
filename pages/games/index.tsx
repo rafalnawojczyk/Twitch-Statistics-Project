@@ -9,7 +9,7 @@ const Games: React.FC<{ data: LiveTableData }> = props => {
     return (
         <>
             <Head>
-                <title>Twitch top LIVE channels statistics | TWITCHSTATISTICS</title>
+                <title>Twitch top LIVE games statistics | TWITCHSTATISTICS</title>
                 <meta
                     name="description"
                     content="Browse a huge list of Twitch statistics and charts. Live charts for streamers and games."
