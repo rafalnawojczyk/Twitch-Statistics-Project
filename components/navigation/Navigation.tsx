@@ -11,7 +11,6 @@ const Navigation: React.FC = () => {
                     <Logo />
                     <NavLink href="/channels" title="Channels" exact={true} />
                     <NavLink href="/games" title="Games" exact={true} />
-                    <NavLink href="/subscribers" title="Subscribers" exact={true} />
                 </div>
                 <div className={styles["nav--right"]}>
                     <NavLink href="/login/signup" title="Sign In" exact={false} />
