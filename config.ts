@@ -42,20 +42,20 @@ export const LIVE_BAR_LABELS: {
     title:
         | "Viewers now"
         | "Channels now"
-        | "Games being streamed"
+        | "Games now"
         | "Total streamers"
-        | "Peak online viewers"
-        | "Peak online channels";
+        | "Peak viewers"
+        | "Peak channels";
 }[] = [
     {
         title: "Viewers now",
         type: "activeViewers",
     },
     { title: "Channels now", type: "activeChannels" },
-    { title: "Games being streamed", type: "gamesStreamed" },
+    { title: "Games now", type: "gamesStreamed" },
     { title: "Total streamers", type: "totalChannels" },
-    { title: "Peak online viewers", type: "peakViewers" },
-    { title: "Peak online channels", type: "peakChannels" },
+    { title: "Peak viewers", type: "peakViewers" },
+    { title: "Peak channels", type: "peakChannels" },
 ];
 
 export const MONTHS_LABELS = [

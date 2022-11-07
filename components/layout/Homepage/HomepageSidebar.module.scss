@@ -5,4 +5,9 @@
     flex-direction: column;
     gap: 3rem;
     justify-content: center;
+
+    @media screen and (max-width: 56.25em) {
+        grid-column: 1 / -1;
+        flex-direction: row;
+    }
 }

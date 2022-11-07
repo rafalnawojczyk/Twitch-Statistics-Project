@@ -7,7 +7,7 @@
 
     @media screen and (max-width: 75em) {
         grid-template-columns: minmax(min-content, 100%);
-        grid-template-rows: repeat(11, 1fr) auto;
+        grid-template-rows: repeat(11, 1fr) max-content;
     }
 
     &__header {
@@ -22,19 +22,10 @@
         align-items: center;
         justify-content: space-around;
 
-        @media screen and (max-width: 56.25em) {
+        @media screen and (max-width: 33.45em) {
             grid-row: -1 / -2;
             grid-column: 1 / -1;
             flex-direction: row;
-            margin-top: 1rem;
-            align-items: center;
-            justify-content: space-around;
-        }
-
-        @media screen and (max-width: 40.625em) {
-            grid-row: -1 / -2;
-            grid-column: 1 / -1;
-            flex-direction: column;
             gap: 2rem;
             align-items: center;
             justify-content: space-around;

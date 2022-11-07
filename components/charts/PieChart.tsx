@@ -94,8 +94,8 @@ const PieChart: React.FC<{
                         fill={"transparent"}
                         labelLine={false}
                         paddingAngle={3}
-                        innerRadius={70}
-                        outerRadius={90}
+                        innerRadius={55}
+                        outerRadius={75}
                         onMouseEnter={props.onPieEnter}
                     >
                         {data?.map((entry, index) => (

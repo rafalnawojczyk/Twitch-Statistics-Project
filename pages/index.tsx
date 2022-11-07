@@ -61,16 +61,15 @@ const HomePage: React.FC<{ homepageData: HomepageData }> = ({ homepageData }) =>
                         color="rgb(255, 154, 67)"
                     />
                 </HomepageTwoColumns>
-
-                <HomepageCenter>
-                    <StatsByMonth data={monthlyData} maxData={maxMonthlyData} />
-                    <LanguageStatsTable data={languageStatsData} />
-                </HomepageCenter>
                 <HomepageSidebar>
                     <LiveStatsTable data={liveStatsData.activeChannels} />
                     <LiveStatsTable data={liveStatsData.activeGames} />
                     <LiveStatsTable data={liveStatsData.topChannels} />
                 </HomepageSidebar>
+                <HomepageCenter>
+                    <StatsByMonth data={monthlyData} maxData={maxMonthlyData} />
+                    <LanguageStatsTable data={languageStatsData} />
+                </HomepageCenter>
             </HomepageLayout>
         </>
     );

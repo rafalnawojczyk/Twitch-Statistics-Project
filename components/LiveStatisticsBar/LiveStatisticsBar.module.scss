@@ -6,4 +6,8 @@
     gap: 1px;
     margin-top: 4rem;
     margin-bottom: 2rem;
+
+    @media screen and (max-width: 40.625em) {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

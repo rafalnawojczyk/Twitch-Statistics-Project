@@ -4,4 +4,8 @@
     display: flex;
     flex-direction: column;
     gap: 3rem;
+
+    @media screen and (max-width: 56.25em) {
+        grid-column: 1 / -1;
+    }
 }

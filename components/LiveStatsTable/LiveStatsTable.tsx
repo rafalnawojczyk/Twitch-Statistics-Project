@@ -24,7 +24,7 @@ const LiveStatsTable: React.FC<{ data: LiveTableData }> = props => {
     };
 
     return (
-        <div className={styles.wrapper}>
+        <div className={`${styles.wrapper} ${data.live ? "" : styles.history}`}>
             <StatsTitle
                 title={`Top ${data.live ? "LIVE " : ""}${data.title}`}
                 icon={
