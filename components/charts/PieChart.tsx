@@ -82,7 +82,7 @@ const PieChart: React.FC<{
         <div className={styles.chart__wrapper}>
             <h4 className={styles.chart__title}>{props.title}</h4>
             <ResponsiveContainer>
-                <PieCharts width={730} height={250}>
+                <PieCharts>
                     <Pie
                         data={data}
                         activeIndex={props.index}

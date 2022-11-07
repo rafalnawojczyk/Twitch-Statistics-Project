@@ -8,6 +8,13 @@
     position: relative;
     overflow: hidden;
 
+    @media screen and (max-width: 90em) {
+        max-width: 130rem;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 2rem 0;
+    }
+
     &::after {
         content: "";
         bottom: 0;

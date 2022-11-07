@@ -17,12 +17,21 @@
 
 html {
     font-size: 62.5%;
+
+    @media screen and (max-width: 75em) {
+        font-size: 56%;
+    }
+
+    @media screen and (max-width: 56.25em) {
+        font-size: 50%;
+    }
 }
 
 body {
     font-family: "Roboto", sans-serif;
     background-color: $bg-color-dark;
     color: $font-color-primary;
+    padding: 0 2rem;
 }
 
 h1,

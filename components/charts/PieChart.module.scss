@@ -25,5 +25,9 @@
         flex-direction: column;
         margin-top: 1rem;
         position: relative;
+
+        @media screen and (max-width: 75em) {
+            width: 24rem;
+        }
     }
 }

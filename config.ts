@@ -6,6 +6,9 @@ export const GET_USER_API_URL = "https://api.twitch.tv/helix/users";
 export const GET_WEEKLY_SUMMARY_API_URL = "https://twitchtracker.com/api/channels/summary/";
 export const GET_USER_FOLLOWERS_API_URL = "https://api.twitch.tv/helix/users/follows?";
 export const GET_USER_INFO_URL = "https://api.twitch.tv/helix/users?";
+export const FIREBASE_LOGIN_URL =
+    "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
+export const FIREBASE_SINGUP_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
 export const SERVER = "http://localhost:3000/";
 
 export const MAX_TOP_LIVE_CHANNELS = 50;
