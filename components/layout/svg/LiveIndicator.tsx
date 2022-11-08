@@ -1,9 +1,11 @@
 import styles from "./LiveIndicator.module.scss";
 
-const LiveIndicator: React.FC<{ className?: string }> = props => {
+type LiveIndicatorProps = { className?: string };
+
+const LiveIndicator = ({ className }: LiveIndicatorProps) => {
     return (
         <svg
-            className={`${styles.indicator} ${props.className}`}
+            className={`${styles.indicator} ${className}`}
             width="16"
             height="16"
             viewBox="0 0 16 16"

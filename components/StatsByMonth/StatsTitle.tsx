@@ -1,10 +1,12 @@
 import styles from "./StatsTitle.module.scss";
 
-const StatsTitle: React.FC<{ title: string; icon?: React.ReactNode }> = props => {
+type StatsTitleProps = { title: string; icon?: React.ReactNode };
+
+const StatsTitle = ({ title, icon }: StatsTitleProps) => {
     return (
         <h3 className={styles.title}>
-            {props.icon}
-            {props.title}
+            {icon}
+            {title}
         </h3>
     );
 };

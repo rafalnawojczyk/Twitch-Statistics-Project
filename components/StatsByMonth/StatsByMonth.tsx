@@ -19,12 +19,11 @@ type statsIndicator =
     | "hoursWatched"
     | "gamesStreamed";
 
-const StatsByMonth: React.FC<{ data: MonthlyData; maxData: MonthlyData }> = props => {
+type StatsByMonthProps = { data: MonthlyData; maxData: MonthlyData };
+
+const StatsByMonth = ({ data, maxData }: StatsByMonthProps) => {
     const [selectedYear, setSelectedYear] = useState(2022);
     const [showYearSelector, setShowYearSelector] = useState(false);
-
-    //TODO: PARSE IT FROM DB USING API ROUTE
-    const { data, maxData } = props;
 
     const maxFilteredData = maxData[selectedYear][0];
 

@@ -7,7 +7,9 @@ import StatsTitle from "../StatsByMonth/StatsTitle";
 import LiveIndicator from "../layout/svg/LiveIndicator";
 import AreaChartData from "../../models/AreaChartData";
 
-const AreaChart: React.FC<{ color: string; title: string; data: AreaChartData[] }> = props => {
+type AreaChartProps = { color: string; title: string; data: AreaChartData[] };
+
+const AreaChart = (props: AreaChartProps) => {
     const { data } = props;
     const randomClass = Math.abs(Math.random() * 1000) + "";
     const randomClass2 = Math.abs(Math.random() * 1000) + "";

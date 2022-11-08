@@ -9,23 +9,23 @@ type statsType =
     | "peakViewers"
     | "peakChannels";
 
-const LiveStatsBox: React.FC<{
+type LiveStatsBoxProps = {
     title: string;
     type: statsType;
     value: number;
     date?: string;
     live?: boolean;
-}> = props => {
+};
+
+const LiveStatsBox = ({ title, type, value, date, live }: LiveStatsBoxProps) => {
     return (
-        <div className={`${styles[props.type]} ${styles.stats__box}`}>
-            <span className={styles.stats__title}>{props.title}</span>
+        <div className={`${styles[type]} ${styles.stats__box}`}>
+            <span className={styles.stats__title}>{title}</span>
             <p className={styles.stats__value}>
-                {props.live && <LiveIndicator />}
-                {props.value.toLocaleString()}
+                {live && <LiveIndicator />}
+                {value.toLocaleString()}
             </p>
-            <p className={`${props.date ? "" : styles.hidden} ${styles.stats__date}`}>
-                {props.date}
-            </p>
+            <p className={`${date ? "" : styles.hidden} ${styles.stats__date}`}>{date}</p>
         </div>
     );
 };

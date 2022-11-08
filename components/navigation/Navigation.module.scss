@@ -27,9 +27,16 @@
     display: flex;
     gap: 3rem;
     align-items: center;
+
+    @media screen and (max-width: 33.45em) {
+        gap: 1.5rem;
+    }
 }
 .nav--right {
     display: flex;
     gap: 3rem;
     align-items: center;
+    @media screen and (max-width: 33.45em) {
+        gap: 1.5rem;
+    }
 }

@@ -1,8 +1,10 @@
 import styles from "./LoadingSpinner.module.scss";
 
-const LoadingSpinner: React.FC<{ className?: string }> = props => {
+type LoadingSpinnerProps = { className?: string };
+
+const LoadingSpinner = ({ className }: LoadingSpinnerProps) => {
     return (
-        <div className={`${styles["lds-roller"]} ${props.className}`}>
+        <div className={`${styles["lds-roller"]} ${className}`}>
             <div></div>
             <div></div>
             <div></div>

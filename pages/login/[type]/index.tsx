@@ -1,8 +1,10 @@
 import { GetStaticProps } from "next";
 import Login from "../../../components/login/Login";
 
-const LoginPage: React.FC<{ operationType: "login" | "signup" }> = props => {
-    const signup = props.operationType === "signup";
+type LoginPageProps = { operationType: "login" | "signup" };
+
+const LoginPage = ({ operationType }: LoginPageProps) => {
+    const signup = operationType === "signup";
 
     return <Login signup={signup} />;
 };

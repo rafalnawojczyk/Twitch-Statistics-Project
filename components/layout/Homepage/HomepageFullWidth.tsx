@@ -1,7 +1,9 @@
 import styles from "./HomepageFullWidth.module.scss";
 
-const HomepageFullWidth: React.FC<{ children: React.ReactNode | React.ReactNode[] }> = props => {
-    return <div className={styles.wrapper}>{props.children}</div>;
+type HomepageFullWidthProps = { children: React.ReactNode | React.ReactNode[] };
+
+const HomepageFullWidth = ({ children }: HomepageFullWidthProps) => {
+    return <div className={styles.wrapper}>{children}</div>;
 };
 
 export default HomepageFullWidth;

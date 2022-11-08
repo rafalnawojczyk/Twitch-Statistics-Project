@@ -25,6 +25,10 @@ html {
     @media screen and (max-width: 56.25em) {
         font-size: 50%;
     }
+
+    @media screen and (max-width: 33.45em) {
+        font-size: 45%;
+    }
 }
 
 body {
@@ -32,6 +36,10 @@ body {
     background-color: $bg-color-dark;
     color: $font-color-primary;
     padding: 0 2rem;
+
+    @media screen and (max-width: 33.45em) {
+        padding: 0 0.5rem;
+    }
 }
 
 h1,

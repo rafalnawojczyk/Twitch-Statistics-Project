@@ -18,7 +18,9 @@ import LiveBarStats from "../models/LiveBarStats";
 import LiveTableData from "../models/LiveTableData";
 import MonthlyData from "../models/MonthlyData";
 
-const HomePage: React.FC<{ homepageData: HomepageData }> = ({ homepageData }) => {
+type HomePageProps = { homepageData: HomepageData };
+
+const HomePage = ({ homepageData }: HomePageProps) => {
     const languageStatsData: LanguageStats[] = Object.values(homepageData.languageStats).slice(
         0,
         10

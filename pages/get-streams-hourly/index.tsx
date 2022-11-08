@@ -8,8 +8,10 @@ import LiveTableData from "../../models/LiveTableData";
 import MonthlyData from "../../models/MonthlyData";
 import UnformattedStatsObj from "../../models/UnformattedStatsObj";
 
-const GetStreams: React.FC<{ homepageData: HomepageData }> = props => {
-    return <p>{JSON.stringify(props.homepageData)}</p>;
+type GetStreamsProps = { homepageData: HomepageData };
+
+const GetStreams = ({ homepageData }: GetStreamsProps) => {
+    return <p>{JSON.stringify(homepageData)}</p>;
 };
 
 export async function getServerSideProps() {

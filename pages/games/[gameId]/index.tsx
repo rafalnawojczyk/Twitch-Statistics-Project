@@ -1,9 +1,11 @@
 import { GetStaticProps } from "next";
 
-const GamePage: React.FC<{ gameId: string }> = props => {
+type GamePageProps = { gameId: string };
+
+const GamePage = ({ gameId }: GamePageProps) => {
     return (
         <h1>
-            Game page for <p>{props.gameId}</p>
+            Game page for <p>{gameId}</p>
         </h1>
     );
 };

@@ -1,11 +1,13 @@
-const Arrow: React.FC<{ className: string }> = props => {
+type ArrowProps = { className: string };
+
+const Arrow = ({ className }: ArrowProps) => {
     return (
         <svg
             width="40"
             height="40"
             viewBox="0 0 40 40"
             fill="currentColor"
-            className={props.className}
+            className={className}
             xmlns="http://www.w3.org/2000/svg"
         >
             <defs></defs>

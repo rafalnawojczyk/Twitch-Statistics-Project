@@ -30,6 +30,10 @@
             align-items: center;
             justify-content: space-around;
         }
+
+        @media screen and (max-width: 33.625em) {
+            flex-direction: column;
+        }
     }
 
     &__value {

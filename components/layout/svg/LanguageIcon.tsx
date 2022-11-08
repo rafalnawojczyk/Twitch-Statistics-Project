@@ -1,7 +1,9 @@
-const LanguageIcon: React.FC<{ className: string }> = props => {
+type LanguageIconProps = { className: string };
+
+const LanguageIcon = ({ className }: LanguageIconProps) => {
     return (
         <svg
-            className={props.className}
+            className={className}
             xmlns="http://www.w3.org/2000/svg"
             height="24"
             width="24"

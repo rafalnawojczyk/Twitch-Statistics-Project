@@ -1,7 +1,7 @@
 @import "../../styles/variables";
 @import "../../styles/mixins";
 .card {
-    width: 80%;
+    // width: 80%;
     padding: 0 !important;
 }
 .stats {
@@ -16,6 +16,10 @@
     scale: 1;
     transition: all 0.3s;
     cursor: pointer;
+
+    @media screen and (max-width: 56.25em) {
+        grid-template-columns: 4fr 6fr 30fr 40fr 15fr 15fr 15fr 15fr;
+    }
 
     &:nth-child(even) {
         position: relative;
@@ -38,7 +42,9 @@
         font-size: 1.3rem;
         color: #fff;
 
+        white-space: nowrap;
         overflow: hidden;
+        max-width: 100%;
     }
 
     &__stream-title {
@@ -142,4 +148,10 @@
     letter-spacing: 0.6px;
     padding-top: 2rem;
     padding-bottom: 1rem;
+}
+
+.viewers-per-channel {
+    @media screen and (max-width: 56.25em) {
+        display: none;
+    }
 }

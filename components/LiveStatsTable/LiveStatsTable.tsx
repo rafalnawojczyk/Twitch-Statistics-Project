@@ -9,9 +9,9 @@ import { useRouter } from "next/router";
 import LiveIndicator from "../layout/svg/LiveIndicator";
 import LiveTableData from "../../models/LiveTableData";
 
-const LiveStatsTable: React.FC<{ data: LiveTableData }> = props => {
-    const { data } = props;
+type LiveStatsTableProps = { data: LiveTableData };
 
+const LiveStatsTable = ({ data }: LiveStatsTableProps) => {
     const maxValue = Math.max(...data.stats.map(stats => stats.viewers));
 
     const router = useRouter();

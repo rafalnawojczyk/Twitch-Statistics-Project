@@ -1,7 +1,9 @@
 import styles from "./HomepageSidebar.module.scss";
 
-const HomepageSidebar: React.FC<{ children: React.ReactNode | React.ReactNode[] }> = props => {
-    return <div className={styles.sidebar}> {props.children}</div>;
+type HomepageSidebarProps = { children: React.ReactNode | React.ReactNode[] };
+
+const HomepageSidebar = ({ children }: HomepageSidebarProps) => {
+    return <div className={styles.sidebar}> {children}</div>;
 };
 
 export default HomepageSidebar;

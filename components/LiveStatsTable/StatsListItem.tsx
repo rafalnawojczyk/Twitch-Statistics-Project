@@ -3,7 +3,7 @@ import { numFormatter, prepareImage } from "../../utils/utils";
 import GainColorBar from "../StatsByMonth/GainColorBar";
 import styles from "./StatsListItem.module.scss";
 
-const StatsListItem: React.FC<{
+type StatsListItemProps = {
     url: string;
     type: "activeChannels" | "activeGames" | "topChannels";
     maxValue: number;
@@ -16,15 +16,15 @@ const StatsListItem: React.FC<{
         image: string;
         profileImg?: string;
     };
-}> = props => {
+};
+
+const StatsListItem = ({ url, type, maxValue, data }: StatsListItemProps) => {
     const router = useRouter();
 
-    const data = props.data;
-
     const clickHandler = () => {
-        const url = props.url + data.title;
+        const directUrl = url + data.title;
 
-        router.push(url);
+        router.push(directUrl);
     };
 
     let descriptionMarkup = (
@@ -33,7 +33,7 @@ const StatsListItem: React.FC<{
         </span>
     );
 
-    if (props.type === "activeGames") {
+    if (type === "activeGames") {
         descriptionMarkup = (
             <span className={styles["stats-list__subtitle"]}>
                 {numFormatter(data.followers!)} Channels
@@ -45,11 +45,7 @@ const StatsListItem: React.FC<{
         <li className={styles["stats-list__item"]} onClick={clickHandler}>
             <img
                 className={styles["stats-list__image"]}
-                src={
-                    props.type === "activeGames"
-                        ? prepareImage(data.image, props.type)
-                        : data.profileImg
-                }
+                src={type === "activeGames" ? prepareImage(data.image, type) : data.profileImg}
             ></img>
             <div className={styles["stats-list__title-box"]}>
                 <h4 className={styles["stats-list__title"]}>{data.title}</h4>
@@ -59,8 +55,8 @@ const StatsListItem: React.FC<{
                 <span className={styles["stats__value"]}>{numFormatter(data.viewers)}</span>
                 <GainColorBar
                     actualAmount={data.viewers}
-                    maxAmount={props.maxValue}
-                    className={styles[props.type]}
+                    maxAmount={maxValue}
+                    className={styles[type]}
                 />
             </div>
         </li>

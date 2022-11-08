@@ -5,7 +5,9 @@ import Head from "next/head";
 import LiveTopGames from "../../components/LiveTopGames/LiveTopGames";
 import LiveTableData from "../../models/LiveTableData";
 
-const Games: React.FC<{ data: LiveTableData }> = props => {
+type GamesProps = { data: LiveTableData };
+
+const Games = ({ data }: GamesProps) => {
     return (
         <>
             <Head>
@@ -16,7 +18,7 @@ const Games: React.FC<{ data: LiveTableData }> = props => {
                 />
             </Head>
 
-            <LiveTopGames data={props.data} />
+            <LiveTopGames data={data} />
         </>
     );
 };

@@ -11,8 +11,8 @@ type statsType =
     | "peakViewers"
     | "peakChannels";
 
-const LiveStatisticsBar: React.FC<{ data: LiveBarStats[] }> = props => {
-    const { data } = props;
+type LiveStatisticsBarProps = { data: LiveBarStats[] };
+const LiveStatisticsBar = ({ data }: LiveStatisticsBarProps) => {
     return (
         <Card className={styles["live-box"]}>
             {data.map(stats => {

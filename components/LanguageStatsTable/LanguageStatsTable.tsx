@@ -9,8 +9,9 @@ import { useCallback, useEffect, useState } from "react";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import LanguageStats from "../../models/LanguageStats";
 
-const LanguageStatsTable: React.FC<{ data: LanguageStats[] }> = props => {
-    const { data } = props;
+type LanguageStatsTableProps = { data: LanguageStats[] };
+
+const LanguageStatsTable = ({ data }: LanguageStatsTableProps) => {
     const [dataIsLoading, setDataIsLoading] = useState(true);
     const [viewersChartData, setViewersChartData] = useState<
         {

@@ -1,7 +1,9 @@
 import styles from "./HomepageTwoColumns.module.scss";
 
-const HomepageTwoColumns: React.FC<{ children: React.ReactNode | React.ReactNode[] }> = props => {
-    return <div className={styles.wrapper}>{props.children}</div>;
+type HomepageTwoColumnsProps = { children: React.ReactNode | React.ReactNode[] };
+
+const HomepageTwoColumns = ({ children }: HomepageTwoColumnsProps) => {
+    return <div className={styles.wrapper}>{children}</div>;
 };
 
 export default HomepageTwoColumns;

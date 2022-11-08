@@ -2,9 +2,11 @@ import Link from "next/link";
 
 import ViewMore from "./ViewMore";
 
-const ViewMoreLink: React.FC<{ href: string }> = props => {
+type ViewMoreLinkProps = { href: string };
+
+const ViewMoreLink = ({ href }: ViewMoreLinkProps) => {
     return (
-        <Link href={props.href} passHref>
+        <Link href={href} passHref>
             <ViewMore />
         </Link>
     );

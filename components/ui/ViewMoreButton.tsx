@@ -1,9 +1,11 @@
 import ViewMore from "./ViewMore";
 import styles from "./ViewMoreButton.module.scss";
 
-const ViewMoreButton: React.FC<{ onClick: () => void }> = props => {
+type ViewMoreButtonProps = { onClick: () => void };
+
+const ViewMoreButton = ({ onClick }: ViewMoreButtonProps) => {
     return (
-        <button className={styles.button} onClick={props.onClick}>
+        <button className={styles.button} onClick={onClick}>
             <ViewMore />
         </button>
     );

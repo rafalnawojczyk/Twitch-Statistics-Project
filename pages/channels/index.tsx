@@ -5,7 +5,9 @@ import Head from "next/head";
 import LiveTopChannels from "../../components/LiveTopChannels/LiveTopChannels";
 import LiveTableData from "../../models/LiveTableData";
 
-const Channels: React.FC<{ data: LiveTableData }> = props => {
+type ChannelsProps = { data: LiveTableData };
+
+const Channels = ({ data }: ChannelsProps) => {
     return (
         <>
             <Head>
@@ -16,7 +18,7 @@ const Channels: React.FC<{ data: LiveTableData }> = props => {
                 />
             </Head>
 
-            <LiveTopChannels data={props.data} />
+            <LiveTopChannels data={data} />
         </>
     );
 };

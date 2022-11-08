@@ -5,12 +5,14 @@ const GoogleLogo = require("../../public/google-icon.png");
 import { ReactElement } from "react";
 import Link from "next/link";
 
-const LoginForm: React.FC<{ signup: boolean }> = props => {
+type LoginFormProps = { signup: boolean };
+
+const LoginForm = ({ signup }: LoginFormProps) => {
     const loginWithGoogleHandler = () => {
         alert("LOGIN WITH GOOGLE HERE");
     };
 
-    const initialValues = props.signup
+    const initialValues = signup
         ? {
               email: "",
               password: "",
@@ -23,7 +25,7 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
               checkbox: false,
           };
 
-    const validationSchema = props.signup
+    const validationSchema = signup
         ? Yup.object({
               email: Yup.string().email("Invalid email address").required("Email is required"),
               password: Yup.string()
@@ -55,7 +57,7 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
     let formMarkup: ReactElement;
     let buttonTitle: string;
 
-    // if (props.signup === "LOGIN") {
+    // if (signup === "LOGIN") {
 
     buttonTitle = "Signup";
     formMarkup = (
@@ -114,8 +116,8 @@ const LoginForm: React.FC<{ signup: boolean }> = props => {
         </>
     );
 
-    // if (props.signup === "SIGNUP") {
-    if (!props.signup) {
+    // if (signup === "SIGNUP") {
+    if (!signup) {
         buttonTitle = "Login";
 
         formMarkup = (

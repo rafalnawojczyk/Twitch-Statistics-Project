@@ -14,7 +14,9 @@ import StatsLabel from "../StatsByMonth/StatsLabel";
 import StatsTitle from "../StatsByMonth/StatsTitle";
 import styles from "./LiveTopChannels.module.scss";
 
-const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
+type LiveTopChannelsProps = { data: LiveTableData };
+
+const LiveTopChannels = ({ data }: LiveTopChannelsProps) => {
     const router = useRouter();
 
     const channelClickHandler = (id: string) => {
@@ -76,9 +78,9 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                     <ListIcon className={styles.stats__icon} />
                     <ImageIcon className={styles.stats__icon} />
                     <StatsLabel title="Channel name" />
-                    <StatsLabel title="Preview" />
+                    <StatsLabel title="Preview" className={styles.preview} />
                     <StatsLabel title="Stream title" />
-                    <LanguageIcon className={styles.stats__icon} />
+                    <LanguageIcon className={`${styles.stats__icon} ${styles.lang}`} />
                     <GameIcon className={styles.stats__icon} />
                     <div onClick={sortingHandler}>
                         <StatsLabel title="Live viewers" />
@@ -99,7 +101,7 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                         <StatsLabel title={channel.title} className={styles.stats__title} />
 
                         <img
-                            className={styles[`stats__preview-image`]}
+                            className={`${styles["stats__preview-image"]} ${styles.preview}`}
                             src={prepareImage(channel.image, "previewImage")}
                         />
 
@@ -109,7 +111,7 @@ const LiveTopChannels: React.FC<{ data: LiveTableData }> = ({ data }) => {
                         />
                         <StatsLabel
                             title={channel.language!.toUpperCase()}
-                            className={styles.stats__language}
+                            className={`${styles.stats__language} ${styles.lang}`}
                         />
                         <img
                             className={styles["stats__game-image"]}

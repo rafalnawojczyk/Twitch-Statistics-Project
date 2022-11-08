@@ -1,7 +1,9 @@
-const ExpandSvg: React.FC<{ className: string }> = props => {
+type ExpandSvgProps = { className: string };
+
+const ExpandSvg = ({ className }: ExpandSvgProps) => {
     return (
         <svg
-            className={props.className}
+            className={className}
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
             height="24"

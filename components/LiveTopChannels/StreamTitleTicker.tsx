@@ -1,4 +1,6 @@
-const StreamTitleTicker: React.FC<{ title: string; className: string }> = props => {
+type StreamTitleTicker = { title: string; className: string };
+
+const StreamTitleTicker = ({ title, className }: StreamTitleTicker) => {
     return <div></div>;
 };
 

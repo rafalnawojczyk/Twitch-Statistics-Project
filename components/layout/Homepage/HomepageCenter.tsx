@@ -1,7 +1,9 @@
 import styles from "./HomepageCenter.module.scss";
 
-const HomepageCenter: React.FC<{ children: React.ReactNode | React.ReactNode[] }> = props => {
-    return <div className={styles.wrapper}>{props.children}</div>;
+type HomepageCenterProps = { children: React.ReactNode | React.ReactNode[] };
+
+const HomepageCenter = ({ children }: HomepageCenterProps) => {
+    return <div className={styles.wrapper}>{children}</div>;
 };
 
 export default HomepageCenter;

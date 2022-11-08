@@ -11,33 +11,35 @@ type statsIndicator =
     | "hoursWatched"
     | "gamesStreamed";
 
-const StatsBox: React.FC<{
+type StatsBoxProps = {
     actualAmount: number;
     prevAmount: number;
     statsIndicator: statsIndicator;
     maxAmount: number;
-}> = props => {
-    const showPercentage = props.prevAmount !== 0 ? true : false;
+};
+
+const StatsBox = ({ actualAmount, prevAmount, statsIndicator, maxAmount }: StatsBoxProps) => {
+    const showPercentage = prevAmount !== 0 ? true : false;
 
     return (
         <div className={styles.stats__box}>
             <GainPercentageIndicator
-                prevAmount={props.prevAmount}
-                actualAmount={props.actualAmount}
+                prevAmount={prevAmount}
+                actualAmount={actualAmount}
                 className={`${showPercentage ? "" : styles.hidden}`}
             />
 
             <span
                 className={`${styles.stats__amount} ${
-                    props.actualAmount === props.maxAmount ? styles["stats__amount--bold"] : ""
+                    actualAmount === maxAmount ? styles["stats__amount--bold"] : ""
                 }`}
             >
-                {props.actualAmount.toLocaleString()}
+                {actualAmount.toLocaleString()}
             </span>
             <GainColorBar
-                maxAmount={props.maxAmount}
-                actualAmount={props.actualAmount}
-                className={styles[props.statsIndicator]}
+                maxAmount={maxAmount}
+                actualAmount={actualAmount}
+                className={styles[statsIndicator]}
             />
         </div>
     );

@@ -3,7 +3,9 @@ import styles from "./BarChart.module.scss";
 import { BarChart as BarCharts, Bar, ResponsiveContainer, Tooltip } from "recharts";
 import BarChartLabel from "./BarChartLabel";
 
-const BarChart: React.FC<{ data: { name: string; value: number }[] }> = ({ data }) => {
+type BarChartProps = { data: { name: string; value: number }[] };
+
+const BarChart = ({ data }: BarChartProps) => {
     return (
         <div className={styles.chart__wrapper}>
             <ResponsiveContainer>

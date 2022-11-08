@@ -1,9 +1,11 @@
 import { GetStaticProps } from "next";
 
-const ChannelPage: React.FC<{ channelId: string }> = props => {
+type ChannelPageProps = { channelId: string };
+
+const ChannelPage = ({ channelId }: ChannelPageProps) => {
     return (
         <h1>
-            Channels page for <p>{props.channelId}</p>
+            Channels page for <p>{channelId}</p>
         </h1>
     );
 };

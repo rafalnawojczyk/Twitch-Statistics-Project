@@ -1,20 +1,22 @@
 import Button from "./Button";
 import styles from "./DropdownSelector.module.scss";
 
-const DropdownSelector: React.FC<{
+type DropdownSelectorProps = {
     className: string;
     values: string[];
     onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}> = props => {
+};
+
+const DropdownSelector = ({ className, values, onClick }: DropdownSelectorProps) => {
     return (
-        <div className={`${styles.dropdown} ${props.className}`}>
-            {props.values.map(value => {
+        <div className={`${styles.dropdown} ${className}`}>
+            {values.map(value => {
                 return (
                     <Button
                         key={value}
                         type="button"
                         value={value}
-                        onClick={props.onClick}
+                        onClick={onClick}
                         className={styles.dropdown__button}
                     >
                         {value}

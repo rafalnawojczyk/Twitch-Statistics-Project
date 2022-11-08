@@ -2,17 +2,20 @@ import { numFormatter } from "../../utils/utils";
 import GainColorBar from "../StatsByMonth/GainColorBar";
 import styles from "./TopGamesBox.module.scss";
 
-const TopGamesBox: React.FC<{
+type TopGamesProps = {
     amount: number;
     maxAmount: number;
-}> = props => {
+    className?: string;
+};
+
+const TopGamesBox = ({ amount, maxAmount, className }: TopGamesProps) => {
     return (
-        <div className={styles["stats__value-box"]}>
-            <span className={styles["stats__value"]}>{numFormatter(Math.trunc(props.amount))}</span>
+        <div className={`${styles["stats__value-box"]} ${className}`}>
+            <span className={styles["stats__value"]}>{numFormatter(Math.trunc(amount))}</span>
             <GainColorBar
-                actualAmount={props.amount}
-                maxAmount={props.maxAmount}
-                className={styles["stats__value-bar"]}
+                actualAmount={amount}
+                maxAmount={maxAmount}
+                className={`${styles["stats__value-bar"]}`}
             />
         </div>
     );

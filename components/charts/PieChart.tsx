@@ -2,14 +2,16 @@ import { ResponsiveContainer, Pie, PieChart as PieCharts, Cell, Sector } from "r
 import { COLORS_ARRAY } from "../../config";
 import styles from "./PieChart.module.scss";
 
-const PieChart: React.FC<{
+type PieChartProps = {
     index: number;
     title: string;
     onPieEnter: (_: any, index: number) => void;
     data: { name: string; value: number }[];
-}> = props => {
+};
+
+const PieChart = ({ index, title, onPieEnter, data }: PieChartProps) => {
     const colors = COLORS_ARRAY;
-    const data = props.data;
+
     const maxIndex = data.length - 1;
 
     const renderActiveShape = (props: any) => {
@@ -80,12 +82,12 @@ const PieChart: React.FC<{
 
     return (
         <div className={styles.chart__wrapper}>
-            <h4 className={styles.chart__title}>{props.title}</h4>
+            <h4 className={styles.chart__title}>{title}</h4>
             <ResponsiveContainer>
                 <PieCharts>
                     <Pie
                         data={data}
-                        activeIndex={props.index}
+                        activeIndex={index}
                         activeShape={renderActiveShape}
                         dataKey="value"
                         nameKey="name"
@@ -96,7 +98,7 @@ const PieChart: React.FC<{
                         paddingAngle={3}
                         innerRadius={55}
                         outerRadius={75}
-                        onMouseEnter={props.onPieEnter}
+                        onMouseEnter={onPieEnter}
                     >
                         {data?.map((entry, index) => (
                             <Cell

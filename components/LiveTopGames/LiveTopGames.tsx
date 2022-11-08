@@ -14,7 +14,9 @@ import StatsTitle from "../StatsByMonth/StatsTitle";
 import styles from "./LiveTopGames.module.scss";
 import TopGamesBox from "./TopGamesBox";
 
-const LiveTopGames: React.FC<{ data: LiveTableData }> = ({ data }) => {
+type LiveTopGamesProps = { data: LiveTableData };
+
+const LiveTopGames = ({ data }: LiveTopGamesProps) => {
     const router = useRouter();
 
     const gameClickHandler = (id: string) => {
@@ -132,7 +134,7 @@ const LiveTopGames: React.FC<{ data: LiveTableData }> = ({ data }) => {
                     <div onClick={sortingHandler}>
                         <StatsLabel title="Average Channels" />
                     </div>
-                    <div onClick={sortingHandler}>
+                    <div onClick={sortingHandler} className={styles["viewers-per-channel"]}>
                         <StatsLabel title="Viewers/Channel" />
                     </div>
                 </div>
@@ -160,6 +162,7 @@ const LiveTopGames: React.FC<{ data: LiveTableData }> = ({ data }) => {
                         />
 
                         <TopGamesBox
+                            className={styles["viewers-per-channel"]}
                             amount={game.viewersPerChannel!}
                             maxAmount={maxViewersPerChannel}
                         />

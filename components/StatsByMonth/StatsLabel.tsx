@@ -1,13 +1,11 @@
 import styles from "./StatsLabel.module.scss";
 
-const StatsLabel: React.FC<{ title: string; upperTitle?: boolean; className?: string }> = props => {
+type StatsLabelProps = { title: string; upperTitle?: boolean; className?: string };
+
+const StatsLabel = ({ title, upperTitle, className }: StatsLabelProps) => {
     return (
-        <span
-            className={` ${props.className} ${styles.title} ${
-                props.upperTitle ? styles.title__upper : ""
-            }`}
-        >
-            {props.title}
+        <span className={` ${className} ${styles.title} ${upperTitle ? styles.title__upper : ""}`}>
+            {title}
         </span>
     );
 };
