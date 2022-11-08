@@ -3,10 +3,10 @@ export default interface LiveBarStats {
     title:
         | "Viewers now"
         | "Channels now"
-        | "Games being streamed"
+        | "Games now"
         | "Total streamers"
-        | "Peak online viewers"
-        | "Peak online channels";
+        | "Peak viewers"
+        | "Peak channels";
     type:
         | "activeViewers"
         | "activeChannels"
