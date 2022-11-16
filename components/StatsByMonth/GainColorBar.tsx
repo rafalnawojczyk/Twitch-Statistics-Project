@@ -11,8 +11,12 @@ const GainColorBar = ({ actualAmount, maxAmount, className, divClassName }: Gain
     const diffValue = +(actualAmount / maxAmount).toFixed(2) * 100;
 
     return (
-        <div className={`${styles["color-bar"]} ${divClassName}`}>
-            <span className={className} style={{ width: `${diffValue}%` }}></span>
+        <div data-testid="color-bar-wrapper" className={`${styles["color-bar"]} ${divClassName}`}>
+            <span
+                data-testid="color-span"
+                className={className}
+                style={{ width: `${diffValue}%` }}
+            ></span>
         </div>
     );
 };

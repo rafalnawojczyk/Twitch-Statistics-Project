@@ -10,6 +10,7 @@ export const FIREBASE_LOGIN_URL =
     "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
 export const FIREBASE_SINGUP_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
 export const SERVER = "http://localhost:3000/";
+export const EMAIL = "contact@twitchstatistics.com";
 
 export const MAX_TOP_LIVE_CHANNELS = 50;
 
@@ -19,6 +20,8 @@ export const HOURLY_TOP_AMOUNT = 50;
 export const HOURLY_GAMES_AMMOUNT = 50;
 export const WEEKLY_TOP_AMMOUNT = 50;
 export const MIN_VIEWERS_AMOUNT = 1;
+
+export const MINIMUM_TOKEN_DURATION_SECONDS = 3600;
 
 export const GAME_THUMBNAIL_WIDTH = 225;
 export const GAME_THUMBNAIL_HEIGHT = 300;

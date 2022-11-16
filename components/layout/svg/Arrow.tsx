@@ -3,6 +3,7 @@ type ArrowProps = { className: string };
 const Arrow = ({ className }: ArrowProps) => {
     return (
         <svg
+            data-test-id="arrow-test"
             width="40"
             height="40"
             viewBox="0 0 40 40"

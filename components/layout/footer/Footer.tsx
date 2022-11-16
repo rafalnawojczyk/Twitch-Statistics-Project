@@ -1,3 +1,4 @@
+import { EMAIL } from "config";
 import styles from "./Footer.module.scss";
 
 const Footer = () => {
@@ -8,9 +9,8 @@ const Footer = () => {
             <p>Get in touch, report a bug or incorrect information, suggest a feature.</p>
             <p>
                 © {actualYear} TwitchStatistics
-                <a href="mailto:contact@twitchstatistics.com" className={styles.footer__email}>
-                    {" "}
-                    contact@twitchstatistics.com
+                <a href={`mailto:${EMAIL}`} className={styles.footer__email}>
+                    {EMAIL}
                 </a>
             </p>
             <p>

@@ -1,7 +1,7 @@
 import styles from "./LoginForm.module.scss";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-const GoogleLogo = require("../../public/google-icon.png");
+import GoogleLogo from "../../public/google-icon.png";
 import { ReactElement } from "react";
 import Link from "next/link";
 
@@ -176,7 +176,7 @@ const LoginForm = ({ signup }: LoginFormProps) => {
                 className={`${styles["login-form__button"]} ${styles["login-form__button--google"]}`}
             >
                 <div className={styles["login-form__button--wrapper"]}>
-                    <img src={GoogleLogo} />
+                    <img src={GoogleLogo.src} />
                     {`${buttonTitle} with Google`}
                 </div>
             </button>
