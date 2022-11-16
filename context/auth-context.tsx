@@ -25,23 +25,21 @@ const calcRemainingTime = (expTime: string) => {
 };
 
 const getStoredToken = () => {
+    // guard clause for serverside tasks
     if (typeof window === "undefined") {
         return null;
     }
 
-    const storedToken = window?.localStorage?.getItem("authToken");
-    const storedExpDate = window?.localStorage?.getItem("expirationTime");
-
-    console.log(storedToken);
-    console.log(storedExpDate);
+    const storedToken = localStorage?.getItem("authToken");
+    const storedExpDate = localStorage?.getItem("expirationTime");
 
     if (!storedToken || !storedExpDate) return null;
 
     const remainingTime = calcRemainingTime(storedExpDate);
 
     if (remainingTime <= MINIMUM_TOKEN_DURATION_SECONDS) {
-        window?.localStorage?.removeItem("authToken");
-        window?.localStorage?.removeItem("expirationTime");
+        localStorage?.removeItem("authToken");
+        localStorage?.removeItem("expirationTime");
         return null;
     }
 
@@ -67,8 +65,8 @@ export const AuthContextProvider = (props: AuthContextProviderProps) => {
 
     const logoutHandler = useCallback(() => {
         setToken(undefined);
-        window?.localStorage?.removeItem("authToken");
-        window?.localStorage?.removeItem("expirationTime");
+        localStorage?.removeItem("authToken");
+        localStorage?.removeItem("expirationTime");
 
         if (logoutTimer) {
             clearTimeout(logoutTimer);
@@ -77,8 +75,8 @@ export const AuthContextProvider = (props: AuthContextProviderProps) => {
 
     const loginHandler = (token: string, expirationTime: string) => {
         setToken(token);
-        window?.localStorage?.setItem("authToken", token);
-        window?.localStorage?.setItem("expirationTime", expirationTime);
+        localStorage?.setItem("authToken", token);
+        localStorage?.setItem("expirationTime", expirationTime);
 
         const remainingTime = calcRemainingTime(expirationTime);
 

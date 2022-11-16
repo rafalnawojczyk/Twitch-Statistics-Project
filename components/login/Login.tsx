@@ -36,8 +36,7 @@ const Login = ({ signup }: LoginProps) => {
         if (!authData.ok) {
             // TODO: error message is in authData.data when authData is not ok. Try to show this to user that he is not logged in
         }
-        console.log(new Date().getTime() + +authData.data.expiresIn * 1000);
-        console.log(new Date().getTime());
+
         const expirationTime = new Date(new Date().getTime() + +authData.data.expiresIn * 1000);
         authCtx.login(authData.data.idToken, expirationTime.toISOString());
 
