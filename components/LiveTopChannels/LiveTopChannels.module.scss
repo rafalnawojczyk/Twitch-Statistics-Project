@@ -44,11 +44,9 @@
         font-size: 1.4rem;
         color: #fff;
 
-        @media screen and (max-width: 56.25em) {
-            white-space: nowrap;
-            overflow: hidden;
-            max-width: 100%;
-        }
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 100%;
     }
 
     &__stream-title {
