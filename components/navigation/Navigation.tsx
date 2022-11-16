@@ -2,8 +2,17 @@ import styles from "./Navigation.module.scss";
 import Logo from "./Logo";
 import NavLink from "./NavLink";
 import Header from "../layout/Header";
+import AuthContext from "context/auth-context";
+import { useContext, useEffect, useState } from "react";
 
 const Navigation: React.FC = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const authCtx = useContext(AuthContext);
+
+    useEffect(() => {
+        setIsLoggedIn(authCtx.isLoggedIn);
+    }, []);
+
     return (
         <Header>
             <nav className={styles.nav}>
@@ -13,8 +22,13 @@ const Navigation: React.FC = () => {
                     <NavLink href="/games" title="Games" exact={true} />
                 </div>
                 <div className={styles["nav--right"]}>
-                    <NavLink href="/login/signup" title="Sign In" exact={false} />
-                    <NavLink href="/login" title="Log In" exact={true} />
+                    {!isLoggedIn && (
+                        <>
+                            <NavLink href="/login/signup" title="Sign In" exact={false} />
+                            <NavLink href="/login" title="Log In" exact={true} />
+                        </>
+                    )}
+                    {isLoggedIn && <NavLink href="/profile" title="Profile" exact={false} />}
                 </div>
             </nav>
         </Header>

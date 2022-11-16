@@ -26,27 +26,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
         });
 
-        if (!firebaseResponse.ok) {
-            throw new Error("Authentication failed.");
+        if (firebaseResponse.ok) {
+            const authData = await firebaseResponse.json();
+
+            return authData;
         }
 
-        const authData = await firebaseResponse.json();
-
-        return authData;
+        throw new Error("Authentication failed.");
     };
 
-    try {
-        const loginData = await firebaseLogin();
+    let loginData;
 
-        // set status on response
+    try {
+        loginData = await firebaseLogin();
         res.status(201).json({
             ok: true,
             data: loginData,
         });
-    } catch (err) {
-        res.status(401).json({
+        // set status on response
+    } catch (err: any) {
+        console.log(err);
+        res.status(201).json({
             ok: false,
-            data: null,
+            data: err.message,
         });
     }
 };

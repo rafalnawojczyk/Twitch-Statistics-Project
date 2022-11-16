@@ -29,16 +29,19 @@ const getStoredToken = () => {
         return null;
     }
 
-    const storedToken = localStorage.getItem("authToken");
-    const storedExpDate = localStorage.getItem("expDate");
+    const storedToken = window?.localStorage?.getItem("authToken");
+    const storedExpDate = window?.localStorage?.getItem("expirationTime");
+
+    console.log(storedToken);
+    console.log(storedExpDate);
 
     if (!storedToken || !storedExpDate) return null;
 
     const remainingTime = calcRemainingTime(storedExpDate);
 
     if (remainingTime <= MINIMUM_TOKEN_DURATION_SECONDS) {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("expirationTime");
+        window?.localStorage?.removeItem("authToken");
+        window?.localStorage?.removeItem("expirationTime");
         return null;
     }
 
@@ -64,8 +67,8 @@ export const AuthContextProvider = (props: AuthContextProviderProps) => {
 
     const logoutHandler = useCallback(() => {
         setToken(undefined);
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("expirationTime");
+        window?.localStorage?.removeItem("authToken");
+        window?.localStorage?.removeItem("expirationTime");
 
         if (logoutTimer) {
             clearTimeout(logoutTimer);
@@ -74,8 +77,8 @@ export const AuthContextProvider = (props: AuthContextProviderProps) => {
 
     const loginHandler = (token: string, expirationTime: string) => {
         setToken(token);
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("expirationTime", expirationTime);
+        window?.localStorage?.setItem("authToken", token);
+        window?.localStorage?.setItem("expirationTime", expirationTime);
 
         const remainingTime = calcRemainingTime(expirationTime);
 

@@ -5,9 +5,12 @@ import GoogleLogo from "../../public/google-icon.png";
 import { ReactElement } from "react";
 import Link from "next/link";
 
-type LoginFormProps = { signup: boolean };
+type LoginFormProps = {
+    signup: boolean;
+    onSubmit: (email: string, password: string, remember: boolean) => void;
+};
 
-const LoginForm = ({ signup }: LoginFormProps) => {
+const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
     const loginWithGoogleHandler = () => {
         alert("LOGIN WITH GOOGLE HERE");
     };
@@ -50,7 +53,7 @@ const LoginForm = ({ signup }: LoginFormProps) => {
         initialValues,
         validationSchema,
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            onSubmit(values.email, values.password, values.checkbox);
         },
     });
 

@@ -2,7 +2,7 @@ import { SERVER } from "config";
 import AuthContext from "context/auth-context";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styles from "./Login.module.scss";
 import LoginForm from "./LoginForm";
 
@@ -12,10 +12,16 @@ const Login = ({ signup }: LoginProps) => {
     const authCtx = useContext(AuthContext);
     const router = useRouter();
 
+    useEffect(() => {
+        if (authCtx.isLoggedIn) {
+            router.push("/");
+        }
+    }, []);
+
     let titleText = "Login to your account and stay tuned!";
     if (signup) titleText = "Signup now to gain lots of new possibilites!";
 
-    const authHandler = async (email: string, password: string) => {
+    const authHandler = async (email: string, password: string, remember: boolean) => {
         const authResponse = await fetch(`${SERVER}api/firebase-login`, {
             method: "POST",
             body: JSON.stringify({
@@ -27,12 +33,14 @@ const Login = ({ signup }: LoginProps) => {
 
         const authData = await authResponse.json();
 
-        if (!authData.ok || (authData.data.error && authData.data.error.message)) {
-            return authData.data.error.message;
+        if (!authData.ok) {
+            // TODO: error message is in authData.data when authData is not ok. Try to show this to user that he is not logged in
         }
-
+        console.log(new Date().getTime() + +authData.data.expiresIn * 1000);
+        console.log(new Date().getTime());
         const expirationTime = new Date(new Date().getTime() + +authData.data.expiresIn * 1000);
         authCtx.login(authData.data.idToken, expirationTime.toISOString());
+
         router.push("/");
     };
 
@@ -48,7 +56,7 @@ const Login = ({ signup }: LoginProps) => {
                         ? "Register now to get 30 days free trial!"
                         : "Welcome back! Please enter your details."}
                 </p>
-                <LoginForm signup={signup} />
+                <LoginForm signup={signup} onSubmit={authHandler} />
                 {!signup && <Link href="/login/signup">Don't have an account? Sign up</Link>}
             </div>
         </div>
