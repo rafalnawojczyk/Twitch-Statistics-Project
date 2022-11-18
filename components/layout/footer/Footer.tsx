@@ -14,9 +14,9 @@ const Footer = () => {
                 </a>
             </p>
             <p>
-                TwitchStatistics is not affiliated with Twitch or Amazon. All Trademarks referred to
-                are the property of their respective owners. This project is made entirely for
-                learning purposes.
+                TwitchStatistics is not affiliated with Twitch. All Trademarks referred to are the
+                property of their respective owners. This project is made entirely for learning
+                purposes.
             </p>
         </footer>
     );
