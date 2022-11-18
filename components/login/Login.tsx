@@ -8,9 +8,6 @@ import LoginForm from "./LoginForm";
 
 type LoginProps = { signup: boolean };
 
-// TODO:
-// when user is succesfully logged in or signed up - animate existing login form with opacity and show greeting message on the screen. After animations make redirect to homepage
-
 const Login = ({ signup }: LoginProps) => {
     const authCtx = useContext(AuthContext);
     const router = useRouter();

@@ -8,7 +8,7 @@ const Footer = () => {
         <footer className={styles.footer}>
             <p>Get in touch, report a bug or incorrect information, suggest a feature.</p>
             <p>
-                © {actualYear} TwitchStatistics
+                © {actualYear} TwitchStatistics{" "}
                 <a href={`mailto:${EMAIL}`} className={styles.footer__email}>
                     {EMAIL}
                 </a>
