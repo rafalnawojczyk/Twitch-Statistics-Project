@@ -24,16 +24,32 @@ Project is created with:
 -   MongoDB version: 4.10.0
 -   Next-images version: 1.8.4
 -   Jest version: 29.3.1
+-   Firebase Authentication
 
 ## Setup
 
-Clone this repo to your desktop and run:
+Clone this repo to your desktop and run this command to install all the dependencies.:
 
 ```
 npm install
 ```
 
-to install all the dependencies.
+In the meantime create file named
+
+```
+.env.local
+```
+
+which will contain all environmental variables. In file you need to include these variables:
+
+```
+NODE_ENV=<DEVELOPMENT/PRODUCTION>
+TWITCH_CLIENT_ID= <YOUR TWITCH CLIENT ID>
+TWITCH_CLIENT_SECRET= <YOUR TWITCH CLIENT SECRET KEY>
+DB_CLIENT_ID= <YOUR DB CLIENT ID>
+DB_CLIENT_PASSWORD= <YOUR DB CLIENT PASSWORD>
+FIREBASE_KEY= <YOUR FIREBASE APP KEY>
+```
 
 To run application run this command:
 
