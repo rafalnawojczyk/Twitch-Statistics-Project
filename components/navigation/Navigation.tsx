@@ -7,11 +7,11 @@ import { useContext, useEffect, useState } from "react";
 
 const Navigation: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const authCtx = useContext(AuthContext);
+    const { isLoggedIn: isLogged } = useContext(AuthContext);
 
     useEffect(() => {
-        setIsLoggedIn(authCtx.isLoggedIn);
-    }, []);
+        setIsLoggedIn(isLogged);
+    }, [isLogged]);
 
     return (
         <Header>
