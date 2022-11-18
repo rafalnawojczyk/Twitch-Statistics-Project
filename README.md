@@ -1,4 +1,6 @@
-Twitch Statistics Project
+# Twitch Statistics Project
+
+============
 
 ## Table of contents
 
@@ -28,7 +30,7 @@ Project is created with:
 
 ## Setup
 
-Clone this repo to your desktop and run this command to install all the dependencies.:
+Clone this repo to your desktop and run this command to install all the dependencies:
 
 ```
 npm install
@@ -51,7 +53,7 @@ DB_CLIENT_PASSWORD= <YOUR DB CLIENT PASSWORD>
 FIREBASE_KEY= <YOUR FIREBASE APP KEY>
 ```
 
-To run application run this command:
+To finally run application run this command:
 
 ```
 npm run dev
