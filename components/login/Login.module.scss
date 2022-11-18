@@ -10,6 +10,7 @@
     overflow: hidden;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    position: relative;
 
     a,
     a:link,
@@ -59,5 +60,10 @@
         h1 {
             font-size: 3rem;
         }
+    }
+
+    &__error {
+        color: $fill-color-salmon;
+        font-size: 2rem;
     }
 }

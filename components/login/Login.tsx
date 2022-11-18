@@ -2,15 +2,19 @@ import { SERVER } from "config";
 import AuthContext from "context/auth-context";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./Login.module.scss";
 import LoginForm from "./LoginForm";
 
 type LoginProps = { signup: boolean };
 
+// TODO:
+// when user is succesfully logged in or signed up - animate existing login form with opacity and show greeting message on the screen. After animations make redirect to homepage
+
 const Login = ({ signup }: LoginProps) => {
     const authCtx = useContext(AuthContext);
     const router = useRouter();
+    const [error, setError] = useState<undefined | string>();
 
     useEffect(() => {
         if (authCtx.isLoggedIn) {
@@ -32,9 +36,11 @@ const Login = ({ signup }: LoginProps) => {
         });
 
         const authData = await authResponse.json();
+        console.log(authData);
 
         if (!authData.ok) {
-            // TODO: error message is in authData.data when authData is not ok. Try to show this to user that he is not logged in
+            setError(authData.data);
+            return;
         }
 
         const expirationTime = new Date(new Date().getTime() + +authData.data.expiresIn * 1000);
@@ -49,6 +55,7 @@ const Login = ({ signup }: LoginProps) => {
                 <h1>{titleText}</h1>
             </div>
             <div className={styles.login__box}>
+                {error && <span className={styles.login__error}>{error}</span>}
                 <h1>{signup ? "30 days free trial" : "Welcome back"}</h1>
                 <p>
                     {signup
