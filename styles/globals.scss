@@ -33,6 +33,7 @@ html {
 
 body {
     font-family: "Roboto", sans-serif;
+    font-weight: 400;
     background-color: $bg-color-dark;
     color: $font-color-primary;
     padding: 0 2rem;
@@ -40,15 +41,6 @@ body {
     @media screen and (max-width: 33.45em) {
         padding: 0 0.5rem;
     }
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: "Lato", sans-serif;
 }
 
 .recharts-tooltip-wrapper {
