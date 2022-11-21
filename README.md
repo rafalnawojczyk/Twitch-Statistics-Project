@@ -10,6 +10,8 @@
 
 This project is an advanced full-stack web application, written in Typescript using Next.js framework. App is fetching data from Twitch API for all live streams, saves them into MongoDB using Next.js API routes, and renders all data in a modern looking charts and tables.
 
+![Twitch statistics screenshot](https://github.com/***REMOVED***/Twitch-Statistics-Project/blob/master/public/twitch-statistics-screenshot.png?raw=true)
+
 ## Technologies
 
 Project is created with:
