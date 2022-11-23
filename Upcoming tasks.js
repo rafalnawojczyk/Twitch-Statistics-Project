@@ -1,6 +1,6 @@
 // NEW:
 
-// Delete old commits on github with db credentials
+// PRODUCTION GIVES HYDRATION ERRORS PROBABLY DUE TO DATE OBJ - DIFF VALUE ON SERVER AND CLIENT
 
 //
 // TODO: TO run API routes each hours use cron-jobs in vercel
