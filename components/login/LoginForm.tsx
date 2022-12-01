@@ -33,6 +33,7 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
               email: Yup.string().email("Invalid email address").required("Email is required"),
               password: Yup.string()
                   .min(8, "Password must contain 8 or more characters.")
+                  .max(20, "Password must contain less than 20 characters.")
                   .required("Password is required"),
               name: Yup.string()
                   .min(8, "Your nickname must contain 8 or more characters.")
