@@ -17,14 +17,12 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
 
     const initialValues = signup
         ? {
-              validateOnMount: true,
               email: "",
               password: "",
               name: "",
               checkbox: false,
           }
         : {
-              validateOnMount: true,
               email: "",
               password: "",
               checkbox: false,
@@ -59,6 +57,8 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
             onSubmit(values.email, values.password, values.checkbox);
         },
     });
+
+    console.log(formik.isValid);
 
     let formMarkup: ReactElement;
     let buttonTitle: string;
@@ -174,7 +174,7 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
         <form className={styles["login-form"]} onSubmit={formik.handleSubmit}>
             {formMarkup}
             <button
-                disabled={!formik.isValid}
+                disabled={!formik.dirty || !formik.isValid}
                 className={styles["login-form__button"]}
                 type="submit"
             >
