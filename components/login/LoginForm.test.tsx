@@ -53,7 +53,7 @@ describe("LoginForm component", () => {
     test("shows error message when email is empty and loses focus", async () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const emailInput = screen.getByLabelText(/Email Address/i);
-        act(() => {
+        await act(async () => {
             emailInput.focus();
             emailInput.blur();
         });
@@ -133,15 +133,47 @@ describe("LoginForm component", () => {
         expect(errorMessage).toBeInTheDocument();
     });
 
-    // test("shows error message when email is empty and loses focus", async () => {
-    //     render(<LoginForm signup={true} onSubmit={() => {}} />);
-    //     const emailInput = screen.getByLabelText(/Email Address/i);
-    //     act(() => {
-    //         emailInput.focus();
-    //         emailInput.blur();
-    //     });
-    //     const errorMessage = await screen.findByText(/Email is required/i);
+    test("shows no error message when nickname has more than 8 chars", async () => {
+        render(<LoginForm signup={true} onSubmit={() => {}} />);
+        const nicknameInput = screen.getByLabelText(/nickname/i);
 
-    //     expect(errorMessage).toBeInTheDocument();
-    // });
+        await act(async () => {
+            userEvent.type(nicknameInput, "asdasdasdasd");
+            nicknameInput.focus();
+            nicknameInput.blur();
+        });
+        const errorMessage = screen.queryByText(
+            /Your nickname must contain 8 or more characters./i
+        );
+
+        expect(errorMessage).not.toBeInTheDocument();
+    });
+
+    test("shows error message when email is invalid", async () => {
+        render(<LoginForm signup={true} onSubmit={() => {}} />);
+        const emailInput = screen.getByLabelText(/Email Address/i);
+        act(() => {
+            userEvent.type(emailInput, "asdasdasdasd");
+            emailInput.focus();
+            emailInput.blur();
+        });
+        const errorMessage = await screen.findByText(/Invalid email address/i);
+
+        expect(errorMessage).toBeInTheDocument();
+    });
+
+    test("shows no error message when email is valid", async () => {
+        render(<LoginForm signup={true} onSubmit={() => {}} />);
+        const emailInput = screen.getByLabelText(/Email Address/i);
+        act(() => {
+            userEvent.type(emailInput, "asdasdasdasd@wp.pl");
+            emailInput.focus();
+            emailInput.blur();
+        });
+        const errorMessage = screen.queryByText(/Invalid email address/i);
+
+        expect(errorMessage).not.toBeInTheDocument();
+    });
+
+    // test if form is submittable when there is any error shown
 });
