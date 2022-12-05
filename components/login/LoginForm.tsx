@@ -2,7 +2,7 @@ import styles from "./LoginForm.module.scss";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import GoogleLogo from "../../public/google-icon.png";
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Link from "next/link";
 
 type LoginFormProps = {
@@ -58,8 +58,6 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
         },
     });
 
-    console.log(formik.isValid);
-
     let formMarkup: ReactElement;
     let buttonTitle: string;
 
@@ -77,7 +75,9 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
                 onBlur={formik.handleBlur}
                 value={formik.values.name}
             />
-            {formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
+            {formik.touched.name && formik.errors.name ? (
+                <div className={"error"}>{formik.errors.name}</div>
+            ) : null}
             <label htmlFor="email">Email Address</label>
             <input
                 id="email"
@@ -87,7 +87,9 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
             />
-            {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
+            {formik.touched.email && formik.errors.email ? (
+                <div className={"error"}>{formik.errors.email}</div>
+            ) : null}
 
             <label htmlFor="password">Password</label>
             <input
@@ -99,7 +101,7 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
                 value={formik.values.password}
             />
             {formik.touched.password && formik.errors.password ? (
-                <div>{formik.errors.password}</div>
+                <div className={"error"}>{formik.errors.password}</div>
             ) : null}
 
             <div className={`${styles["login-form__checkbox"]} ${styles["margin-top"]}`}>
@@ -116,7 +118,7 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
                     I agree with <Link href="/terms">Terms and Conditions</Link>
                 </label>
                 {formik.touched.checkbox && formik.errors.checkbox ? (
-                    <div>{formik.errors.checkbox}</div>
+                    <div className={"error"}>{formik.errors.checkbox}</div>
                 ) : null}
             </div>
         </>
@@ -138,7 +140,7 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
                     value={formik.values.email}
                 />
                 {formik.touched.email && formik.errors.email ? (
-                    <div>{formik.errors.email}</div>
+                    <div className={"error"}>{formik.errors.email}</div>
                 ) : null}
                 <label htmlFor="password">Password</label>
                 <input
@@ -150,7 +152,7 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
                     value={formik.values.password}
                 />
                 {formik.touched.password && formik.errors.password ? (
-                    <div>{formik.errors.password}</div>
+                    <div className={"error"}>{formik.errors.password}</div>
                 ) : null}
 
                 <div className={styles["login-form__remember-box"]}>
@@ -174,7 +176,7 @@ const LoginForm = ({ signup, onSubmit }: LoginFormProps) => {
         <form className={styles["login-form"]} onSubmit={formik.handleSubmit}>
             {formMarkup}
             <button
-                disabled={!formik.dirty || !formik.isValid}
+                disabled={!!(!formik.dirty || !formik.isValid)}
                 className={styles["login-form__button"]}
                 type="submit"
             >
