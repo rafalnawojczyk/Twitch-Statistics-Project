@@ -261,14 +261,14 @@ describe("LoginForm component", () => {
 
         // emailInput.focus();
         await userEvent.clear(emailInput);
-
+        await userEvent.type(nicknameInput, "asdasdasdasda");
         await userEvent.type(emailInput, "abcdefg@wp.kl");
 
         // passwordInput.focus();
         await userEvent.type(passwordInput, "asdasdasdasdas");
 
         // nicknameInput.focus();
-        await userEvent.type(nicknameInput, "asdasdasdasda");
+
         // nicknameInput.blur();
         fireEvent.click(checkbox);
 
