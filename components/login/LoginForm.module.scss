@@ -85,6 +85,20 @@
                 background-color: darken(#fff, 40%);
             }
         }
+
+        &:disabled {
+            filter: brightness(0.6);
+        }
+        &:disabled:hover {
+            scale: 1;
+            background-color: $bg-color-white;
+            color: $bg-color-dark;
+        }
+
+        &:disabled:active {
+            scale: 1;
+            background-color: $bg-color-white;
+        }
     }
 }
 
