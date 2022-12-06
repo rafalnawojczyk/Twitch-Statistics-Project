@@ -31,8 +31,6 @@ describe("LoginForm component", () => {
 
         fireEvent.focus(nicknameInput);
         fireEvent.blur(nicknameInput);
-        // nicknameInput.focus();
-        //  nicknameInput.blur();
 
         const errorMessage = await screen.findByText(/Nickname is required/i);
 
@@ -44,8 +42,6 @@ describe("LoginForm component", () => {
         const passwordInput = screen.getByLabelText(/password/i);
         fireEvent.focus(passwordInput);
         fireEvent.blur(passwordInput);
-        // passwordInput.focus();
-        // passwordInput.blur();
 
         const errorMessage = await screen.findByText(/Password is required/i);
 
@@ -57,8 +53,6 @@ describe("LoginForm component", () => {
         const emailInput = screen.getByLabelText(/Email Address/i);
         fireEvent.focus(emailInput);
         fireEvent.blur(emailInput);
-        // emailInput.focus();
-        // emailInput.blur();
 
         const errorMessage = await screen.findByText(/Email is required/i);
 
@@ -68,12 +62,11 @@ describe("LoginForm component", () => {
     test("shows error message when password has 21 characters", async () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
+        const user = userEvent.setup();
 
-        userEvent.type(passwordInput, "asdasdasdasdasdasdasd");
+        user.type(passwordInput, "asdasdasdasdasdasdasd");
         fireEvent.focus(passwordInput);
         fireEvent.blur(passwordInput);
-        // passwordInput.focus();
-        // passwordInput.blur();
 
         const errorMessage = await screen.findByText(
             /Password must contain less than 20 characters./i
@@ -82,16 +75,14 @@ describe("LoginForm component", () => {
         expect(errorMessage).toBeInTheDocument();
     });
 
-    test("shows no error message when password has 15 characters", async () => {
+    test("shows no error message when password has 15 characters", () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
+        const user = userEvent.setup();
 
-        userEvent.type(passwordInput, "asdasdasdasdasd");
+        user.type(passwordInput, "asdasdasdasdasd");
         fireEvent.focus(passwordInput);
         fireEvent.blur(passwordInput);
-
-        // passwordInput.focus();
-        // passwordInput.blur();
 
         const errorMessageShort = screen.queryByText(
             /Password must contain 8 or more characters./i
@@ -108,12 +99,11 @@ describe("LoginForm component", () => {
     test("shows error message when password has 7 characters", async () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
+        const user = userEvent.setup();
 
-        userEvent.type(passwordInput, "asdasd1");
+        user.type(passwordInput, "asdasd1");
         fireEvent.focus(passwordInput);
         fireEvent.blur(passwordInput);
-        // passwordInput.focus();
-        // passwordInput.blur();
 
         const errorMessage = await screen.findByText(
             /Password must contain 8 or more characters./i
@@ -125,12 +115,11 @@ describe("LoginForm component", () => {
     test("shows error message when nickname has less than 8 chars", async () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const nicknameInput = screen.getByLabelText(/nickname/i);
+        const user = userEvent.setup();
 
-        userEvent.type(nicknameInput, "asdasd1");
+        user.type(nicknameInput, "asdasd1");
         fireEvent.focus(nicknameInput);
         fireEvent.blur(nicknameInput);
-        // nicknameInput.focus();
-        // nicknameInput.blur();
 
         const errorMessage = await screen.findByText(
             /Your nickname must contain 8 or more characters./i
@@ -139,15 +128,14 @@ describe("LoginForm component", () => {
         expect(errorMessage).toBeInTheDocument();
     });
 
-    test("shows no error message when nickname has more than 8 chars", async () => {
+    test("shows no error message when nickname has more than 8 chars", () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const nicknameInput = screen.getByLabelText(/nickname/i);
+        const user = userEvent.setup();
 
-        userEvent.type(nicknameInput, "asdasdasdasd");
+        user.type(nicknameInput, "asdasdasdasd");
         fireEvent.focus(nicknameInput);
         fireEvent.blur(nicknameInput);
-        // nicknameInput.focus();
-        // nicknameInput.blur();
 
         const errorMessage = screen.queryByText(
             /Your nickname must contain 8 or more characters./i
@@ -159,123 +147,131 @@ describe("LoginForm component", () => {
     test("shows error message when email is invalid", async () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const emailInput = screen.getByLabelText(/Email Address/i);
+        const user = userEvent.setup();
 
-        userEvent.type(emailInput, "asdasdasdasd");
+        user.type(emailInput, "asdasdasdasd");
         fireEvent.focus(emailInput);
         fireEvent.blur(emailInput);
-        // emailInput.focus();
-        // emailInput.blur();
 
         const errorMessage = await screen.findByText(/Invalid email address/i);
 
         expect(errorMessage).toBeInTheDocument();
     });
 
-    test("shows no error message when email is valid", async () => {
+    test("shows no error message when email is valid", () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const emailInput = screen.getByLabelText(/Email Address/i);
+        const user = userEvent.setup();
 
-        userEvent.type(emailInput, "asdasdasdasd@wp.pl");
+        user.type(emailInput, "asdasdasdasd@wp.pl");
         fireEvent.focus(emailInput);
         fireEvent.blur(emailInput);
-        // emailInput.focus();
-        // emailInput.blur();
 
         const errorMessage = screen.queryByText(/Invalid email address/i);
 
         expect(errorMessage).not.toBeInTheDocument();
     });
 
-    // // test if form is submittable when all inputs are invalid/empty
-
-    test("submit button is disabled when password is invalid", async () => {
+    test("submit button is disabled when password is invalid", () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
         const emailInput = screen.getByLabelText(/Email Address/i);
         const nicknameInput = screen.getByLabelText(/nickname/i);
         const button = screen.getByRole("button", { name: "Signup" });
+        const user = userEvent.setup();
 
-        // emailInput.focus();
         fireEvent.focus(emailInput);
-        userEvent.type(emailInput, "asdasdasdasd@wp.pl");
+        user.type(emailInput, "asdasdasdasd@wp.pl");
+
         fireEvent.focus(passwordInput);
-        // passwordInput.focus();
-        userEvent.type(passwordInput, "asd");
+        user.type(passwordInput, "asd");
+
         fireEvent.focus(nicknameInput);
-        // nicknameInput.focus();
-        userEvent.type(nicknameInput, "validnicknameitis");
-        // nicknameInput.blur();
+        user.type(nicknameInput, "validnicknameitis");
         fireEvent.blur(nicknameInput);
+
         expect(button).toBeDisabled();
     });
 
-    test("submit button is disabled when nickname is invalid", async () => {
+    test("submit button is disabled when nickname is invalid", () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
         const emailInput = screen.getByLabelText(/Email Address/i);
         const nicknameInput = screen.getByLabelText(/nickname/i);
         const button = screen.getByRole("button", { name: "Signup" });
+        const user = userEvent.setup();
 
-        // emailInput.focus();
         fireEvent.focus(emailInput);
-        userEvent.type(emailInput, "asdasdasdasd@wp.pl");
+        user.type(emailInput, "asdasdasdasd@wp.pl");
+
         fireEvent.focus(passwordInput);
-        // passwordInput.focus();
-        userEvent.type(passwordInput, "asdasdasdasdas");
+        user.type(passwordInput, "asdasdasdasdas");
+
         fireEvent.focus(nicknameInput);
-        // nicknameInput.focus();
-        userEvent.type(nicknameInput, "asdasd");
-        // nicknameInput.blur();
+        user.type(nicknameInput, "asdasd");
         fireEvent.blur(nicknameInput);
+
         expect(button).toBeDisabled();
     });
 
-    test("submit button is disabled when email is invalid", async () => {
+    test("submit button is disabled when email is invalid", () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
         const emailInput = screen.getByLabelText(/Email Address/i);
         const nicknameInput = screen.getByLabelText(/nickname/i);
         const button = screen.getByRole("button", { name: "Signup" });
+        const user = userEvent.setup();
 
-        // emailInput.focus();
         fireEvent.focus(emailInput);
-        userEvent.type(emailInput, "asdasdasdas");
+        user.type(emailInput, "asdasdasdas");
+
         fireEvent.focus(passwordInput);
-        // passwordInput.focus();
-        userEvent.type(passwordInput, "asdasdasdasdas");
+        user.type(passwordInput, "asdasdasdasdas");
+
         fireEvent.focus(nicknameInput);
-        // nicknameInput.focus();
-        userEvent.type(nicknameInput, "asdasdsaasdd");
-        // nicknameInput.blur();
+        user.type(nicknameInput, "asdasdsaasdd");
         fireEvent.blur(nicknameInput);
+
         expect(button).toBeDisabled();
     });
 
-    test("submit button is enabled when all inputs are valid", async () => {
+    test("submit button is disabled when checkbox is double clicked", () => {
+        render(<LoginForm signup={true} onSubmit={() => {}} />);
+        const passwordInput = screen.getByLabelText(/password/i);
+        const emailInput = screen.getByLabelText(/Email Address/i);
+        const nicknameInput = screen.getByLabelText(/nickname/i);
+        const button = screen.getByRole("button", { name: "Signup" });
+        const checkbox = screen.getByLabelText(/I agree with Terms and Conditions/i);
+        const user = userEvent.setup();
+
+        fireEvent.focus(emailInput);
+        user.type(emailInput, "asdasdasdasd@wp.pl");
+
+        fireEvent.focus(passwordInput);
+        user.type(passwordInput, "asdasdasdasdas");
+
+        fireEvent.focus(nicknameInput);
+        user.type(nicknameInput, "asdasdasdasd");
+        fireEvent.blur(nicknameInput);
+
+        expect(button).toBeDisabled();
+    });
+
+    test("submit button is enabled when all inputs are valid", () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
         const emailInput = screen.getByLabelText(/Email Address/i);
         const nicknameInput = screen.getByLabelText(/nickname/i);
         const checkbox = screen.getByLabelText(/I agree with Terms and Conditions/i);
         const button = screen.getByRole("button", { name: "Signup" });
+        const user = userEvent.setup();
 
-        // emailInput.focus();
-        await userEvent.clear(emailInput);
-        await userEvent.type(nicknameInput, "asdasdasdasda");
-        await userEvent.type(emailInput, "abcdefg@wp.kl");
+        user.type(emailInput, "abcdefg@wp.kl");
+        user.type(nicknameInput, "asdasdasdasda");
+        user.type(passwordInput, "asdasdasdasdas");
 
-        // passwordInput.focus();
-        await userEvent.type(passwordInput, "asdasdasdasdas");
-
-        // nicknameInput.focus();
-
-        // nicknameInput.blur();
         fireEvent.click(checkbox);
 
-        await waitFor(() => {
-            expect(button).toBeEnabled();
-        });
+        expect(button).toBeEnabled();
     });
-
-    // test if form is
 });
