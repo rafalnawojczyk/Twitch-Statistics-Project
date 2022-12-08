@@ -1,4 +1,4 @@
-import { SERVER } from "config";
+import { SERVER } from "../../config";
 import AuthContext from "context/auth-context";
 import Link from "next/link";
 import { useRouter } from "next/router";
