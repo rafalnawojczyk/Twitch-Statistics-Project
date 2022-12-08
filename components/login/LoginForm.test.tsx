@@ -5,7 +5,7 @@ import "@testing-library/jest-dom";
 import LoginForm from "./LoginForm";
 
 describe("LoginForm component", () => {
-    test("shows nickname, email and password textboxes on signup", () => {
+    test("shows nickname, email, checkbox and password textboxes on signup", () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
         const emailInput = screen.getByLabelText(/Email Address/i);
@@ -172,12 +172,41 @@ describe("LoginForm component", () => {
         expect(errorMessage).not.toBeInTheDocument();
     });
 
-    test("submit button is disabled when password is invalid", () => {
+    test("shows error message when checkbox is invalid", async () => {
+        render(<LoginForm signup={true} onSubmit={() => {}} />);
+        const user = userEvent.setup();
+        const checkbox = screen.getByLabelText(/I agree with Terms and Conditions/i);
+
+        fireEvent.focus(checkbox);
+        user.click(checkbox);
+        user.click(checkbox);
+        fireEvent.focusOut(checkbox);
+
+        const errorMessage = await screen.findByText(/Conditions is required/i);
+
+        expect(errorMessage).toBeInTheDocument();
+    });
+
+    test("shows no error message when checkbox is valid", () => {
+        render(<LoginForm signup={true} onSubmit={() => {}} />);
+        const checkbox = screen.getByLabelText(/I agree with Terms and Conditions/i);
+
+        fireEvent.click(checkbox);
+        fireEvent.click(checkbox);
+        fireEvent.click(checkbox);
+
+        const errorMessage = screen.queryByText(/Accept Terms & Conditions is required/i);
+
+        expect(errorMessage).not.toBeInTheDocument();
+    });
+
+    test("submit button is disabled when password is invalid", async () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
         const emailInput = screen.getByLabelText(/Email Address/i);
         const nicknameInput = screen.getByLabelText(/nickname/i);
         const button = screen.getByRole("button", { name: "Signup" });
+        const checkbox = screen.getByLabelText(/I agree with Terms and Conditions/i);
         const user = userEvent.setup();
 
         fireEvent.focus(emailInput);
@@ -190,14 +219,17 @@ describe("LoginForm component", () => {
         user.type(nicknameInput, "validnicknameitis");
         fireEvent.blur(nicknameInput);
 
+        user.click(checkbox);
+
         expect(button).toBeDisabled();
     });
 
-    test("submit button is disabled when nickname is invalid", () => {
+    test("submit button is disabled when nickname is invalid", async () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
         const emailInput = screen.getByLabelText(/Email Address/i);
         const nicknameInput = screen.getByLabelText(/nickname/i);
+        const checkbox = screen.getByLabelText(/I agree with Terms and Conditions/i);
         const button = screen.getByRole("button", { name: "Signup" });
         const user = userEvent.setup();
 
@@ -211,15 +243,18 @@ describe("LoginForm component", () => {
         user.type(nicknameInput, "asdasd");
         fireEvent.blur(nicknameInput);
 
+        user.click(checkbox);
+
         expect(button).toBeDisabled();
     });
 
-    test("submit button is disabled when email is invalid", () => {
+    test("submit button is disabled when email is invalid", async () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
         const emailInput = screen.getByLabelText(/Email Address/i);
         const nicknameInput = screen.getByLabelText(/nickname/i);
         const button = screen.getByRole("button", { name: "Signup" });
+        const checkbox = screen.getByLabelText(/I agree with Terms and Conditions/i);
         const user = userEvent.setup();
 
         fireEvent.focus(emailInput);
@@ -232,15 +267,18 @@ describe("LoginForm component", () => {
         user.type(nicknameInput, "asdasdsaasdd");
         fireEvent.blur(nicknameInput);
 
+        user.click(checkbox);
+
         expect(button).toBeDisabled();
     });
 
-    test("submit button is disabled when checkbox is double clicked", () => {
+    test("submit button is disabled when checkbox is not clicked", () => {
         render(<LoginForm signup={true} onSubmit={() => {}} />);
         const passwordInput = screen.getByLabelText(/password/i);
         const emailInput = screen.getByLabelText(/Email Address/i);
         const nicknameInput = screen.getByLabelText(/nickname/i);
         const button = screen.getByRole("button", { name: "Signup" });
+
         const checkbox = screen.getByLabelText(/I agree with Terms and Conditions/i);
         const user = userEvent.setup();
 
@@ -253,7 +291,6 @@ describe("LoginForm component", () => {
         fireEvent.focus(nicknameInput);
         user.type(nicknameInput, "asdasdasdasd");
         fireEvent.blur(nicknameInput);
-
         expect(button).toBeDisabled();
     });
 
@@ -273,5 +310,51 @@ describe("LoginForm component", () => {
         fireEvent.click(checkbox);
 
         expect(button).toBeEnabled();
+    });
+
+    test("onSubmit function is called with proper arguments", async () => {
+        const onSub = jest.fn();
+        render(<LoginForm signup={true} onSubmit={onSub} />);
+
+        const passwordInput = screen.getByLabelText(/password/i);
+        const emailInput = screen.getByLabelText(/Email Address/i);
+        const nicknameInput = screen.getByLabelText(/nickname/i);
+        const checkbox = screen.getByLabelText(/I agree with Terms and Conditions/i);
+        const button = screen.getByRole("button", { name: "Signup" });
+        const user = userEvent.setup();
+
+        await user.type(nicknameInput, "asdasdasdasda");
+        await user.click(checkbox);
+
+        await user.type(emailInput, "abcdefg@wp.kl");
+
+        await user.type(passwordInput, "asdasdasdasdas");
+
+        await user.click(button);
+
+        expect(onSub).toBeCalledWith("abcdefg@wp.kl", "asdasdasdasdas", true);
+    });
+
+    test("onSubmit function is called only once", async () => {
+        const onSub = jest.fn();
+        render(<LoginForm signup={true} onSubmit={onSub} />);
+
+        const passwordInput = screen.getByLabelText(/password/i);
+        const emailInput = screen.getByLabelText(/Email Address/i);
+        const nicknameInput = screen.getByLabelText(/nickname/i);
+        const checkbox = screen.getByLabelText(/I agree with Terms and Conditions/i);
+        const button = screen.getByRole("button", { name: "Signup" });
+        const user = userEvent.setup();
+
+        await user.type(nicknameInput, "asdasdasdasda");
+        await user.click(checkbox);
+
+        await user.type(emailInput, "abcdefg@wp.kl");
+
+        await user.type(passwordInput, "asdasdasdasdas");
+
+        await user.click(button);
+
+        expect(onSub).toBeCalledTimes(1);
     });
 });
