@@ -2,7 +2,7 @@ import styles from "./LoginForm.module.scss";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import GoogleLogo from "../../public/google-icon.png";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import Link from "next/link";
 
 type LoginFormProps = {
