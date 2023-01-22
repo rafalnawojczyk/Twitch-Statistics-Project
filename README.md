@@ -10,6 +10,10 @@
 
 This project is an advanced full-stack web application, written in Typescript using Next.js framework. App is fetching data from Twitch API for all live streams, saves them into MongoDB using Next.js API routes, and renders all data in a modern looking charts and tables.
 
+I used in this app various of tools that NextJS provides, such as: 
+- ISR - used in probably the most of all pages, because my data is changing each hour, and that the revalidation time, that is triggering site regeneration. This ensures that data is always actual and up to date, and pages are loading surprisingly fast, due to prerendering.
+- SSR - I used that tool in one case. It is rendering content for each request, but lets you use your backend API routes. Really solved the problem behind getting tons of data from Twitch API each hour.
+
 ![Twitch statistics screenshot](https://github.com/rafalnawojczyk/Twitch-Statistics-Project/blob/master/public/twitch-statistics-screenshot.png?raw=true)
 
 ## Technologies
