@@ -1,5 +1,7 @@
 # Twitch Statistics Project
 
+[SEE THIS PROJECT LIVE](https://twitch-statistics.vercel.app/)
+
 ## Table of contents
 
 -   [General info](#general-info)
